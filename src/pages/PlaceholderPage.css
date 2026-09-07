@@ -1,0 +1,26 @@
+.placeholder {
+  background:
+    radial-gradient(circle at top right, rgba(46, 196, 166, 0.12), transparent 40%),
+    var(--color-sand);
+}
+
+.placeholder__box {
+  max-width: 40rem;
+}
+
+.placeholder h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0.85rem;
+}
+
+.placeholder p {
+  margin-bottom: 1.5rem;
+}
+
+.placeholder code {
+  font-size: 0.95em;
+  background: rgba(46, 196, 166, 0.12);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  color: var(--color-ink);
+}
