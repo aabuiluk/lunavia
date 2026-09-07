@@ -49,3 +49,16 @@ Discovery logic lives in `src/pages/sitePages.js`.
 - `npm run dev`
 - `npm run build`
 - `npm run preview`
+
+## Deploy
+
+Push or merge to `main` triggers GitHub Actions → build → upload to PythonAnywhere → reload.
+
+Manual deploy:
+
+```bash
+npm run build
+PYTHONANYWHERE_API_TOKEN=… python deploy/upload_pa.py
+```
+
+Required GitHub secret: `PYTHONANYWHERE_API_TOKEN`.
