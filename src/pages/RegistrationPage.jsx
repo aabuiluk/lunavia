@@ -7,6 +7,7 @@ export default function Register() {
         password: ''
     });
 
+
     const [statusMessage, setStatusMessage] = useState({ text: '', type: '' });
     const [isLoading, setIsLoading] = useState(false);
 
