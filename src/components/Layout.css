@@ -1,19 +1,47 @@
 .site-header {
+  width: 92%;
   position: sticky;
-  top: 0;
+  top: 4%;
+  left: 4%;
   z-index: 20;
   height: var(--header-h);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(20, 36, 36, 0.06);
+  display: flex;
+  align-items: center;
 }
 
-.site-header__inner {
-  height: 100%;
+.sign_up_and_plan {
+  margin-left: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+}
+
+.site-header__inner {
+  height: 75%;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  margin-left: 0px;
+  justify-content: space-between;
+  justify-items: center;
+  gap: 1.5rem;
+  /* Полупрозрачный белый фон */
+  background: rgba(255, 255, 255, 0.1);
+
+  /* Размытие фона под элементом */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* Для поддержки Safari */
+
+  /* Тонкая полупрозрачная рамка для объема */
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
+
+  /* Мягкая тень */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+
+  /* Скругление углов */
+  border-radius: 50px;
 }
 
 .logo {
@@ -49,7 +77,7 @@
   position: relative;
   font-weight: 600;
   font-size: 0.95rem;
-  color: var(--color-muted);
+  color: black;
   transition: color 0.2s ease;
 }
 
@@ -77,8 +105,21 @@
 }
 
 .site-header__cta {
-  padding: 0.7rem 1.15rem;
+  color: var(--color-black);
+  padding: 15px 12px;
+  border-radius: 25px;
   font-size: 0.9rem;
+}
+
+.to_sign_up {
+  color: var(--color-white);
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+.site-header__currency {
+  color: var(--color-white);
+  font-size: 16px;
 }
 
 .site-main {

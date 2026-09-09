@@ -28,9 +28,14 @@ export default function Layout() {
               </NavLink>
             ))}
           </nav>
-
+        </div>
+        <div className="sign_up_and_plan">
+          <NavLink to="/signUp" className="to_sign_up">
+            SIGN UP
+          </NavLink>
+          <p className="site-header__currency"> UA / EN | € EUR</p>
           <NavLink to="/about" className="btn site-header__cta">
-            Plan a trip
+            Choose a destination
           </NavLink>
         </div>
       </header>
