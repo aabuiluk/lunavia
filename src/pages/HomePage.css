@@ -1,14 +1,14 @@
 .home-hero {
-  .home-hero {
-    position: relative;
-    min-height: min(92vh, 820px);
-    display: grid;
-    align-items: end;
-    overflow: hidden;
-    color: #17231D;
-  
-  }
+  position: relative;
+  top: -72px ;
+  min-height: min(92vh, 820px);
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  color: #17231D;
+
 }
+
 
 .home-hero__media {
   position: absolute;
@@ -75,7 +75,7 @@
 
 .home-hero__ghost {
   color: #17231D;
-  
+
   border-color: rgba(23, 35, 29, 0.25);
 
 }
@@ -87,7 +87,7 @@
 
 .for_inputs_to_route {
   position: relative;
-  top: 210px;
+  top: 212px;
   width: 170%;
   height: 115px;
   background: white;
@@ -108,7 +108,7 @@
 }
 
 .search-bar__grid {
-  padding-top:10px;
+  padding-top: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   align-items: center;
@@ -152,7 +152,7 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-   transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .search-bar__cta:hover {
