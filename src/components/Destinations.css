@@ -1,0 +1,131 @@
+* {
+  font-family: var(--font-body, 'Manrope', sans-serif);
+}
+.destinations {
+  padding-block: clamp(3rem, 8vw, 6rem);
+  background: var(--color-mist, #eaf7f2);
+  border-radius: 32px;
+}
+
+.destinations__eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--color-teal, #1fc79a);
+  margin-bottom: 12px;
+}
+
+.destinations__title {
+  font-family: var(--font-body, 'Manrope');
+  font-size: 60px;
+  font-weight: 900;
+  line-height: 72px;
+  color: var(--color-ink, #0e211b);
+  margin-bottom: 32px;
+}
+
+.destinations__grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 20px;
+}
+
+.destinations__card {
+  position: relative;
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  height: 340px;
+  color: #fff;
+}
+
+.destinations__card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.destinations__card:hover img {
+  transform: scale(1.05);
+}
+
+.destinations__card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 26, 21, 0) 45%,
+    rgba(10, 26, 21, 0.85) 100%
+  );
+}
+
+.destinations__tag {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  left: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink, #0e211b);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.destinations__info {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.destinations__country {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.destinations__place {
+  display: block;
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.destinations__price {
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 780px) {
+  .destinations__grid {
+    grid-template-columns: 1fr;
+  }
+  .destinations__card {
+    height: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  .destinations {
+    padding-block: 2.5rem;
+    border-radius: 22px;
+  }
+
+  .destinations__title {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+  }
+}
