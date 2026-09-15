@@ -1,27 +1,42 @@
 # Lunavia
 
-Small online travel agency (React). Style: teal accents, full-bleed photography, Syne + Manrope.
+Small online travel agency (React + FastAPI). Style: teal accents, full-bleed photography, Syne + Manrope.
 
 ## Quick start
 
 ```bash
 npm install
+pip install -r requirements.txt
 npm run dev
 ```
 
+In a second terminal:
+
+```bash
+npm run dev:api
+```
+
+Vite proxies `/api` (and `/docs`) to FastAPI on port 8000.
 
 | Route | Page |
 | --- | --- |
 | `/` | Home |
 | `/tours` | Tours (placeholder for students) |
-| `/about` | About + auto menu of site pages |
+| `/about` | About — content from `GET /api/about` |
+| `/template` | Frontend + API page template |
+| `/docs` | FastAPI OpenAPI (with the API running) |
 
 About URL in production: `site.com/about`.
 
 ## How students add a site page
 
-1. Create `src/pages/YourPage.jsx` (name must end with `Page.jsx`)
-2. Export `pageMeta` and a default component:
+Copy the paired templates:
+
+1. Frontend: `src/pages/TemplatePage.jsx` → `src/pages/YourPage.jsx`
+2. API: `backend/pages/template.py` → `backend/pages/yourpage.py`
+3. Data: `backend/data/template.json` → `backend/data/yourpage.json`
+
+Export `pageMeta` on the React page and `page_meta` + `router` on the FastAPI module. Keep the slug the same in the path, JSON filename, and `useApi('/api/yourpage')`.
 
 ```jsx
 export const pageMeta = {
@@ -36,18 +51,23 @@ export default function ContactPage() {
 }
 ```
 
-3. That’s it — the page is picked up by:
-   - React Router (`App.jsx`)
-   - Header navigation
-   - **About page menu** (`getSiblingPages`)
+The page is picked up by:
+
+- React Router (`App.jsx`)
+- Header navigation
+- **About page menu** (`getSiblingPages`)
+- FastAPI (`GET /api/pages` and `/api/<slug>`)
 
 Shared styles: `.container`, `.section`, `.btn`, `.eyebrow` in `src/index.css`.
 
-Discovery logic lives in `src/pages/sitePages.js`.
+Discovery logic lives in `src/pages/sitePages.js` and `backend/registry.py`.
+
+About is the full backend example (page payload, section GETs, team CRUD). Other existing pages have API skeletons under `/api/home`, `/api/tours`, and `/api/register`.
 
 ## Scripts
 
-- `npm run dev`
+- `npm run dev` — Vite frontend
+- `npm run dev:api` — FastAPI backend
 - `npm run build`
 - `npm run preview`
 

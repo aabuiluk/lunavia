@@ -1,0 +1,20 @@
+{
+  "eyebrow": "Page template",
+  "title": "Start every new page from here",
+  "lead": "This screen is wired to GET /api/template. Copy the frontend file and the FastAPI page module to add a new route.",
+  "steps": [
+    {
+      "title": "Copy the frontend page",
+      "text": "Duplicate src/pages/TemplatePage.jsx, export pageMeta, and keep the useApi hook."
+    },
+    {
+      "title": "Copy the API page",
+      "text": "Duplicate backend/pages/template.py and backend/data/template.json."
+    },
+    {
+      "title": "Rename the slug",
+      "text": "Use the same slug in page_meta, the JSON filename, the router prefix, and the fetch path."
+    }
+  ],
+  "cta": { "label": "See About (full API)", "href": "/about" }
+}
