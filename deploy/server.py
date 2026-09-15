@@ -30,6 +30,7 @@ if not DIST.is_dir():
     DIST = HERE / "dist"
 
 DATA = ROOT / "backend" / "data"
+SKIP_PAGE_SLUGS = {"menu"}
 
 
 def flask_application():
@@ -57,6 +58,8 @@ def flask_application():
             return []
         pages = []
         for file in sorted(DATA.glob("*.json")):
+            if file.stem in SKIP_PAGE_SLUGS:
+                continue
             pages.append(
                 {
                     "slug": file.stem,
@@ -76,6 +79,13 @@ def flask_application():
     @app.get("/api/pages")
     def api_pages():
         return page_list()
+
+    @app.get("/api/menu")
+    def api_menu():
+        try:
+            return store.dump("menu")
+        except FileNotFoundError:
+            abort(404)
 
     @app.post("/api/admin/login")
     def admin_login():
@@ -109,6 +119,30 @@ def flask_application():
         if err:
             return err
         return page_list()
+
+    @app.get("/api/admin/menu")
+    def admin_get_menu():
+        _user, err = admin_user()
+        if err:
+            return err
+        try:
+            return store.dump("menu")
+        except FileNotFoundError:
+            abort(404)
+
+    @app.put("/api/admin/menu")
+    def admin_save_menu():
+        _user, err = admin_user()
+        if err:
+            return err
+        body = request.get_json(silent=True)
+        if not isinstance(body, dict):
+            return {"detail": "JSON object required"}, 400
+        try:
+            store.dump("menu")
+        except FileNotFoundError:
+            return {"detail": "Unknown page 'menu'"}, 404
+        return store.save("menu", body)
 
     @app.put("/api/admin/pages/<slug>")
     def admin_save(slug: str):

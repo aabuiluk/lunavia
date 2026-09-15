@@ -7,7 +7,8 @@ export const pageMeta = {
   path: '/login',
   title: 'Login',
   summary: 'Log in to your Lunavia account.',
-  nav: true,
+  nav: false,
+  listed: false,
 }
 
 

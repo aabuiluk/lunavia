@@ -1,5 +1,22 @@
-import React from 'react';
-import './Hotels.css';
+import { useMemo, useState } from 'react'
+import './Hotels.css'
+
+export const pageMeta = {
+  path: '/hotels',
+  title: 'Hotels',
+  order: 4,
+  nav: false,
+  summary: 'Stay options that pair with Lunavia routes.',
+}
+
+const FILTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'resorts', label: 'Resorts', match: ['RESORT', 'ALL INCL'] },
+  { id: 'apartments', label: 'Apartments', match: ['FLATS', 'CITY'] },
+  { id: 'villas', label: 'Villas', match: ['VILLAS'] },
+  { id: 'spa', label: 'Spa & Wellness', amenity: 'Spa' },
+  { id: 'inclusive', label: 'All inclusive', match: ['ALL INCL'] },
+]
 
 const hotelsData = [
   {
@@ -149,83 +166,83 @@ const hotelsData = [
 ];
 
 export default function HotelsPage() {
+  const [filter, setFilter] = useState('all')
+  const active = FILTERS.find((item) => item.id === filter) || FILTERS[0]
+  const hotels = useMemo(
+    () =>
+      hotelsData.filter((hotel) => {
+        if (active.id === 'all') return true
+        if (active.match && active.match.includes(hotel.category)) return true
+        if (active.amenity && hotel.amenities.includes(active.amenity)) return true
+        return false
+      }),
+    [active],
+  )
+
   return (
-    <div>
-      {/* HEADER */}
-      <header className="hotels-header">
+    <main className="hotels-main-container">
+      <div className="hotels-categories" role="tablist" aria-label="Hotel types">
+        {FILTERS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={filter === item.id}
+            className={filter === item.id ? 'hotels-tab-btn active' : 'hotels-tab-btn'}
+            onClick={() => setFilter(item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
 
-      </header>
+      <div className="hotels-grid">
+        {hotels.map((hotel) => (
+          <article key={hotel.id} className="hotel-card">
+            <div className="hotel-image-wrapper">
+              <img src={`/${hotel.image}`} alt={hotel.title} />
+              <span className="hotel-badge-category">{hotel.category}</span>
+              <button type="button" className="hotel-like-btn" aria-label={`Save ${hotel.title}`}>
+                <img src="/Favorite.png" alt="" className="hotel-like-icon" />
+              </button>
+            </div>
 
+            <div className="hotel-card-info">
+              <h3 className="hotel-title">{hotel.title}</h3>
+              <p className="hotel-subtitle">{hotel.subtitle}</p>
 
-      {/* MAIN CONTAINER */}
-      <main className="hotels-main-container">
-        {/* CATEGORY TABS */}
-        <div className="hotels-categories">
-          <button className="hotels-tab-btn active">All</button>
-          <button className="hotels-tab-btn">Resorts</button>
-          <button className="hotels-tab-btn">Apartments</button>
-          <button className="hotels-tab-btn">Villas</button>
-          <button className="hotels-tab-btn">Spa & Wellness</button>
-          <button className="hotels-tab-btn">All inclusive</button>
-        </div>
+              <div className="hotel-rating">
+                ★ {hotel.rating} <span>({hotel.reviewsCount} reviews)</span>
+              </div>
 
-        {/* HOTELS GRID */}
-        <div className="hotels-grid">
-          {hotelsData.map((hotel) => (
-            <div key={hotel.id} className="hotel-card">
-              <div className="hotel-image-wrapper">
-                <img src={hotel.image} alt={hotel.title} />
-                <span className="hotel-badge-category">{hotel.category}</span>
-                <button className="hotel-like-btn">
-                  <img src="./Favorite.png" alt="Like" className="hotel-like-icon" />
+              <div className="hotel-divider" />
+
+              <p className="hotel-description">{hotel.amenities}</p>
+
+              <div className="hotel-card-footer">
+                <div className="hotel-price-block">
+                  {hotel.oldPrice ? (
+                    <span className="hotel-old-price">€{hotel.oldPrice}/night</span>
+                  ) : null}
+                  <div className="hotel-price">
+                    €{hotel.price}
+                    <span className="hotel-night-label">/night</span>
+                  </div>
+                </div>
+                <button type="button" className="hotel-btn-arrow" aria-label={`View ${hotel.title}`}>
+                  →
                 </button>
               </div>
-
-              <div className="hotel-card-info">
-                <h3 className="hotel-title">{hotel.title}</h3>
-                <p className="hotel-subtitle">{hotel.subtitle}</p>
-
-                <div className="hotel-rating">
-                  ★ {hotel.rating} <span>({hotel.reviewsCount} reviews)</span>
-                </div>
-
-                <div className="hotel-divider"></div>
-
-                <p className="hotel-description">{hotel.amenities}</p>
-
-                <div className="hotel-card-footer">
-                  <div className="hotel-price-block">
-                    {hotel.oldPrice && (
-                      <span className="hotel-old-price">€{hotel.oldPrice}/night</span>
-                    )}
-                    <div className="hotel-price">
-                      €{hotel.price}<span className="hotel-night-label">/night</span>
-                    </div>
-                  </div>
-                  <button className="hotel-btn-arrow">&rarr;</button>
-                </div>
-              </div>
             </div>
-          ))}
-        </div>
+          </article>
+        ))}
+      </div>
 
-        {/* PAGINATION */}
-        <div className="hotels-pagination">
-          <button className="hotels-page-btn arrow">&lt;</button>
-          <button className="hotels-page-btn active">1</button>
-          <button className="hotels-page-btn">2</button>
-          <button className="hotels-page-btn">3</button>
-          <button className="hotels-page-btn">4</button>
-          <button className="hotels-page-btn arrow">&gt;</button>
-        </div>
-      </main>
-
-      {/* FOOTER */}
-      <footer className="hotels-footer">
-
-      </footer>
-    </div>
-  );
+      {hotels.length === 0 ? (
+        <p className="hotels-empty">No stays in this category yet.</p>
+      ) : null}
+    </main>
+  )
 }
 
 

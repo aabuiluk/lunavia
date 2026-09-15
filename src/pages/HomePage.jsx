@@ -13,6 +13,7 @@ export const pageMeta = {
   path: '/',
   title: 'Home',
   order: 1,
+  nav: false,
   summary: 'Start here — Lunavia’s welcome page and travel promise.',
 }
 
