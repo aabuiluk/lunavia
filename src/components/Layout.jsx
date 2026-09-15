@@ -1,9 +1,14 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import { navPages, sitePages } from '../pages/sitePages'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { listedPages, navPages } from '../pages/sitePages'
 import './Layout.css'
 
 export default function Layout() {
-  const explorePages = sitePages.filter((page) => page.path !== '/')
+  const { pathname } = useLocation()
+  const explorePages = listedPages.filter((page) => page.path !== '/')
+
+  if (pathname.startsWith('/admin')) {
+    return <Outlet />
+  }
 
   return (
     <div className="layout">

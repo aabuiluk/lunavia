@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './PlaceholderPage.css'
 import './ToursPage.css'
 
