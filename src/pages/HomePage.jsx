@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useApi } from '../api/client'
 import './HomePage.css'
 
 export const pageMeta = {
@@ -8,30 +9,49 @@ export const pageMeta = {
   summary: 'Start here — Lunavia’s welcome page and travel promise.',
 }
 
-const HERO =
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80'
-
 export default function HomePage() {
+  const { data, error, loading } = useApi('/api/home')
+
+  if (loading || error || !data) {
+    return (
+      <section className="home-hero">
+        <div className="container home-hero__content">
+          <p className="home-hero__brand rise">Lunavia</p>
+          <h1 className="rise rise-delay-1">
+            {error ? 'Could not load home' : 'Loading…'}
+          </h1>
+          {error ? (
+            <p className="rise rise-delay-2">Start the API with npm run dev:api.</p>
+          ) : null}
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="home-hero">
-      <img className="home-hero__media" src={HERO} alt="Mountain lake at dusk" />
+      <img className="home-hero__media" src={data.image} alt={data.imageAlt} />
       <div className="home-hero__veil" />
       <div className="container home-hero__content">
-        <p className="home-hero__brand rise">Lunavia</p>
+        <p className="home-hero__brand rise">{data.brand}</p>
         <h1 className="rise rise-delay-1">
-          Your route to <span>anywhere</span> in the world
+          {data.title} <span>{data.titleHighlight}</span> {data.titleSuffix}
         </h1>
-        <p className="rise rise-delay-2">
-          A small travel agency for clear itineraries, trusted partners, and
-          trips that feel like living — not logistics.
-        </p>
+        <p className="rise rise-delay-2">{data.lead}</p>
         <div className="home-hero__actions rise rise-delay-2">
-          <Link className="btn btn--light" to="/about">
-            About us
-          </Link>
-          <Link className="btn btn--ghost home-hero__ghost" to="/tours">
-            See tours
-          </Link>
+          {data.actions.map((action) => (
+            <Link
+              key={action.href}
+              className={
+                action.variant === 'ghost'
+                  ? 'btn btn--ghost home-hero__ghost'
+                  : 'btn btn--light'
+              }
+              to={action.href}
+            >
+              {action.label}
+            </Link>
+          ))}
         </div>
       </div>
     </section>

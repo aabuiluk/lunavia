@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Upload the Vite build + Flask SPA server to PythonAnywhere and reload."""
+"""Upload the Vite build + backend + WSGI server to PythonAnywhere and reload."""
 from __future__ import annotations
 
 import os
@@ -12,6 +12,8 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 SERVER = Path(__file__).resolve().parent / "server.py"
+BACKEND = ROOT / "backend"
+REQUIREMENTS = ROOT / "requirements.txt"
 
 USERNAME = os.environ.get("PYTHONANYWHERE_USERNAME", "cscai")
 TOKEN = os.environ.get("PYTHONANYWHERE_API_TOKEN", "")
@@ -61,6 +63,16 @@ def main() -> None:
     uploads: list[tuple[Path, str]] = [
         (SERVER, f"{REMOTE_ROOT}/server.py"),
     ]
+    if REQUIREMENTS.is_file():
+        uploads.append((REQUIREMENTS, f"{REMOTE_ROOT}/requirements.txt"))
+    if BACKEND.is_dir():
+        for path in sorted(BACKEND.rglob("*")):
+            if not path.is_file():
+                continue
+            if "__pycache__" in path.parts or path.suffix == ".pyc":
+                continue
+            rel = path.relative_to(BACKEND).as_posix()
+            uploads.append((path, f"{REMOTE_ROOT}/backend/{rel}"))
     for path in sorted(DIST.rglob("*")):
         if path.is_file():
             rel = path.relative_to(DIST).as_posix()

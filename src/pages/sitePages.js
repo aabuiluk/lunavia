@@ -17,7 +17,14 @@ const modules = import.meta.glob('./*Page.jsx', { eager: true })
 
 function toPage(mod) {
   if (!mod?.pageMeta || !mod.default) return null
-  const { path, title, order = 100, summary = '', nav = true } = mod.pageMeta
+  const {
+    path,
+    title,
+    order = 100,
+    summary = '',
+    nav = true,
+    listed = true,
+  } = mod.pageMeta
   if (!path || !title) return null
   return {
     path,
@@ -25,6 +32,7 @@ function toPage(mod) {
     order,
     summary,
     nav,
+    listed,
     Component: mod.default,
   }
 }
@@ -37,7 +45,10 @@ export const sitePages = Object.values(modules)
 /** Pages shown in the main header */
 export const navPages = sitePages.filter((page) => page.nav !== false)
 
+/** Pages shown in menus and the footer (hides admin). */
+export const listedPages = sitePages.filter((page) => page.listed !== false)
+
 /** Sibling pages for menus (excludes the current path) */
 export function getSiblingPages(currentPath) {
-  return sitePages.filter((page) => page.path !== currentPath)
+  return listedPages.filter((page) => page.path !== currentPath)
 }
