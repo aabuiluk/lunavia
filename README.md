@@ -24,6 +24,7 @@ Vite proxies `/api` (and `/docs`) to FastAPI on port 8000.
 | `/tours` | Tours (placeholder for students) |
 | `/about` | About — content from `GET /api/about` |
 | `/template` | Frontend + API page template |
+| `/admin` | Admin panel (`admin` / `admin`) |
 | `/docs` | FastAPI OpenAPI (with the API running) |
 
 About URL in production: `site.com/about`.
@@ -63,6 +64,12 @@ Shared styles: `.container`, `.section`, `.btn`, `.eyebrow` in `src/index.css`.
 Discovery logic lives in `src/pages/sitePages.js` and `backend/registry.py`.
 
 About is the full backend example (page payload, section GETs, team CRUD). Other existing pages have API skeletons under `/api/home`, `/api/tours`, and `/api/register`.
+
+## Admin
+
+Open `/admin` and sign in with `admin` / `admin`. The panel can edit every page JSON file in `backend/data/` (Home, Tours, Register, About, Template). Saves write through `PUT /api/admin/pages/{slug}` and persist to disk.
+
+Writes (replace About, team CRUD) require the admin token. Public `GET` routes stay open.
 
 ## Scripts
 

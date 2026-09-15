@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useApi } from '../api/client'
 import './PlaceholderPage.css'
 
 export const pageMeta = {
@@ -9,18 +10,29 @@ export const pageMeta = {
 }
 
 export default function ToursPage() {
+  const { data, error, loading } = useApi('/api/tours')
+
   return (
     <section className="placeholder section">
       <div className="container placeholder__box">
-        <span className="eyebrow">Coming soon</span>
-        <h1>Tours & packages</h1>
-        <p>
-          This route is reserved for the tour catalog. Students can extend it or
-          build their own pages under <code>/students/…</code>.
-        </p>
-        <Link className="btn" to="/about">
-          Read about Lunavia
-        </Link>
+        {loading ? <span className="eyebrow">Loading…</span> : null}
+        {error ? (
+          <>
+            <span className="eyebrow">API error</span>
+            <h1>Could not load tours</h1>
+            <p>Start the FastAPI app with <code>npm run dev:api</code>.</p>
+          </>
+        ) : null}
+        {data ? (
+          <>
+            <span className="eyebrow">{data.eyebrow}</span>
+            <h1>{data.title}</h1>
+            <p>{data.lead}</p>
+            <Link className="btn" to={data.cta.href}>
+              {data.cta.label}
+            </Link>
+          </>
+        ) : null}
       </div>
     </section>
   )

@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from backend.admin import router as admin_router
 from backend.registry import discover_pages
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -44,6 +45,8 @@ def health() -> dict:
 def list_pages() -> list[dict]:
     return [page.as_dict() for page in pages]
 
+
+app.include_router(admin_router)
 
 for page in pages:
     app.include_router(page.router, prefix=page.api, tags=[page.title])

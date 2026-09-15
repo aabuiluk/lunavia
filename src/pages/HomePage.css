@@ -5,6 +5,7 @@
   align-items: end;
   overflow: hidden;
   color: var(--color-white);
+  background: #102222;
 }
 
 .home-hero__media {

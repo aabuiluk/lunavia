@@ -11,3 +11,5 @@ They are discovered by `backend/registry.py` and appear in:
 Start from `template.py` + `backend/data/template.json` + `src/pages/TemplatePage.jsx`.
 
 About (`about.py`) is the full example: page payload, section GETs, and team CRUD.
+
+Edit content in the `/admin` UI (`admin` / `admin`) or at `/docs`.
