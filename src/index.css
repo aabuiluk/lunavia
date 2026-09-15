@@ -15,7 +15,7 @@
   --max: 1120px;
   color: var(--color-ink);
   background: var(--color-white);
-  font-family: var(--font-body);
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -50,7 +50,6 @@ a {
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.1;
   margin: 0;
