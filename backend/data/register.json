@@ -1,0 +1,10 @@
+{
+  "tag": "CREATE ACCOUNT",
+  "title": "Let’s get you moving.",
+  "lead": "Create your Lunavia account to save routes and travel with more ease.",
+  "fields": [
+    { "name": "name", "label": "YOUR NAME", "type": "text", "placeholder": "Jonny Dodep" },
+    { "name": "email", "label": "EMAIL ADDRESS", "type": "email", "placeholder": "you@example.com" },
+    { "name": "password", "label": "PASSWORD", "type": "password", "placeholder": "••••••••" }
+  ]
+}
