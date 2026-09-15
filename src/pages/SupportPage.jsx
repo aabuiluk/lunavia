@@ -2,7 +2,8 @@ import './SupportPage.css'
 import heroImage from '../assets/support/support_img_one.png'
 import { useState } from 'react'
 import phoneIcon from '../assets/support/phone.png'
-import chatIcon from '../assets/support/massage.png'
+import chatIcon from '../assets/support/message.png'
+import mailIcon from '../assets/support/mail.png'
 
 export const pageMeta = {
     path: '/support',
@@ -11,6 +12,8 @@ export const pageMeta = {
 
 export default function SupportPage() {
     const [openFaq, setOpenFaq] = useState(0)
+    const [searchInput, setSearchInput] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
 
     const faqs = [
         {
@@ -44,6 +47,17 @@ export default function SupportPage() {
                 'Coverage depends on your insurance provider and the specific policy attached to your booking.',
         },
     ]
+    const filteredFaqs = faqs.filter((faq) => {
+        const query = searchQuery.toLowerCase().trim()
+
+        if (!query) return true
+
+        return (
+            faq.question.toLowerCase().includes(query) ||
+            faq.answer.toLowerCase().includes(query)
+        )
+    })
+
     return (
         <main className="support-page">
             <section className="support-hero">
@@ -73,12 +87,15 @@ export default function SupportPage() {
                         <input
                             className="support-search__input"
                             type="text"
-                            placeholder="Search for booking ID, destination, policies..."
+                            placeholder="Search FAQ..."
+                            value={searchInput}
+                            onChange={(event) => setSearchInput(event.target.value)}
                         />
 
                         <button
                             className="support-search__button"
                             type="button"
+                            onClick={() => setSearchQuery(searchInput)}
                         >
                             Search
                         </button>
@@ -117,7 +134,7 @@ export default function SupportPage() {
 
                         <article className="support-card">
                             <div className="support-card__icon">
-                                ✉
+                               <img src={mailIcon} alt="" />
                             </div>
 
                             <h3>Email Support</h3>
@@ -144,9 +161,13 @@ export default function SupportPage() {
                                 or flight connection on the go.
                             </p>
 
-                            <a href="#">
+                            <button
+                                className="support-card__link"
+                                type="button"
+                                onClick={() => alert('Live Chat coming soon')}
+                            >
                                 Open Live Chat →
-                            </a>
+                            </button>
                         </article>
 
                     </div>
@@ -164,7 +185,7 @@ export default function SupportPage() {
                     </h2>
 
                     <div className="support-faq__list">
-                        {faqs.map((faq, index) => {
+                        {filteredFaqs.map((faq, index) => {
                             const isOpen = openFaq === index
 
                             return (
@@ -177,6 +198,8 @@ export default function SupportPage() {
                                         className="support-faq__question"
                                         type="button"
                                         onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                                        aria-expanded={isOpen}
+                                        aria-controls={`faq-answer-${index}`}
                                     >
                                         <span>{faq.question}</span>
 
@@ -186,7 +209,10 @@ export default function SupportPage() {
                                     </button>
 
                                     {isOpen && (
-                                        <p className="support-faq__answer">
+                                        <p
+                                            id={`faq-answer-${index}`}
+                                            className="support-faq__answer"
+                                        >
                                             {faq.answer}
                                         </p>
                                     )}
