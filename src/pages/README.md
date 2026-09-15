@@ -10,6 +10,7 @@ They are discovered by `sitePages.js` and appear in:
 
 `NotFoundPage.jsx` has no `pageMeta` on purpose — it stays a catch-all only.
 
+<<<<<<< HEAD
 ## Page template (frontend + API)
 
 Copy these together:
@@ -23,3 +24,6 @@ Keep the same slug in `pageMeta.path`, `page_meta.slug`, the JSON filename, and 
 About is the full example: `AboutPage.jsx` reads `GET /api/about`. Team CRUD lives under `/api/about/team`.
 
 Content for every API page can be edited at `/admin` (`admin` / `admin`).
+=======
+12345
+>>>>>>> origin/csc-38
