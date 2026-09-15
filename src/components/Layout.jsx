@@ -33,9 +33,14 @@ export default function Layout() {
               </NavLink>
             ))}
           </nav>
-
+        </div>
+        <div className="sign_up_and_plan">
+          <NavLink to="/login" className="to_sign_up">
+            SIGN UP
+          </NavLink>
+          <p className="site-header__currency"> UA / EN | € EUR</p>
           <NavLink to="/about" className="btn site-header__cta">
-            Plan a trip
+            Choose a destination
           </NavLink>
         </div>
       </header>
@@ -46,33 +51,23 @@ export default function Layout() {
 
       <footer className="site-footer">
         <div className="container site-footer__inner">
-          <div>
-            <p className="logo logo--footer">
-              <span className="logo__mark" aria-hidden="true" />
-              Lunavia
-            </p>
-            <p className="site-footer__tag">
-              Routes crafted for people who want less logistics and more living.
-            </p>
+          <p className="logo logo--footer">
+            <span className="logo__mark" aria-hidden="true" />
+            Lunavia
+          </p>
+
+          <p className="site-footer__tagline">Your route to everywhere. © {new Date().getFullYear()}</p>
+
+          <div className="site-footer__links">
+            {explorePages.slice(0, 3).map((page) => (
+              <NavLink key={page.path} to={page.path} className="social-links">
+                {page.title}
+              </NavLink>
+            ))}
+            <a href="mailto:hello@lunavia.ua" className="social-links">
+              hello@lunavia.ua
+            </a>
           </div>
-          <div className="site-footer__cols">
-            <div>
-              <h3>Explore</h3>
-              {explorePages.map((page) => (
-                <NavLink key={page.path} to={page.path}>
-                  {page.title}
-                </NavLink>
-              ))}
-            </div>
-            <div>
-              <h3>Contact</h3>
-              <a href="mailto:hello@lunavia.travel">hello@lunavia.travel</a>
-              <span>+380 00 000 00 00</span>
-            </div>
-          </div>
-        </div>
-        <div className="container site-footer__copy">
-          © {new Date().getFullYear()} Lunavia Travel Agency
         </div>
       </footer>
     </div>
