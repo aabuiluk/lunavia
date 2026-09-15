@@ -5,7 +5,6 @@ import {
   getAdminToken,
   setAdminToken,
 } from '../api/client'
-import { sitePages } from './sitePages'
 import './AdminPage.css'
 
 export const pageMeta = {
@@ -463,7 +462,16 @@ function PageEditor({ slug, draft, setDraft, tab, setTab }) {
   )
 }
 
-const MENU_CATALOG = sitePages.filter((page) => page.path !== '/admin')
+const MENU_CATALOG = [
+  { path: '/', title: 'Home' },
+  { path: '/tours', title: 'Tours' },
+  { path: '/hotels', title: 'Hotels' },
+  { path: '/about', title: 'About' },
+  { path: '/support', title: 'Support' },
+  { path: '/register', title: 'Register' },
+  { path: '/login', title: 'Login' },
+  { path: '/template', title: 'Page template' },
+]
 
 function MenuEditor({ draft, setDraft }) {
   const items = [...(draft.items || [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
