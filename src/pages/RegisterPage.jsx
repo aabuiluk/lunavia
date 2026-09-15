@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
-import './Register.css';
+import { useState } from 'react'
+import { apiSend, useApi } from '../api/client'
+import './Register.css'
 
 export const pageMeta = {
   path: '/register',
   title: 'Register',
   order: 2,
   summary: 'Create your Lunavia account.',
-};
+}
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
-  const [showPassword, setShowPassword] = useState(false);
+  const { data, error, loading } = useApi('/api/register')
+  const [form, setForm] = useState({})
+  const [showPassword, setShowPassword] = useState(false)
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Отправленные данные:', form);
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setMessage('')
+    try {
+      await apiSend('/api/register', { method: 'POST', body: form })
+      setMessage('Account request sent.')
+    } catch (err) {
+      setMessage(err.message)
+    }
+  }
 
   return (
     <div className="split-layout">
@@ -27,11 +36,11 @@ export default function RegisterPage() {
           </div>
           <div className="hero-text">
             <span className="small-top-label">YOUR ROUTE TO EVERYWHERE</span>
-            <h1>A little less planning. <span className="highlight-text">A lot more going.</span></h1>
+            <h1>
+              A little less planning. <span className="highlight-text">A lot more going.</span>
+            </h1>
           </div>
-          <div className="footer-credits">
-            Lunavia · Ukraine to anywhere
-          </div>
+          <div className="footer-credits">Lunavia · Ukraine to anywhere</div>
         </div>
       </div>
 
@@ -40,62 +49,63 @@ export default function RegisterPage() {
         <div className="bg-circle-bottom"></div>
         <div className="form-wrapper">
           <div className="form-header">
-            <span className="create-account-tag">CREATE ACCOUNT</span>
-            <h2>Let’s get you moving.</h2>
-            <p>Create your Lunavia account to save routes and travel with more ease.</p>
+            <span className="create-account-tag">
+              {loading ? 'LOADING' : data?.tag || 'CREATE ACCOUNT'}
+            </span>
+            <h2>{error ? 'Could not load register copy' : data?.title || 'Let’s get you moving.'}</h2>
+            <p>
+              {error
+                ? 'Start the API with npm run dev:api.'
+                : data?.lead ||
+                  'Create your Lunavia account to save routes and travel with more ease.'}
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="reg-form">
-            <div className="input-group">
-              <label htmlFor="name">YOUR NAME</label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Jonny Dodep"
-                value={form.name}
-                onChange={e => setForm({...form, name: e.target.value})}
-                required
-              />
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="email">EMAIL ADDRESS</label>
-              <input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={form.email}
-                onChange={e => setForm({...form, email: e.target.value})}
-                required
-              />
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="password">PASSWORD</label>
-              <div className="password-wrapper">
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={form.password}
-                  onChange={e => setForm({...form, password: e.target.value})}
-                  required
-                />
-                <button
-                  type="button"
-                  className="toggle-password"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label="Toggle password visibility"
-                >
-                  👁
-                </button>
+            {(data?.fields || []).map((field) => (
+              <div className="input-group" key={field.name}>
+                <label htmlFor={field.name}>{field.label}</label>
+                {field.type === 'password' ? (
+                  <div className="password-wrapper">
+                    <input
+                      id={field.name}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder={field.placeholder}
+                      value={form[field.name] || ''}
+                      onChange={(e) =>
+                        setForm({ ...form, [field.name]: e.target.value })
+                      }
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="toggle-password"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label="Toggle password visibility"
+                    >
+                      👁
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    id={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={form[field.name] || ''}
+                    onChange={(e) =>
+                      setForm({ ...form, [field.name]: e.target.value })
+                    }
+                    required
+                  />
+                )}
               </div>
-            </div>
+            ))}
 
             <button type="submit" className="btn-primary">
               Create account →
             </button>
           </form>
+          {message ? <p className="login-footer">{message}</p> : null}
 
           <div className="divider">
             <span>OR CONTINUE WITH</span>
@@ -117,7 +127,5 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
-
-

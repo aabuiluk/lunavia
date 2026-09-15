@@ -1,8 +1,9 @@
 """About page API — full read model plus team CRUD."""
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from backend import store
+from backend.auth import require_admin
 from backend.schemas.about import (
     AboutCta,
     AboutHero,
@@ -51,7 +52,7 @@ def get_about() -> AboutPage:
 
 
 @router.put("", response_model=AboutPage)
-def replace_about(body: AboutPage) -> AboutPage:
+def replace_about(body: AboutPage, _: str = Depends(require_admin)) -> AboutPage:
     return _save(body.model_dump(by_alias=True))
 
 
@@ -91,7 +92,7 @@ def get_team_member(member_id: int) -> TeamMember:
 
 
 @router.post("/team", response_model=TeamMember, status_code=status.HTTP_201_CREATED)
-def add_team_member(body: TeamMemberIn) -> TeamMember:
+def add_team_member(body: TeamMemberIn, _: str = Depends(require_admin)) -> TeamMember:
     data = _page()
     next_id = max((item["id"] for item in data["team"]), default=0) + 1
     member = {"id": next_id, **body.model_dump(by_alias=True)}
@@ -101,7 +102,9 @@ def add_team_member(body: TeamMemberIn) -> TeamMember:
 
 
 @router.put("/team/{member_id}", response_model=TeamMember)
-def update_team_member(member_id: int, body: TeamMemberIn) -> TeamMember:
+def update_team_member(
+    member_id: int, body: TeamMemberIn, _: str = Depends(require_admin)
+) -> TeamMember:
     data = _page()
     for index, item in enumerate(data["team"]):
         if item["id"] == member_id:
@@ -113,7 +116,7 @@ def update_team_member(member_id: int, body: TeamMemberIn) -> TeamMember:
 
 
 @router.delete("/team/{member_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_team_member(member_id: int) -> None:
+def delete_team_member(member_id: int, _: str = Depends(require_admin)) -> None:
     data = _page()
     kept = [item for item in data["team"] if item["id"] != member_id]
     if len(kept) == len(data["team"]):

@@ -6,18 +6,65 @@
  */
 import { useEffect, useState } from 'react'
 
+const ADMIN_TOKEN_KEY = 'lunavia.adminToken'
+
 export function apiUrl(path) {
   const base = import.meta.env.VITE_API_BASE ?? ''
   const prefix = path.startsWith('/') ? path : `/${path}`
   return `${base}${prefix}`
 }
 
+export function getAdminToken() {
+  return localStorage.getItem(ADMIN_TOKEN_KEY)
+}
+
+export function setAdminToken(token) {
+  if (token) localStorage.setItem(ADMIN_TOKEN_KEY, token)
+  else localStorage.removeItem(ADMIN_TOKEN_KEY)
+}
+
 export async function apiGet(path, signal) {
-  const response = await fetch(apiUrl(path), { signal })
+  return apiSend(path, { signal })
+}
+
+export async function apiSend(
+  path,
+  { method = 'GET', body, token, signal } = {},
+) {
+  const headers = { Accept: 'application/json' }
+  if (body !== undefined) headers['Content-Type'] = 'application/json'
+  const auth = token ?? getAdminToken()
+  if (auth) headers.Authorization = `Bearer ${auth}`
+
+  const response = await fetch(apiUrl(path), {
+    method,
+    headers,
+    body: body === undefined ? undefined : JSON.stringify(body),
+    signal,
+  })
+
+  if (response.status === 204) return null
   if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`)
+    let detail = `${response.status} ${response.statusText}`
+    try {
+      const payload = await response.json()
+      if (payload?.detail) {
+        detail =
+          typeof payload.detail === 'string'
+            ? payload.detail
+            : JSON.stringify(payload.detail)
+      }
+    } catch {
+      /* keep status text */
+    }
+    const error = new Error(detail)
+    error.status = response.status
+    throw error
   }
-  return response.json()
+
+  const contentType = response.headers.get('content-type') || ''
+  if (contentType.includes('application/json')) return response.json()
+  return null
 }
 
 export function useApi(path) {

@@ -21,3 +21,5 @@ Copy these together:
 Keep the same slug in `pageMeta.path`, `page_meta.slug`, the JSON filename, and `useApi('/api/yourpage')`.
 
 About is the full example: `AboutPage.jsx` reads `GET /api/about`. Team CRUD lives under `/api/about/team`.
+
+Content for every API page can be edited at `/admin` (`admin` / `admin`).

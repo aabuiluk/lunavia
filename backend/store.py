@@ -29,4 +29,9 @@ def dump(slug: str) -> dict:
 
 def save(slug: str, data: dict) -> dict:
     _cache[slug] = copy.deepcopy(data)
+    path = _path(slug)
+    path.write_text(
+        json.dumps(_cache[slug], ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     return dump(slug)
