@@ -2,8 +2,7 @@ import { useState } from 'react'
 import './PlanCta.css'
 import BGImage from '../images/_ 1.png'
 
-const BG =
-  'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1800&q=80'
+
 
 export function PlanCta() {
   const [values, setValues] = useState({
