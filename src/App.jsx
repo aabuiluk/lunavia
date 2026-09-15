@@ -3,22 +3,26 @@ import Layout from './components/Layout'
 import NotFoundPage from './pages/NotFoundPage'
 import { sitePages } from './pages/sitePages'
 
-// Pages listed here render full-screen, without the site header/footer.
-const STANDALONE_PATHS = ['/login']
+// Full-screen pages without the public header/footer.
+const STANDALONE_PATHS = ['/login', '/admin']
 
 /**
  * Routes are built from `pageMeta` exports in `src/pages/*Page.jsx`.
  * Add a new page file there — it appears here automatically.
  */
 export default function App() {
-  const layoutPages = sitePages.filter((p) => !STANDALONE_PATHS.includes(p.path))
-  const standalonePages = sitePages.filter((p) => STANDALONE_PATHS.includes(p.path))
+  const layoutPages = sitePages.filter((page) => !STANDALONE_PATHS.includes(page.path))
+  const standalonePages = sitePages.filter((page) => STANDALONE_PATHS.includes(page.path))
 
   return (
     <BrowserRouter>
       <Routes>
         {standalonePages.map(({ path, Component }) => (
-          <Route key={path} path={path.replace(/^\//, '')} element={<Component />} />
+          <Route
+            key={path}
+            path={path.replace(/^\//, '')}
+            element={<Component />}
+          />
         ))}
 
         <Route element={<Layout />}>
