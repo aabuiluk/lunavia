@@ -6,6 +6,7 @@ export const pageMeta = {
   path: '/register',
   title: 'Register',
   order: 2,
+  nav: false,
   summary: 'Create your Lunavia account.',
 }
 

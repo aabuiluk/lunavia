@@ -1,38 +1,38 @@
-"""Demo admin auth. Default credentials: admin / admin."""
+"""FastAPI wrappers around stdlib admin sessions. Default: admin / admin."""
 from __future__ import annotations
-
-import os
-import secrets
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-ADMIN_USER = os.getenv("LUNAVIA_ADMIN_USER", "admin")
-ADMIN_PASSWORD = os.getenv("LUNAVIA_ADMIN_PASSWORD", "admin")
+from backend.sessions import AuthError
+from backend.sessions import login as session_login
+from backend.sessions import logout as session_logout
+from backend.sessions import username_for
 
 _bearer = HTTPBearer(auto_error=False)
-_sessions: dict[str, str] = {}
 
 
 def login(username: str, password: str) -> str:
-    if username != ADMIN_USER or password != ADMIN_PASSWORD:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
-    token = secrets.token_urlsafe(32)
-    _sessions[token] = username
-    return token
+    try:
+        return session_login(username, password)
+    except AuthError as exc:
+        raise HTTPException(exc.status_code, exc.message) from exc
 
 
 def logout(token: str) -> None:
-    _sessions.pop(token, None)
+    session_logout(token)
 
 
 def require_token(
     creds: HTTPAuthorizationCredentials | None = Depends(_bearer),
 ) -> str:
-    if creds is None or creds.credentials not in _sessions:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Admin login required")
-    return creds.credentials
+    token = creds.credentials if creds else None
+    try:
+        username_for(token)
+    except AuthError as exc:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, exc.message) from exc
+    return token or ""
 
 
 def require_admin(token: str = Depends(require_token)) -> str:
-    return _sessions[token]
+    return username_for(token)

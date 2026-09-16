@@ -10,6 +10,7 @@ from backend.auth import login, logout, require_admin, require_token
 from backend.registry import discover_pages
 from backend.schemas import Schema
 from backend.schemas.about import AboutPage
+from backend.schemas.menu import MenuConfig
 from backend.schemas.pages import HomePage, RegisterPage, ToursPage
 from backend.schemas.template import TemplatePage
 
@@ -58,6 +59,18 @@ def admin_me(username: str = Depends(require_admin)) -> MeOut:
 @router.get("/pages")
 def admin_pages(_: str = Depends(require_admin)) -> list[dict]:
     return [page.as_dict() for page in discover_pages()]
+
+
+@router.get("/menu", response_model=MenuConfig)
+def admin_menu(_: str = Depends(require_admin)) -> dict:
+    return store.dump("menu")
+
+
+@router.put("/menu", response_model=MenuConfig)
+def save_menu(body: dict[str, Any], _: str = Depends(require_admin)) -> dict:
+    parsed = MenuConfig.model_validate(body)
+    saved = store.save("menu", parsed.model_dump(by_alias=True))
+    return MenuConfig.model_validate(saved).model_dump(by_alias=True)
 
 
 @router.put("/pages/{slug}")

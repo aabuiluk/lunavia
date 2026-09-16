@@ -13,7 +13,7 @@ export const pageMeta = {
   order: 999,
   nav: false,
   listed: false,
-  summary: 'Edit site page content from the FastAPI store.',
+  summary: 'Edit the public menu and page content.',
 }
 
 function Field({ label, value, onChange, type = 'text', multiline = false }) {
@@ -462,17 +462,165 @@ function PageEditor({ slug, draft, setDraft, tab, setTab }) {
   )
 }
 
+const MENU_CATALOG = [
+  { path: '/', title: 'Home' },
+  { path: '/tours', title: 'Tours' },
+  { path: '/hotels', title: 'Hotels' },
+  { path: '/about', title: 'About' },
+  { path: '/support', title: 'Support' },
+  { path: '/register', title: 'Register' },
+  { path: '/login', title: 'Login' },
+  { path: '/template', title: 'Page template' },
+]
+
+function MenuEditor({ draft, setDraft }) {
+  const items = [...(draft.items || [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  const cta = draft.cta || { label: '', href: '/' }
+  const signUp = draft.signUp || { label: '', href: '/register' }
+
+  function setItems(next) {
+    setDraft(
+      patch(
+        draft,
+        'items',
+        next.map((item, index) => ({ ...item, order: index + 1 })),
+      ),
+    )
+  }
+
+  function connected(path) {
+    return items.find((item) => item.href === path)
+  }
+
+  function togglePage(page) {
+    const existing = connected(page.path)
+    if (existing) {
+      setItems(
+        items.map((item) =>
+          item.href === page.path ? { ...item, enabled: !item.enabled } : item,
+        ),
+      )
+      return
+    }
+    setItems([
+      ...items,
+      {
+        id: page.path.replace(/^\//, '') || 'home',
+        label: page.title,
+        href: page.path,
+        enabled: true,
+        order: items.length + 1,
+      },
+    ])
+  }
+
+  function move(index, delta) {
+    const next = [...items]
+    const target = index + delta
+    if (target < 0 || target >= next.length) return
+    const [row] = next.splice(index, 1)
+    next.splice(target, 0, row)
+    setItems(next)
+  }
+
+  return (
+    <>
+      <p className="admin-help">
+        Connect site pages to the public header and footer. Disabled items stay in the
+        catalog but are hidden from the menu.
+      </p>
+      <div className="admin-connect">
+        {MENU_CATALOG.map((page) => {
+          const item = connected(page.path)
+          const on = Boolean(item?.enabled)
+          return (
+            <button
+              key={page.path}
+              type="button"
+              className={on ? 'admin-connect__item is-on' : 'admin-connect__item'}
+              onClick={() => togglePage(page)}
+            >
+              <strong>{page.title}</strong>
+              <span>{page.path}</span>
+              <em>{on ? 'In menu' : 'Connect'}</em>
+            </button>
+          )
+        })}
+      </div>
+
+      <ListBlock
+        title="Menu items"
+        items={items}
+        onChange={setItems}
+        blank={{ id: `custom-${Date.now()}`, label: '', href: '/', enabled: true, order: items.length + 1 }}
+        addLabel="Add custom link"
+      >
+        {(item, index, update) => (
+          <>
+            <Field label="Label" value={item.label} onChange={(v) => update(patch(item, 'label', v))} />
+            <Field label="Href" value={item.href} onChange={(v) => update(patch(item, 'href', v))} />
+            <label className="admin-check">
+              <input
+                type="checkbox"
+                checked={item.enabled !== false}
+                onChange={(e) => update(patch(item, 'enabled', e.target.checked))}
+              />
+              Show in header
+            </label>
+            <div className="admin-reorder">
+              <button type="button" onClick={() => move(index, -1)}>
+                Up
+              </button>
+              <button type="button" onClick={() => move(index, 1)}>
+                Down
+              </button>
+            </div>
+          </>
+        )}
+      </ListBlock>
+
+      <Field
+        label="Header CTA label"
+        value={cta.label}
+        onChange={(v) => setDraft(patch(draft, 'cta', patch(cta, 'label', v)))}
+      />
+      <Field
+        label="Header CTA href"
+        value={cta.href}
+        onChange={(v) => setDraft(patch(draft, 'cta', patch(cta, 'href', v)))}
+      />
+      <Field
+        label="Sign up label"
+        value={signUp.label}
+        onChange={(v) => setDraft(patch(draft, 'signUp', patch(signUp, 'label', v)))}
+      />
+      <Field
+        label="Sign up href"
+        value={signUp.href}
+        onChange={(v) => setDraft(patch(draft, 'signUp', patch(signUp, 'href', v)))}
+      />
+      <Field
+        label="Currency line"
+        value={draft.currency}
+        onChange={(v) => setDraft(patch(draft, 'currency', v))}
+      />
+    </>
+  )
+}
+
 export default function AdminPage() {
   const [session, setSession] = useState(null)
   const [authError, setAuthError] = useState('')
   const [username, setUsername] = useState('admin')
   const [password, setPassword] = useState('admin')
   const [pages, setPages] = useState([])
+  const [section, setSection] = useState('menu')
   const [slug, setSlug] = useState('about')
   const [draft, setDraft] = useState(null)
   const [tab, setTab] = useState('Hero')
   const [status, setStatus] = useState('')
   const [busy, setBusy] = useState(false)
+  const menuMode = section === 'menu'
 
   const current = useMemo(
     () => pages.find((page) => page.slug === slug),
@@ -495,24 +643,27 @@ export default function AdminPage() {
     apiSend('/api/admin/pages')
       .then((list) => {
         setPages(list)
-        setSlug((current) =>
-          list.some((page) => page.slug === current) ? current : list[0]?.slug || current,
+        setSlug((currentSlug) =>
+          list.some((page) => page.slug === currentSlug) ? currentSlug : list[0]?.slug || currentSlug,
         )
       })
       .catch((err) => setStatus(err.message))
   }, [session])
 
   useEffect(() => {
-    if (!session || !slug) return
+    if (!session) return
     const controller = new AbortController()
-    apiSend(`/api/${slug}`, { signal: controller.signal })
+    const path = menuMode ? '/api/admin/menu' : `/api/${slug}`
+    if (!menuMode && !slug) return undefined
+    setDraft(null)
+    apiSend(path, { signal: controller.signal })
       .then(setDraft)
       .catch((err) => {
         if (err.name === 'AbortError') return
         setStatus(err.message)
       })
     return () => controller.abort()
-  }, [session, slug])
+  }, [session, slug, menuMode])
 
   async function handleLogin(event) {
     event.preventDefault()
@@ -547,12 +698,16 @@ export default function AdminPage() {
     setBusy(true)
     setStatus('')
     try {
-      const saved = await apiSend(`/api/admin/pages/${slug}`, {
+      const saved = await apiSend(menuMode ? '/api/admin/menu' : `/api/admin/pages/${slug}`, {
         method: 'PUT',
         body: draft,
       })
       setDraft(saved)
-      setStatus('Saved. Open the public page to see the change.')
+      setStatus(
+        menuMode
+          ? 'Menu saved. Refresh the public site to see the header change.'
+          : 'Saved. Open the public page to see the change.',
+      )
     } catch (err) {
       setStatus(err.message)
     } finally {
@@ -566,7 +721,7 @@ export default function AdminPage() {
         <form className="admin-login__card" onSubmit={handleLogin}>
           <p className="eyebrow">Lunavia</p>
           <h1>Admin</h1>
-          <p>Sign in to edit page content stored in FastAPI.</p>
+          <p>Sign in to edit the menu and page content.</p>
           <Field label="Username" value={username} onChange={setUsername} />
           <Field
             label="Password"
@@ -591,15 +746,28 @@ export default function AdminPage() {
           <h1>Admin</h1>
           <p className="admin-side__user">{session.username}</p>
         </div>
-        <nav aria-label="Pages">
+        <nav aria-label="Admin sections">
+          <button
+            type="button"
+            className={menuMode ? 'is-active' : ''}
+            onClick={() => {
+              setSection('menu')
+              setStatus('')
+            }}
+          >
+            <strong>Navigation</strong>
+            <span>/api/menu</span>
+          </button>
           {pages.map((page) => (
             <button
               key={page.slug}
               type="button"
-              className={page.slug === slug ? 'is-active' : ''}
+              className={!menuMode && page.slug === slug ? 'is-active' : ''}
               onClick={() => {
+                setSection('page')
                 setSlug(page.slug)
                 setTab('Hero')
+                setStatus('')
               }}
             >
               <strong>{page.title}</strong>
@@ -615,10 +783,14 @@ export default function AdminPage() {
       <section className="admin-main">
         <header className="admin-main__head">
           <div>
-            <span className="eyebrow">{current?.api || `/api/${slug}`}</span>
-            <h2>{current?.title || slug}</h2>
+            <span className="eyebrow">{menuMode ? '/api/menu' : current?.api || `/api/${slug}`}</span>
+            <h2>{menuMode ? 'Site menu' : current?.title || slug}</h2>
           </div>
-          {current?.path ? (
+          {menuMode ? (
+            <Link className="btn btn--ghost" to="/">
+              View site
+            </Link>
+          ) : current?.path ? (
             <Link className="btn btn--ghost" to={current.path}>
               View page
             </Link>
@@ -627,13 +799,17 @@ export default function AdminPage() {
 
         {draft ? (
           <form className="admin-form" onSubmit={handleSave}>
-            <PageEditor
-              slug={slug}
-              draft={draft}
-              setDraft={setDraft}
-              tab={tab}
-              setTab={setTab}
-            />
+            {menuMode ? (
+              <MenuEditor draft={draft} setDraft={setDraft} />
+            ) : (
+              <PageEditor
+                slug={slug}
+                draft={draft}
+                setDraft={setDraft}
+                tab={tab}
+                setTab={setTab}
+              />
+            )}
             {status ? <p className="admin-status">{status}</p> : null}
             <button className="btn" type="submit" disabled={busy}>
               {busy ? 'Saving…' : 'Save changes'}

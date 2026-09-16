@@ -1,7 +1,7 @@
 """WSGI entry for PythonAnywhere.
 
 Prefers FastAPI (ASGI) wrapped with a2wsgi. If those packages are missing,
-falls back to Flask: SPA + GET /api/<slug> from backend/data JSON files.
+falls back to Flask: SPA + page JSON APIs + admin login/save.
 """
 from __future__ import annotations
 
@@ -30,12 +30,47 @@ if not DIST.is_dir():
     DIST = HERE / "dist"
 
 DATA = ROOT / "backend" / "data"
+SKIP_PAGE_SLUGS = {"menu"}
 
 
 def flask_application():
-    from flask import Flask, abort, send_from_directory
+    from flask import Flask, abort, request, send_from_directory
+
+    from backend import store
+    from backend.sessions import AuthError, login, logout, username_for
 
     app = Flask(__name__, static_folder=None)
+
+    def bearer() -> str | None:
+        header = request.headers.get("Authorization", "")
+        if header.startswith("Bearer "):
+            return header[7:].strip() or None
+        return None
+
+    def admin_user():
+        try:
+            return username_for(bearer()), None
+        except AuthError as exc:
+            return None, ({"detail": exc.message}, exc.status_code)
+
+    def page_list() -> list[dict]:
+        if not DATA.is_dir():
+            return []
+        pages = []
+        for file in sorted(DATA.glob("*.json")):
+            if file.stem in SKIP_PAGE_SLUGS:
+                continue
+            pages.append(
+                {
+                    "slug": file.stem,
+                    "title": file.stem.replace("-", " ").title(),
+                    "path": "/" if file.stem == "home" else f"/{file.stem}",
+                    "api": f"/api/{file.stem}",
+                    "order": 100,
+                    "summary": "",
+                }
+            )
+        return pages
 
     @app.get("/api/health")
     def health():
@@ -43,23 +78,95 @@ def flask_application():
 
     @app.get("/api/pages")
     def api_pages():
-        if not DATA.is_dir():
-            return []
-        pages = []
-        for file in sorted(DATA.glob("*.json")):
-            pages.append({"slug": file.stem, "api": f"/api/{file.stem}"})
-        return pages
+        return page_list()
+
+    @app.get("/api/menu")
+    def api_menu():
+        try:
+            return store.dump("menu")
+        except FileNotFoundError:
+            abort(404)
+
+    @app.post("/api/admin/login")
+    def admin_login():
+        body = request.get_json(silent=True) or {}
+        try:
+            token = login(str(body.get("username") or ""), str(body.get("password") or ""))
+        except AuthError as exc:
+            return {"detail": exc.message}, exc.status_code
+        return {"token": token, "username": body.get("username")}
+
+    @app.post("/api/admin/logout")
+    def admin_logout():
+        _user, err = admin_user()
+        if err:
+            return err
+        token = bearer()
+        if token:
+            logout(token)
+        return ("", 204)
+
+    @app.get("/api/admin/me")
+    def admin_me():
+        user, err = admin_user()
+        if err:
+            return err
+        return {"username": user}
+
+    @app.get("/api/admin/pages")
+    def admin_pages():
+        _user, err = admin_user()
+        if err:
+            return err
+        return page_list()
+
+    @app.get("/api/admin/menu")
+    def admin_get_menu():
+        _user, err = admin_user()
+        if err:
+            return err
+        try:
+            return store.dump("menu")
+        except FileNotFoundError:
+            abort(404)
+
+    @app.put("/api/admin/menu")
+    def admin_save_menu():
+        _user, err = admin_user()
+        if err:
+            return err
+        body = request.get_json(silent=True)
+        if not isinstance(body, dict):
+            return {"detail": "JSON object required"}, 400
+        try:
+            store.dump("menu")
+        except FileNotFoundError:
+            return {"detail": "Unknown page 'menu'"}, 404
+        return store.save("menu", body)
+
+    @app.put("/api/admin/pages/<slug>")
+    def admin_save(slug: str):
+        _user, err = admin_user()
+        if err:
+            return err
+        body = request.get_json(silent=True)
+        if not isinstance(body, dict):
+            return {"detail": "JSON object required"}, 400
+        try:
+            store.dump(slug)
+        except FileNotFoundError:
+            return {"detail": f"Unknown page '{slug}'"}, 404
+        return store.save(slug, body)
 
     @app.get("/api/<slug>")
     def api_slug(slug: str):
-        target = DATA / f"{slug}.json"
-        if not target.is_file():
+        try:
+            return store.dump(slug)
+        except FileNotFoundError:
             abort(404)
-        payload = json.loads(target.read_text(encoding="utf-8"))
-        return payload
 
-    @app.route("/", defaults={"path": ""})
-    @app.route("/<path:path>")
+    @app.route("/", defaults={"path": ""}, methods=["GET", "HEAD"])
+    @app.route("/<path:path>", methods=["GET", "HEAD"])
     def spa(path: str):
         target = os.path.join(DIST, path)
         if path and os.path.isfile(target):

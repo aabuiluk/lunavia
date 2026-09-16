@@ -9,8 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from backend import store
 from backend.admin import router as admin_router
 from backend.registry import discover_pages
+from backend.schemas.menu import MenuConfig
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
@@ -44,6 +46,11 @@ def health() -> dict:
 @app.get("/api/pages")
 def list_pages() -> list[dict]:
     return [page.as_dict() for page in pages]
+
+
+@app.get("/api/menu")
+def public_menu() -> dict:
+    return MenuConfig.model_validate(store.dump("menu")).model_dump(by_alias=True)
 
 
 app.include_router(admin_router)
