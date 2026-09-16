@@ -8,6 +8,8 @@ import mailIcon from '../assets/support/mail.png'
 export const pageMeta = {
     path: '/support',
     title: 'Support',
+    order: 5,
+    summary: 'Help with bookings, routes, and travel questions.',
 }
 
 export default function SupportPage() {

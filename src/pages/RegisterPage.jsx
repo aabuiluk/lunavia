@@ -1,17 +1,30 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { apiSend, useApi } from '../api/client'
 import './Register.css'
 
 export const pageMeta = {
   path: '/register',
   title: 'Register',
-  order: 2,
+  order: 7,
   nav: false,
   summary: 'Create your Lunavia account.',
 }
 
+const FALLBACK = {
+  tag: 'CREATE ACCOUNT',
+  title: 'Let’s get you moving.',
+  lead: 'Create your Lunavia account to save routes and travel with more ease.',
+  fields: [
+    { name: 'name', label: 'YOUR NAME', type: 'text', placeholder: 'Alina Pupsic' },
+    { name: 'email', label: 'EMAIL ADDRESS', type: 'email', placeholder: 'you@example.com' },
+    { name: 'password', label: 'PASSWORD', type: 'password', placeholder: '••••••••' },
+  ],
+}
+
 export default function RegisterPage() {
-  const { data, error, loading } = useApi('/api/register')
+  const { data } = useApi('/api/register')
+  const copy = data || FALLBACK
   const [form, setForm] = useState({})
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
@@ -50,20 +63,13 @@ export default function RegisterPage() {
         <div className="bg-circle-bottom"></div>
         <div className="form-wrapper">
           <div className="form-header">
-            <span className="create-account-tag">
-              {loading ? 'LOADING' : data?.tag || 'CREATE ACCOUNT'}
-            </span>
-            <h2>{error ? 'Could not load register copy' : data?.title || 'Let’s get you moving.'}</h2>
-            <p>
-              {error
-                ? 'Start the API with npm run dev:api.'
-                : data?.lead ||
-                  'Create your Lunavia account to save routes and travel with more ease.'}
-            </p>
+            <span className="create-account-tag">{copy.tag}</span>
+            <h2>{copy.title}</h2>
+            <p>{copy.lead}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="reg-form">
-            {(data?.fields || []).map((field) => (
+            {(copy.fields || []).map((field) => (
               <div className="input-group" key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
                 {field.type === 'password' ? (
@@ -123,7 +129,7 @@ export default function RegisterPage() {
           </button>
 
           <p className="login-footer">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </div>
       </div>

@@ -4,7 +4,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import { sitePages } from './pages/sitePages'
 
 // Full-screen pages without the public header/footer.
-const STANDALONE_PATHS = ['/login', '/admin']
+const STANDALONE_PATHS = ['/login', '/register', '/admin']
 
 /**
  * Routes are built from `pageMeta` exports in `src/pages/*Page.jsx`.

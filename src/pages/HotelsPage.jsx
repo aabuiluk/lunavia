@@ -4,8 +4,7 @@ import './Hotels.css'
 export const pageMeta = {
   path: '/hotels',
   title: 'Hotels',
-  order: 4,
-  nav: false,
+  order: 3,
   summary: 'Stay options that pair with Lunavia routes.',
 }
 
