@@ -5,16 +5,26 @@
 
 /* MAIN CONTENT & CATEGORIES */
 .hotels-main-container {
+<<<<<<< HEAD
   max-width: 1550px;
   margin: 0 auto;
   padding: 80px 24px 60px 24px;
+=======
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 6.5rem 1.25rem 4rem;
+>>>>>>> 9e896cf03ff780fb191a4ad5c7a0961f31d90a26
 }
 
 .hotels-categories {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
+<<<<<<< HEAD
   margin-bottom: 40px;
+=======
+  margin-bottom: 32px;
+>>>>>>> 9e896cf03ff780fb191a4ad5c7a0961f31d90a26
   flex-wrap: wrap;
 }
 
@@ -39,8 +49,13 @@
 /* HOTEL CARDS GRID */
 .hotels-grid {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: repeat(3, 1fr);
   gap: 80px;
+=======
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+>>>>>>> 9e896cf03ff780fb191a4ad5c7a0961f31d90a26
 }
 
 .hotel-card {
@@ -52,8 +67,13 @@
   justify-content: space-between;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s, box-shadow 0.2s;
+<<<<<<< HEAD
   height: 700px;
   width: 450px;
+=======
+  height: auto;
+  width: 100%;
+>>>>>>> 9e896cf03ff780fb191a4ad5c7a0961f31d90a26
 }
 
 .hotel-card:hover {
@@ -63,7 +83,11 @@
 
 .hotel-image-wrapper {
   position: relative;
+<<<<<<< HEAD
   height: 532px;
+=======
+  height: 220px;
+>>>>>>> 9e896cf03ff780fb191a4ad5c7a0961f31d90a26
   overflow: hidden;
 }
 
@@ -240,6 +264,7 @@
   color: #ffffff;
 }
 
+<<<<<<< HEAD
 /* FOOTER */
 .tours-hero {
   position: relative;
@@ -354,3 +379,20 @@
     display: none;
   }
 }
+=======
+.hotels-empty {
+  margin-top: 1rem;
+  color: #666;
+}
+
+@media (max-width: 640px) {
+  .hotels-main-container {
+    padding: 5.25rem 1rem 3rem;
+  }
+
+  .hotel-image-wrapper {
+    height: 190px;
+  }
+}
+
+>>>>>>> 9e896cf03ff780fb191a4ad5c7a0961f31d90a26
