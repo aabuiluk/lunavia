@@ -11,13 +11,12 @@
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  padding-top: 5.25rem;
 }
 
 
 .left-side {
   flex: 1;
-  background: url('./components/bungalow.jpg') center/cover no-repeat;
+  background: url('../components/bungalow.jpg') center/cover no-repeat;
   position: relative;
   color: white;
 }
