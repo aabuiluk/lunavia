@@ -1,5 +1,7 @@
 import React from 'react';
 import './Hotels.css';
+import { Link } from 'react-router-dom'
+import './PlaceholderPage.css'
 
 const hotelsData = [
   {
@@ -152,6 +154,41 @@ export default function HotelsPage() {
   return (
     <div>
       {/* HEADER */}
+      <section className="tours-hero">
+        <img className="tours-hero__media" src={TOURS_HERO} alt="Ocean from above" />
+        <div className="tours-hero__veil" />
+        <div className="container tours-hero__content">
+          <p className="tours-hero__eyebrow rise">FIND YOUR NEXT ADVENTURE</p>
+          <h1 className="rise rise-delay-1">
+            All our tours <br /><span>&</span> Packages
+          </h1>
+        </div>
+      </section>
+      <div className="container search-wrapper rise rise-delay-2">
+        <div className="search-panel">
+          <div className="search-item">
+            <span className="search-label">START?</span>
+            <span className="search-value">Ukraine</span>
+            <span className="search-sub">Flights + trains + hotels — compared for you.</span>
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-item">
+            <span className="search-label">WHERE?</span>
+            <span className="search-value">Anywhere</span>
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-item">
+            <span className="search-label">DATES</span>
+            <span className="search-value">Choose dates</span>
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-item">
+            <span className="search-label">TRAVELERS</span>
+            <span className="search-value">2</span>
+          </div>
+          <button className="btn search-btn">Find route &rarr;</button>
+        </div>
+      </div>
       <header className="hotels-header">
 
       </header>
