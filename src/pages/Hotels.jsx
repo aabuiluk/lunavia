@@ -1,24 +1,13 @@
-import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Hotels.css'
+import './Hotels.css';
 
 export const pageMeta = {
   path: '/hotels',
   title: 'Hotels',
   order: 3,
-
-  summary: 'Explore all our luxury hotels and resorts.',
-  summary: 'Stay options that pair with Lunavia routes.',
+  summary: 'Explore all our tours and packages.',
 }
 
-const FILTERS = [
-  { id: 'all', label: 'All' },
-  { id: 'resorts', label: 'Resorts', match: ['RESORT', 'ALL INCL'] },
-  { id: 'apartments', label: 'Apartments', match: ['FLATS', 'CITY'] },
-  { id: 'villas', label: 'Villas', match: ['VILLAS'] },
-  { id: 'spa', label: 'Spa & Wellness', amenity: 'Spa' },
-  { id: 'inclusive', label: 'All inclusive', match: ['ALL INCL'] },
-]
 
 const hotelsData = [
   {
@@ -165,93 +154,72 @@ const hotelsData = [
     category: 'VILLAS',
     image: '/Hotels12.png',
   },
-]
+];
 
 export default function HotelsPage() {
-  const [filter, setFilter] = useState('all')
-  const active = FILTERS.find((item) => item.id === filter) || FILTERS[0]
-
-  const hotels = useMemo(
-    () =>
-      hotelsData.filter((hotel) => {
-        if (active.id === 'all') return true
-        if (active.match && active.match.includes(hotel.category)) return true
-        if (active.amenity && hotel.amenities.includes(active.amenity)) return true
-        return false
-      }),
-    [active],
-  )
-
   return (
     <div>
-      {/* HEADER / HERO */}
+      {/* HEADER */}
       <header className="hotels-header">
-        <section className="tours-hero">
-          <img className="tours-hero__media" src="/HeaderHotels.png" alt="Header Hotels" />
-          <div className="tours-hero__veil" />
-          <div className="container tours-hero__content">
-            <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
-            <h1 className="rise rise-delay-1">
-              All our hotels <br /><span>&</span> resorts
-            </h1>
-          </div>
-        </section>
-
-        {/* SEARCH PANEL */}
-        <div className="container search-wrapper rise rise-delay-2">
-          <div className="search-panel">
-            <div className="search-item">
-              <span className="search-label">START?</span>
-              <span className="search-value">Ukraine</span>
-              <span className="search-sub">Flights + trains + hotels — compared for you.</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">WHERE?</span>
-              <span className="search-value">Anywhere</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">DATES</span>
-              <span className="search-value">Choose dates</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">TRAVELERS</span>
-              <span className="search-value">2</span>
-            </div>
-            <button type="button" className="btn search-btn">Find route &rarr;</button>
-          </div>
+      <section className="tours-hero">
+        <img className="tours-hero__media" src="/HeaderHotels.png"/>
+        <div className="tours-hero__veil" />
+        <div className="container tours-hero__content">
+          <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
+          <h1 className="rise rise-delay-1">
+            All our tours <br /><span>&</span> resorts
+          </h1>
         </div>
+      </section>
+      <div className="container search-wrapper rise rise-delay-2">
+        <div className="search-panel">
+          <div className="search-item">
+            <span className="search-label">START?</span>
+            <span className="search-value">Ukraine</span>
+            <span className="search-sub">Flights + trains + hotels — compared for you.</span>
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-item">
+            <span className="search-label">WHERE?</span>
+            <span className="search-value">Anywhere</span>
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-item">
+            <span className="search-label">DATES</span>
+            <span className="search-value">Choose dates</span>
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-item">
+            <span className="search-label">TRAVELERS</span>
+            <span className="search-value">2</span>
+          </div>
+          <button className="btn search-btn">Find route &rarr;</button>
+        </div>
+      </div>
       </header>
+
 
       {/* MAIN CONTAINER */}
       <main className="hotels-main-container">
-        {/* CATEGORY TABS WITH WORKING FILTERING */}
-        <div className="hotels-categories" role="tablist" aria-label="Hotel types">
-          {FILTERS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={filter === item.id}
-              className={filter === item.id ? 'hotels-tab-btn active' : 'hotels-tab-btn'}
-              onClick={() => setFilter(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
+        {/* CATEGORY TABS */}
+        <div className="hotels-categories">
+          <button className="hotels-tab-btn active">All</button>
+          <button className="hotels-tab-btn">Resorts</button>
+          <button className="hotels-tab-btn">Apartments</button>
+          <button className="hotels-tab-btn">Villas</button>
+          <button className="hotels-tab-btn">Spa & Wellness</button>
+          <button className="hotels-tab-btn">All inclusive</button>
         </div>
 
         {/* HOTELS GRID */}
         <div className="hotels-grid">
-          {hotels.map((hotel) => (
-            <article key={hotel.id} className="hotel-card">
+          {hotelsData.map((hotel) => (
+            <div key={hotel.id} className="hotel-card">
               <div className="hotel-image-wrapper">
                 <img src={hotel.image} alt={hotel.title} />
                 <span className="hotel-badge-category">{hotel.category}</span>
-                <button type="button" className="hotel-like-btn" aria-label={`Save ${hotel.title}`}>
-                  <img src="/Favorite.png" alt="Like" className="hotel-like-icon" />
+                <button className="hotel-like-btn">
+                  <img src="./Favorite.png" alt="Like" className="hotel-like-icon" />
                 </button>
               </div>
 
@@ -263,48 +231,41 @@ export default function HotelsPage() {
                   ★ {hotel.rating} <span>({hotel.reviewsCount} reviews)</span>
                 </div>
 
-                <div className="hotel-divider" />
+                <div className="hotel-divider"></div>
 
                 <p className="hotel-description">{hotel.amenities}</p>
 
                 <div className="hotel-card-footer">
                   <div className="hotel-price-block">
-                    {hotel.oldPrice ? (
+                    {hotel.oldPrice && (
                       <span className="hotel-old-price">€{hotel.oldPrice}/night</span>
-                    ) : null}
+                    )}
                     <div className="hotel-price">
-                      €{hotel.price}
-                      <span className="hotel-night-label">/night</span>
+                      €{hotel.price}<span className="hotel-night-label">/night</span>
                     </div>
                   </div>
-                  <button type="button" className="hotel-btn-arrow" aria-label={`View ${hotel.title}`}>
-                    &rarr;
-                  </button>
+                  <button className="hotel-btn-arrow">&rarr;</button>
                 </div>
               </div>
-            </article>
+            </div>
           ))}
         </div>
 
-        {hotels.length === 0 ? (
-          <p className="hotels-empty" style={{ textAlign: 'center', margin: '40px 0' }}>
-            No stays in this category yet.
-          </p>
-        ) : null}
-
         {/* PAGINATION */}
         <div className="hotels-pagination">
-          <button type="button" className="hotels-page-btn arrow">&lt;</button>
-          <button type="button" className="hotels-page-btn active">1</button>
-          <button type="button" className="hotels-page-btn">2</button>
-          <button type="button" className="hotels-page-btn">3</button>
-          <button type="button" className="hotels-page-btn">4</button>
-          <button type="button" className="hotels-page-btn arrow">&gt;</button>
+          <button className="hotels-page-btn arrow">&lt;</button>
+          <button className="hotels-page-btn active">1</button>
+          <button className="hotels-page-btn">2</button>
+          <button className="hotels-page-btn">3</button>
+          <button className="hotels-page-btn">4</button>
+          <button className="hotels-page-btn arrow">&gt;</button>
         </div>
       </main>
 
       {/* FOOTER */}
-      <footer className="hotels-footer"></footer>
+      <footer className="hotels-footer">
+
+      </footer>
     </div>
-  )
+  );
 }
