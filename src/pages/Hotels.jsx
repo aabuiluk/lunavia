@@ -1,7 +1,13 @@
-import React from 'react';
-import './Hotels.css';
 import { Link } from 'react-router-dom'
-import './PlaceholderPage.css'
+import './Hotels.css';
+
+export const pageMeta = {
+  path: '/hotels',
+  title: 'Hotels',
+  order: 3,
+  summary: 'Explore all our tours and packages.',
+}
+
 
 const hotelsData = [
   {
@@ -14,7 +20,7 @@ const hotelsData = [
     oldPrice: '350',
     price: '289',
     category: 'VILLAS',
-    image: 'Hotels1.png',
+    image: '/Hotels1.png',
   },
   {
     id: 2,
@@ -26,7 +32,7 @@ const hotelsData = [
     oldPrice: '220',
     price: '189',
     category: 'RESORT',
-    image: 'Hotels2.png',
+    image: '/Hotels2.png',
   },
   {
     id: 3,
@@ -38,7 +44,7 @@ const hotelsData = [
     oldPrice: '400',
     price: '315',
     category: 'VILLAS',
-    image: 'Hotels3.png',
+    image: '/Hotels3.png',
   },
   {
     id: 4,
@@ -50,7 +56,7 @@ const hotelsData = [
     oldPrice: '600',
     price: '489',
     category: 'CITY',
-    image: 'Hotels4.png',
+    image: '/Hotels4.png',
   },
   {
     id: 5,
@@ -62,7 +68,7 @@ const hotelsData = [
     oldPrice: '289',
     price: '219',
     category: 'ALL INCL',
-    image: 'Hotels5.png',
+    image: '/Hotels5.png',
   },
   {
     id: 6,
@@ -74,7 +80,7 @@ const hotelsData = [
     oldPrice: '3100',
     price: '2289',
     category: 'ICONIC',
-    image: 'Hotels6.png',
+    image: '/Hotels6.png',
   },
   {
     id: 7,
@@ -86,7 +92,7 @@ const hotelsData = [
     oldPrice: '2300',
     price: '1679',
     category: '5 STARS',
-    image: 'Hotels7.png',
+    image: '/Hotels7.png',
   },
   {
     id: 8,
@@ -98,7 +104,7 @@ const hotelsData = [
     oldPrice: '2500',
     price: '2099',
     category: 'CHALET',
-    image: 'Hotels8.png',
+    image: '/Hotels8.png',
   },
   {
     id: 9,
@@ -110,7 +116,7 @@ const hotelsData = [
     oldPrice: '1550',
     price: '1289',
     category: 'CHALET',
-    image: 'Hotels9.png',
+    image: '/Hotels9.png',
   },
   {
     id: 10,
@@ -122,7 +128,7 @@ const hotelsData = [
     oldPrice: '450',
     price: '389',
     category: 'FLATS',
-    image: 'Hotels10.png',
+    image: '/Hotels10.png',
   },
   {
     id: 11,
@@ -134,7 +140,7 @@ const hotelsData = [
     oldPrice: '2290',
     price: '1889',
     category: 'VILLAS',
-    image: 'Hotels11.png',
+    image: '/Hotels11.png',
   },
   {
     id: 12,
@@ -146,7 +152,7 @@ const hotelsData = [
     oldPrice: '2399',
     price: '1649',
     category: 'VILLAS',
-    image: 'Hotels12.png',
+    image: '/Hotels12.png',
   },
 ];
 
@@ -154,13 +160,14 @@ export default function HotelsPage() {
   return (
     <div>
       {/* HEADER */}
+      <header className="hotels-header">
       <section className="tours-hero">
-        <img className="tours-hero__media" src={TOURS_HERO} alt="Ocean from above" />
+        <img className="tours-hero__media" src="/HeaderHotels.png"/>
         <div className="tours-hero__veil" />
         <div className="container tours-hero__content">
-          <p className="tours-hero__eyebrow rise">FIND YOUR NEXT ADVENTURE</p>
+          <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
           <h1 className="rise rise-delay-1">
-            All our tours <br /><span>&</span> Packages
+            All our tours <br /><span>&</span> resorts
           </h1>
         </div>
       </section>
@@ -189,8 +196,6 @@ export default function HotelsPage() {
           <button className="btn search-btn">Find route &rarr;</button>
         </div>
       </div>
-      <header className="hotels-header">
-
       </header>
 
 
@@ -264,5 +269,3 @@ export default function HotelsPage() {
     </div>
   );
 }
-
-
