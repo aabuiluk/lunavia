@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import './Register.css';
 
-export default function Register() {
+export const pageMeta = {
+  path: '/register',
+  title: 'Register',
+  order: 2,
+  summary: 'Create your Lunavia account.',
+};
+
+export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -12,8 +19,8 @@ export default function Register() {
 
   return (
     <div className="split-layout">
-      {/* Левая колонка с картинкой и текстом */}
       <div className="left-side">
+        <div className="left-overlay"></div>
         <div className="overlay-content">
           <div className="brand">
             <span className="brand-dot"></span> Lunavia
@@ -28,8 +35,9 @@ export default function Register() {
         </div>
       </div>
 
-      {/* Правая колонка с формой регистрации */}
       <div className="right-side">
+        <div className="bg-circle-top"></div>
+        <div className="bg-circle-bottom"></div>
         <div className="form-wrapper">
           <div className="form-header">
             <span className="create-account-tag">CREATE ACCOUNT</span>
@@ -39,10 +47,11 @@ export default function Register() {
 
           <form onSubmit={handleSubmit} className="reg-form">
             <div className="input-group">
-              <label>YOUR NAME</label>
+              <label htmlFor="name">YOUR NAME</label>
               <input
+                id="name"
                 type="text"
-                placeholder="Alina Pupsic"
+                placeholder="Jonny Dodep"
                 value={form.name}
                 onChange={e => setForm({...form, name: e.target.value})}
                 required
@@ -50,8 +59,9 @@ export default function Register() {
             </div>
 
             <div className="input-group">
-              <label>EMAIL ADDRESS</label>
+              <label htmlFor="email">EMAIL ADDRESS</label>
               <input
+                id="email"
                 type="email"
                 placeholder="you@example.com"
                 value={form.email}
@@ -61,9 +71,10 @@ export default function Register() {
             </div>
 
             <div className="input-group">
-              <label>PASSWORD</label>
+              <label htmlFor="password">PASSWORD</label>
               <div className="password-wrapper">
                 <input
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={form.password}
@@ -74,6 +85,7 @@ export default function Register() {
                   type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label="Toggle password visibility"
                 >
                   👁
                 </button>
@@ -89,7 +101,7 @@ export default function Register() {
             <span>OR CONTINUE WITH</span>
           </div>
 
-          <button className="btn-google">
+          <button className="btn-google" type="button">
             <svg width="16" height="16" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -107,3 +119,5 @@ export default function Register() {
     </div>
   );
 }
+
+

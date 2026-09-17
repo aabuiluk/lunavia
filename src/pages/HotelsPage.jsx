@@ -6,7 +6,9 @@ export const pageMeta = {
   path: '/hotels',
   title: 'Hotels',
   order: 3,
+
   summary: 'Explore all our luxury hotels and resorts.',
+  summary: 'Stay options that pair with Lunavia routes.',
 }
 
 const FILTERS = [

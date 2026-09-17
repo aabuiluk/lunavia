@@ -6,8 +6,8 @@ import BGImageForLogin from '../images/back_for-login.png'
 export const pageMeta = {
   path: '/login',
   title: 'Login',
+  order: 6,
   summary: 'Log in to your Lunavia account.',
-  nav: true,
 }
 
 
@@ -93,13 +93,13 @@ export default function LoginPage() {
             </div>
           </label>
 
-          <Link to="/restore" className="login__forgot">
+          <Link to="/register" className="login__forgot">
             Forgot password? <span>Restore it</span>
           </Link>
 
-          <Link to="/" type="submit" className="btn login__submit">
+          <button type="submit" className="btn login__submit">
             Log in <span>→</span>
-          </Link>
+          </button>
 
           <div className="login__divider">
             <span>OR CONTINUE WITH</span>
@@ -110,7 +110,7 @@ export default function LoginPage() {
           </button>
 
           <p className="login__signup">
-            New to Lunavia? <Link to="/signUp">Create one</Link>
+            New to Lunavia? <Link to="/register">Create one</Link>
           </p>
         </form>
       </div>

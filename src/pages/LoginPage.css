@@ -71,7 +71,7 @@
 
 .login__media-content h1 {
   font-family: var(--font-body, 'Manrope', sans-serif);
-  font-size: clamp(5rem, 3.6vw, 2.9rem);
+  font-size: clamp(2.4rem, 4vw, 4.2rem);
   font-weight: 900;
   line-height: 1.15;
   color: #17231d;
