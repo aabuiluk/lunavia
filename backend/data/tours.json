@@ -1,6 +1,123 @@
 {
   "eyebrow": "Coming soon",
   "title": "Tours & packages",
-  "lead": "This route is reserved for the tour catalog. Wire this payload to the Tours page when you start the student build-out.",
-  "cta": { "label": "Read about Lunavia", "href": "/about" }
+  "lead": "Explore our available tours and packages.",
+  "cta": {
+    "label": "Read about Lunavia",
+    "href": "/about"
+  },
+  "tours": [
+    {
+      "id": 1,
+      "title": "GREEK ISLAND",
+      "category": "BEACH",
+      "meta": "4 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Greek island",
+      "price": "549",
+      "discount": "-€86",
+      "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=800"
+    },
+    {
+      "id": 2,
+      "title": "BARCELONA",
+      "category": "CITY",
+      "meta": "5 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Barcelona",
+      "price": "679",
+      "discount": "-€65",
+      "image": "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=800"
+    },
+    {
+      "id": 3,
+      "title": "ANTALYA",
+      "category": "FAMILY",
+      "meta": "7 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Antalya",
+      "price": "889",
+      "discount": "-€50",
+      "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=800"
+    },
+    {
+      "id": 4,
+      "title": "PARIS",
+      "category": "CITY",
+      "meta": "2 nights • 4★ hotel",
+      "route": "Ukraine → Warsaw → Paris",
+      "price": "559",
+      "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=800"
+    },
+    {
+      "id": 5,
+      "title": "ROME",
+      "category": "CITY",
+      "meta": "7 nights • 3★ hotel",
+      "route": "Ukraine → Chișinău → Rome",
+      "price": "629",
+      "image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=800"
+    },
+    {
+      "id": 6,
+      "title": "TOKYO",
+      "category": "FAMILY",
+      "meta": "6 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Istanbul → Tokyo",
+      "price": "2229",
+      "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=800"
+    },
+    {
+      "id": 7,
+      "title": "PHUKET",
+      "category": "BEACH",
+      "meta": "7 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Istanbul → Phuket",
+      "price": "899",
+      "image": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?q=80&w=800"
+    },
+    {
+      "id": 8,
+      "title": "BALI",
+      "category": "BEACH",
+      "meta": "5 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Istanbul → Bali",
+      "price": "1349",
+      "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800"
+    },
+    {
+      "id": 9,
+      "title": "BEIJING",
+      "category": "CITY",
+      "meta": "4 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Istanbul → Beijing",
+      "price": "1749",
+      "image": "https://res.klook.com/image/upload/fl_lossy.progressive,q_60/Mobile/City/mto5pdt9gm6p1hsiedhz.jpg"
+    },
+    {
+      "id": 10,
+      "title": "AMSTERDAM",
+      "category": "CITY",
+      "meta": "5 nights • 4★ hotel",
+      "route": "Ukraine → Warsaw → Amsterdam",
+      "price": "669",
+      "image": "https://startpeak.ru/wp-content/uploads/2018/09/DSCF6694.jpg"
+    },
+    {
+      "id": 11,
+      "title": "PRAGUE",
+      "category": "CITY",
+      "meta": "7 nights • 4★ hotel",
+      "route": "Ukraine → Prague",
+      "price": "539",
+      "discount": "-€69",
+      "image": "https://images.unsplash.com/photo-1519677100203-a0e668c92439?q=80&w=800"
+    },
+    {
+      "id": 12,
+      "title": "DUBAI",
+      "category": "CITY",
+      "meta": "4 nights • 4★ hotel",
+      "route": "Ukraine → Chișinău → Dubai",
+      "price": "849",
+      "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800"
+    }
+  ]
 }
