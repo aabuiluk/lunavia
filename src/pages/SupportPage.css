@@ -8,10 +8,6 @@
 }
 
 /* HERO */
-
-}
-
-/* HERO */
 .support-hero {
   position: relative;
   width: 100%;
@@ -46,23 +42,10 @@
 .support-hero__overlay {
   position: absolute;
   inset: 0;
-
-.support-hero__overlay {
-  position: absolute;
-  inset: 0;
   background: rgba(0, 0, 0, 0.3);
 }
 
 /* CONTENT */
-
-.support-hero__content {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  max-width: 700px;
-
-  text-align: center;
 
 .support-hero__content {
   position: relative;
@@ -111,14 +94,6 @@
 
 .support-hero__description {
   color: white;
-
-  font-size: 15px;
-  line-height: 1.5;
-
-  max-width: 500px;
-
-.support-hero__description {
-  color: white;
   font-size: 15px;
   line-height: 1.5;
   max-width: 500px;
@@ -126,16 +101,6 @@
 }
 
 /* SEARCH */
-
-.support-search {
-  display: flex;
-
-  width: 100%;
-  max-width: 550px;
-
-  margin: 0 auto;
-
-  padding: 7px;
 
 .support-search {
   display: flex;
@@ -319,11 +284,6 @@
   text-decoration: none;
 }
 
-  font-size: 13px;
-  line-height: 1.5;
-  color: #777;
-}
-
 .support-card__link {
   padding: 0;
   border: none;
@@ -468,7 +428,7 @@
   line-height: 1.6;
 }
 
-/* 
+/*
    TABLET
  */
 
@@ -556,9 +516,6 @@
   }
 
   /* CONTACT */
-
-    line-height: 1.6;
-  }
 
   .support-contact {
     padding: 40px 20px;
