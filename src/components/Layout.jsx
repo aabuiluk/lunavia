@@ -4,16 +4,23 @@ import { useApi } from '../api/client'
 import { navPages } from '../pages/sitePages'
 import './Layout.css'
 
-function fallbackItems() {
+function itemsFromPages() {
   return navPages
     .filter((page) => page.path !== '/')
     .map((page, index) => ({
-      id: page.path,
+      id: page.path.replace(/^\//, '') || 'home',
       label: page.title,
       href: page.path,
       enabled: true,
-      order: index + 1,
+      order: page.order ?? index + 1,
     }))
+}
+
+function mergeMenuItems(apiItems) {
+  const fromApi = (apiItems || []).filter((item) => item.enabled !== false)
+  const seen = new Set(fromApi.map((item) => item.href))
+  const extras = itemsFromPages().filter((item) => !seen.has(item.href))
+  return [...fromApi, ...extras].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
 }
 
 export default function Layout() {
@@ -21,10 +28,7 @@ export default function Layout() {
   const { data } = useApi('/api/menu')
   const [open, setOpen] = useState(false)
 
-  const items = (data?.items?.length ? data.items : fallbackItems())
-    .filter((item) => item.enabled !== false)
-    .slice()
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  const items = mergeMenuItems(data?.items)
 
   const cta = data?.cta || { label: 'Choose a destination', href: '/tours' }
   const signUp = data?.signUp || { label: 'Sign up', href: '/register' }
@@ -146,7 +150,7 @@ export default function Layout() {
           <p className="site-footer__tagline">Your route to everywhere. © {new Date().getFullYear()}</p>
 
           <div className="site-footer__links">
-            {items.slice(0, 4).map((item) => (
+            {items.map((item) => (
               <NavLink key={item.id || item.href} to={item.href} className="social-links">
                 {item.label}
               </NavLink>

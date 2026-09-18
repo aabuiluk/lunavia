@@ -36,6 +36,13 @@
       "href": "/support",
       "enabled": true,
       "order": 4
+    },
+    {
+      "id": "login",
+      "label": "Login",
+      "href": "/login",
+      "enabled": true,
+      "order": 5
     }
   ]
 }
