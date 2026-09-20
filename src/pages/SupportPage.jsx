@@ -1,165 +1,118 @@
-import React, { useState } from 'react';
-import heroImage from '../assets/support_img_one.png';
-import phoneIcon from '../assets/phone.png';
-import chatIcon from '../assets/massage.png';
-import mailIcon from '../assets/mail.png';
+import React, { useState, useEffect } from 'react';
 import './SupportPage.css';
 
 export const pageMeta = {
   path: '/support',
   title: 'Support',
-  order: 3,
-  summary: 'Get help, contact our team, and browse FAQs.',
+  order: 4,
+  summary: 'Support Center and FAQ',
 };
 
 export default function SupportPage() {
-  const [openFaq, setOpenFaq] = useState(0);
-  const [searchInput, setSearchInput] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const faqs = [
-    {
-      question: 'Is travel insurance included in my booking?',
-      answer: 'Coverage depends on your insurance provider and the specific policy attached to your booking.',
-    },
-    {
-      question: 'How can I change or cancel my travel route?',
-      answer: 'You can modify or cancel your tickets directly through your account dashboard or by contacting our 24/7 support team.',
-    },
-    {
-      question: 'What payment methods are supported?',
-      answer: 'We accept credit cards, bank transfers, and major payment systems including Google Pay and Apple Pay.',
-    },
-  ];
-
-  const filteredFaqs = faqs.filter((faq) => {
-    const query = searchQuery.toLowerCase().trim();
-    if (!query) return true;
-    return (
-      faq.question.toLowerCase().includes(query) ||
-      faq.answer.toLowerCase().includes(query)
-    );
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
   });
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [faqList, setFaqList] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/support/faq?q=${encodeURIComponent(searchQuery)}`)
+      .then(res => res.json())
+      .then(data => {
+        setFaqList(data.results);
+      })
+      .catch(err => console.error("Ошибка загрузки FAQ:", err));
+  }, [searchQuery]);
+
+  const handleTicketSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/support/ticket", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Не удалось отправить запрос");
+      }
+
+      alert("Success! " + data.message);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
+
   return (
-    <main className="support-page">
-      <section className="support-hero">
-        <img className="support-hero__background" src={heroImage} alt="Support background" />
-        <div className="support-hero__overlay" />
+    <div className="support-page container" style={{ padding: '40px 0' }}>
+      <h1 style={{ marginBottom: '24px' }}>Support Center</h1>
 
-        <div className="support-hero__content">
-          <span className="support-hero__label">WE ARE HERE TO HELP</span>
-          <h1 className="support-hero__title">How can we assist you?</h1>
-          <p className="support-hero__description">
-            Search our knowledge base or reach out to our team for help with your routes, bookings, and policies.
-          </p>
-
-          <div className="support-search">
-            <input
-              className="support-search__input"
-              type="text"
-              placeholder="Search FAQ, booking ID, destination..."
-              value={searchInput}
-              onChange={(event) => setSearchInput(event.target.value)}
-            />
-            <button
-              className="support-search__button"
-              type="button"
-              onClick={() => setSearchQuery(searchInput)}
-            >
-              Search
-            </button>
-          </div>
+      <div className="faq-search-section" style={{ marginBottom: '40px' }}>
+        <input
+          type="text"
+          placeholder="Search for answers..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="faq-search-input"
+          style={{ width: '100%', padding: '12px', marginBottom: '16px', borderRadius: '8px', border: '1px solid #ccc' }}
+        />
+        <div className="faq-list">
+          {faqList.map(faq => (
+            <div key={faq.id} className="faq-item" style={{ marginBottom: '16px', padding: '16px', background: '#f9f9f9', borderRadius: '8px' }}>
+              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>{faq.question}</h3>
+              <p style={{ color: '#555' }}>{faq.answer}</p>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
 
-
-      <section className="support-contact">
-        <div className="support-contact__container">
-          <p className="support-contact__label">GET IN TOUCH</p>
-          <h2 className="support-contact__title">Other ways to reach us</h2>
-
-          <div className="support-contact__grid">
-            <article className="support-card">
-              <div className="support-card__icon">
-                <img src={chatIcon} alt="Chat" />
-              </div>
-              <h3>Live Chat</h3>
-              <p>Chat with our support assistant instantly for quick answers on the go.</p>
-              <button
-                className="support-card__link"
-                type="button"
-                onClick={() => alert('Live Chat coming soon')}
-              >
-                Open Live Chat →
-              </button>
-            </article>
-
-            <article className="support-card">
-              <div className="support-card__icon">
-                <img src={phoneIcon} alt="Phone" />
-              </div>
-              <h3>Phone Support</h3>
-              <p>Call our hotline directly if you have an urgent issue with your flight or train.</p>
-              <a href="tel:+380000000000" className="support-card__link">
-                +380 (00) 000-00-00 →
-              </a>
-            </article>
-
-            <article className="support-card">
-              <div className="support-card__icon">
-                <img src={mailIcon} alt="Email" />
-              </div>
-              <h3>Email Support</h3>
-              <p>Send us a detailed message and we will get back to you within 24 hours.</p>
-              <a href="mailto:support@lunavia.com" className="support-card__link">
-                support@lunavia.com →
-              </a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ СЕКЦИЯ */}
-      <section className="support-faq">
-        <div className="support-faq__container">
-          <p className="support-faq__label">FAQ</p>
-          <h2 className="support-faq__title">Frequently Asked Questions</h2>
-
-          <div className="support-faq__list">
-            {filteredFaqs.map((faq, index) => {
-              const isOpen = openFaq === index;
-
-              return (
-                <div
-                  key={index}
-                  className={`support-faq__item ${isOpen ? 'support-faq__item--open' : ''}`}
-                >
-                  <button
-                    className="support-faq__question"
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                    aria-expanded={isOpen}
-                    aria-controls={`faq-answer-${index}`}
-                  >
-                    <span>{faq.question}</span>
-                    <span className="support-faq__button">{isOpen ? '−' : '+'}</span>
-                  </button>
-
-                  {isOpen && (
-                    <p
-                      id={`faq-answer-${index}`}
-                      className="support-faq__answer"
-                    >
-                      {faq.answer}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </main>
+      <form onSubmit={handleTicketSubmit} className="support-form" style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h2>Submit a Request</h2>
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={(e) => setFormData({...formData, name: e.target.value})}
+          required
+          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
+        />
+        <input
+          type="email"
+          placeholder="Your Email"
+          value={formData.email}
+          onChange={(e) => setFormData({...formData, email: e.target.value})}
+          required
+          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
+        />
+        <input
+          type="text"
+          placeholder="Subject"
+          value={formData.subject}
+          onChange={(e) => setFormData({...formData, subject: e.target.value})}
+          required
+          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
+        />
+        <textarea
+          placeholder="Describe your issue..."
+          value={formData.message}
+          onChange={(e) => setFormData({...formData, message: e.target.value})}
+          required
+          rows="5"
+          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
+        />
+        <button type="submit" style={{ padding: '12px 24px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+          Send Message
+        </button>
+      </form>
+    </div>
   );
 }
