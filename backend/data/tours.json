@@ -1,0 +1,6 @@
+{
+  "eyebrow": "Coming soon",
+  "title": "Tours & packages",
+  "lead": "This route is reserved for the tour catalog. Wire this payload to the Tours page when you start the student build-out.",
+  "cta": { "label": "Read about Lunavia", "href": "/about" }
+}

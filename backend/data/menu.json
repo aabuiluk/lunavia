@@ -1,0 +1,48 @@
+{
+  "cta": {
+    "label": "Choose a destination",
+    "href": "/tours"
+  },
+  "signUp": {
+    "label": "Sign up",
+    "href": "/register"
+  },
+  "currency": "UA / EN | € EUR",
+  "items": [
+    {
+      "id": "tours",
+      "label": "Tours",
+      "href": "/tours",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "id": "hotels",
+      "label": "Hotels",
+      "href": "/hotels",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "href": "/about",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "id": "support",
+      "label": "Support",
+      "href": "/support",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "id": "login",
+      "label": "Login",
+      "href": "/login",
+      "enabled": true,
+      "order": 5
+    }
+  ]
+}
