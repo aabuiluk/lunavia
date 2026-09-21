@@ -1,0 +1,489 @@
+.tickets-hero {
+  position: relative;
+
+  min-height: 680px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+.tickets-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.75) 18%,
+    rgba(255, 255, 255, 0.35) 35%,
+    rgba(255, 255, 255, 0) 55%
+  );
+
+  z-index: 1;
+}
+
+.tickets-hero__inner {
+  position: relative;
+  z-index: 2;
+
+  min-height: 680px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* LEFT */
+
+.tickets-hero__title h1 {
+  margin: 0;
+
+  font-family: 'Manrope', sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+}
+
+.tickets-hero__title p {
+  margin: 20px 0 0;
+
+  font-family: 'Manrope', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+
+
+/* SEARCH CARD */
+
+.tickets-search {
+  width: 460px;
+  flex-shrink: 0;
+
+  padding: 42px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  font-family: 'Manrope', sans-serif;
+}
+
+.tickets-search__field {
+  padding: 14px 0;
+
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tickets-search__field span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+
+  color: #777777;
+}
+
+.tickets-search__field strong {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.tickets-search__button {
+  width: 100%;
+
+  margin-top: 28px;
+  padding: 14px;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: #20c5ad;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.tickets-search__row {
+  display: flex;
+
+  gap: 48px;
+}
+
+.tickets-search__row .tickets-search__field {
+  flex: 1;
+}
+
+
+/* DESTINATIONS */
+
+.tickets-destinations {
+  padding: 44px 0 110px;
+
+  background: #ffffff;
+}
+
+.tickets-destinations__season {
+  margin: 0 0 14px;
+
+  color: #20c5ad;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.tickets-destinations__title {
+  margin: 0 0 48px;
+
+  width: max-content;
+
+  font-family: 'Manrope', sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -2.2px;
+}
+
+
+/* DESTINATION PHOTOS */
+
+.tickets-destinations__photos {
+  display: grid;
+
+  grid-template-columns: 1.55fr 1.55fr 0.75fr;
+
+  gap: 16px;
+
+  margin-bottom: 52px;
+}
+
+.tickets-photo {
+  position: relative;
+
+  height: 330px;
+
+  padding: 14px;
+
+  border-radius: 10px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+.tickets-photo::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0) 45%
+  );
+}
+
+.tickets-photo__tag {
+  position: relative;
+  z-index: 2;
+
+  display: inline-block;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #0b1212;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.tickets-photo__bottom {
+  position: absolute;
+  z-index: 2;
+
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tickets-photo__bottom strong {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* OFFER CARDS */
+
+.tickets-offers {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 48px;
+}
+
+.tickets-offer {
+  padding: 18px;
+
+  border: 1px solid #dce4e2;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.tickets-offer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 28px;
+
+  color: #9a9a9a;
+
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.tickets-offer__sale {
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  background: #42ded0;
+  color: #17231D;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.tickets-offer h3 {
+  margin: 0 0 6px;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tickets-offer p {
+  margin: 0 0 24px;
+
+  color: #8a8a8a;
+
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.tickets-offer__route {
+  padding: 14px 0;
+
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+
+  color: #555555;
+
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.tickets-offer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-top: 14px;
+}
+
+.tickets-offer__bottom strong {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tickets-offer__bottom button {
+  width: 38px;
+  height: 26px;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: #20c5ad;
+  color: #ffffff;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  /* CONTAINER */
+
+  .tickets-hero .container,
+  .tickets-destinations .container {
+    width: calc(100% - 32px);
+  }
+
+
+  /* HERO */
+
+  .tickets-hero {
+    min-height: auto;
+
+    background-position: center;
+  }
+
+  .tickets-hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.55) 30%,
+      rgba(255, 255, 255, 0.1) 55%,
+      rgba(255, 255, 255, 0) 70%
+    );
+  }
+
+  .tickets-hero__inner {
+    min-height: auto;
+
+    padding-top: 100px;
+    padding-bottom: 40px;
+
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    gap: 32px;
+  }
+
+
+  /* HERO TITLE */
+
+  .tickets-hero__title h1 {
+    font-size: 48px;
+    line-height: 0.95;
+    letter-spacing: -2px;
+  }
+
+  .tickets-hero__title p {
+    margin-top: 12px;
+
+    font-size: 25px;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+
+  /* SEARCH */
+
+  .tickets-search {
+    width: 100%;
+
+    padding: 24px;
+
+    border-radius: 14px;
+  }
+
+  .tickets-search__field {
+    padding: 12px 0;
+  }
+
+  .tickets-search__field span {
+    font-size: 8px;
+  }
+
+  .tickets-search__field strong {
+    font-size: 13px;
+  }
+
+  .tickets-search__row {
+    gap: 24px;
+  }
+
+  .tickets-search__button {
+    margin-top: 22px;
+    padding: 13px;
+  }
+
+
+  /* DESTINATIONS */
+
+  .tickets-destinations {
+    padding: 36px 0 70px;
+  }
+
+  .tickets-destinations__season {
+    margin-bottom: 10px;
+
+    font-size: 8px;
+  }
+
+  .tickets-destinations__title {
+    margin-bottom: 30px;
+
+    font-size: 34px;
+    line-height: 0.92;
+    letter-spacing: -1.7px;
+  }
+
+
+  /* PHOTOS */
+
+  .tickets-destinations__photos {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 36px;
+  }
+
+  .tickets-photo {
+    height: 300px;
+  }
+
+
+  /* OFFERS */
+
+  .tickets-offers {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .tickets-offer {
+    padding: 18px;
+  }
+}
