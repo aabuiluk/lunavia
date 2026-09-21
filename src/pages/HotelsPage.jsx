@@ -47,42 +47,37 @@ export default function HotelsPage() {
           <div className="container tours-hero__content">
             <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
             <h1 className="rise rise-delay-1">
-              All our hotels <br /><span>&</span> resorts
+              All our hotels <br />
+              <span>&</span> resorts
             </h1>
           </div>
         </section>
 
-        {/* SEARCH PANEL */}
+        {/* SEARCH BAR FROM HOME PAGE */}
         <div className="container search-wrapper rise rise-delay-2">
-          <div className="search-panel">
-            <div className="search-item">
-              <span className="search-label">START?</span>
-              <span className="search-value">Ukraine</span>
-              <span className="search-sub">Flights + trains + hotels — compared for you.</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">WHERE?</span>
-              <span className="search-value">Anywhere</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">DATES</span>
-              <span className="search-value">Choose dates</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">TRAVELERS</span>
-              <span className="search-value">2</span>
-            </div>
-            <button type="button" className="btn search-btn">Find route &rarr;</button>
+          <div className="for_inputs_to_route">
+            <SearchBar
+              fields={[
+                { name: 'start', label: 'Start?', value: '', placeholder: 'Choose start point' },
+                { name: 'where', label: 'Where?', value: '', placeholder: 'Choose destination' },
+                { name: 'dates', label: 'Dates', value: '', placeholder: 'Choose dates' },
+                {
+                  name: 'travelers',
+                  label: 'Travelers',
+                  value: '',
+                  placeholder: 'Choose number of travelers',
+                },
+              ]}
+              note="Flights + trains + hotels — compared for you."
+              onSubmit={(values) => console.log('submitted:', values)}
+            />
           </div>
         </div>
       </header>
 
       {/* MAIN CONTAINER */}
       <main className="hotels-main-container">
-        {/* CATEGORY TABS WITH WORKING FILTERING */}
+        {/* CATEGORY TABS */}
         <div className="hotels-categories" role="tablist" aria-label="Hotel types">
           {FILTERS.map((item) => (
             <button
@@ -161,17 +156,19 @@ export default function HotelsPage() {
 
         {/* PAGINATION */}
         <div className="hotels-pagination">
-          <button type="button" className="hotels-page-btn arrow">&lt;</button>
+          <button type="button" className="hotels-page-btn arrow" aria-label="Previous page">
+            <img src="/HotelsLeft.png" alt="Previous" className="pagination-arrow-icon" />
+          </button>
           <button type="button" className="hotels-page-btn active">1</button>
           <button type="button" className="hotels-page-btn">2</button>
           <button type="button" className="hotels-page-btn">3</button>
           <button type="button" className="hotels-page-btn">4</button>
-          <button type="button" className="hotels-page-btn arrow">&gt;</button>
+          <button type="button" className="hotels-page-btn">5</button>
+          <button type="button" className="hotels-page-btn arrow" aria-label="Next page">
+            <img src="/HotelsRight.png" alt="Next" className="pagination-arrow-icon" />
+          </button>
         </div>
       </main>
-
-      {/* FOOTER */}
-      <footer className="hotels-footer"></footer>
     </div>
   )
 }

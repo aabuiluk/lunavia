@@ -12,11 +12,6 @@
   position: relative;
   width: 100%;
   height: 380px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,14 +19,10 @@
 }
 
 /* BACKGROUND */
-
 .support-hero__background {
   position: absolute;
   width: 100%;
   height: 100%;
-
-  object-fit: cover;
-
   object-fit: cover;
   top: 0;
   left: 0;
@@ -57,22 +48,6 @@
 }
 
 /* SMALL GREEN TEXT */
-
-.support-hero__label {
-  color: #20d6a3;
-
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 2px;
-
-  margin-bottom: 15px;
-}
-
-/* TITLE */
-
-.support-hero__title {
-  color: white;
-  font-size: clamp(2rem, 6vw, 3.4rem);
 .support-hero__label {
   color: #20d6a3;
   font-size: 12px;
@@ -114,12 +89,6 @@
 
 .support-search__input {
   flex: 1;
-
-  border: none;
-  outline: none;
-
-  padding: 10px 15px;
-
   border: none;
   outline: none;
   padding: 10px 15px;
@@ -128,19 +97,6 @@
 
 .support-search__button {
   border: none;
-
-  padding: 10px 25px;
-
-  border-radius: 10px;
-
-  background: #18c7a0;
-  color: white;
-
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
   padding: 10px 25px;
   border-radius: 10px;
   background: #18c7a0;
@@ -168,9 +124,6 @@
 
 .support-contact__label {
   margin: 0 0 12px;
-
-  color: #19c8a2;
-
   color: #19c8a2;
   font-size: 12px;
   font-weight: 700;
@@ -179,10 +132,6 @@
 
 .support-contact__title {
   margin: 0 0 30px;
-
-  font-size: 30px;
-  font-weight: 700;
-
   font-size: 30px;
   font-weight: 700;
   color: #17211c;
@@ -196,44 +145,6 @@
 
 .support-card {
   padding: 24px;
-
-  background: white;
-
-  border: 1px solid #e7e7e7;
-  border-radius: 16px;
-
-  text-align: left;
-
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
-}
-
-.support-card__icon img {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-}
-
-.support-card__icon {
-  width: 36px;
-  height: 36px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 18px;
-
-  border-radius: 50%;
-
-  background: #f3faf7;
-  color: #18c7a0;
-
-  font-size: 18px;
-}
-
-.support-card h3 {
-  margin: 0 0 10px;
-
   background: white;
   border: 1px solid #e7e7e7;
   border-radius: 16px;
@@ -295,6 +206,7 @@
   text-decoration: none;
 }
 
+.support-card a:hover,
 .support-card__link:hover {
   text-decoration: underline;
 }
@@ -312,11 +224,6 @@
 
 .support-faq__label {
   margin: 0 0 12px;
-
-  text-align: center;
-
-  color: #19c8a2;
-
   text-align: center;
   color: #19c8a2;
   font-size: 12px;
@@ -326,11 +233,6 @@
 
 .support-faq__title {
   margin: 0 0 30px;
-
-  text-align: center;
-
-  color: #17211c;
-
   text-align: center;
   color: #17211c;
   font-size: 30px;
@@ -345,9 +247,6 @@
 
 .support-faq__item {
   padding: 0 16px;
-
-  background: white;
-
   background: white;
   border: 1px solid #e4e4e4;
   border-radius: 12px;
@@ -355,24 +254,10 @@
 
 .support-faq__question {
   width: 100%;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-
-  padding: 18px 0;
-
-  border: none;
-  background: transparent;
-
-  text-align: left;
-
-  color: #17211c;
-
-  font-size: 14px;
-  font-weight: 700;
-
   padding: 18px 0;
   border: none;
   background: transparent;
@@ -385,20 +270,6 @@
 
 .support-faq__button {
   flex-shrink: 0;
-
-  width: 24px;
-  height: 24px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #f4f6f3;
-
-  color: #17211c;
-
   width: 24px;
   height: 24px;
   display: flex;
@@ -417,11 +288,6 @@
 
 .support-faq__answer {
   margin: -4px 0 18px;
-
-  padding-right: 50px;
-
-  color: #777;
-
   padding-right: 50px;
   color: #777;
   font-size: 12px;
@@ -457,18 +323,11 @@
   }
 }
 
-
-/*
-   MOBILE
- */
-
 /* MOBILE */
 @media (max-width: 600px) {
   .support-page {
     gap: 40px;
   }
-
-  /* HERO */
 
   .support-hero {
     height: 420px;
@@ -496,8 +355,6 @@
     font-size: 14px;
     max-width: 330px;
   }
-
-  /* SEARCH */
 
   .support-search {
     max-width: 100%;
@@ -532,8 +389,6 @@
   .support-card {
     padding: 22px;
   }
-
-  /* FAQ */
 
   .support-faq {
     padding: 40px 20px;
