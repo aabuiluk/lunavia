@@ -8,6 +8,44 @@ export const pageMeta = {
   summary: 'Explore all our luxury hotels and resorts.',
 }
 
+export function SearchBar({ fields, note, ctaLabel = 'Find route', onSubmit }) {
+  const [values, setValues] = useState(
+    Object.fromEntries(fields.map((field) => [field.name, field.value])),
+  )
+
+  function handleChange(name, newValue) {
+    setValues((prev) => ({ ...prev, [name]: newValue }))
+  }
+
+  return (
+    <div className="search-bar">
+      <div className="search-bar__grid">
+        {fields.map((field) => (
+          <div className="search-bar__field" key={field.name}>
+            <label className="search-bar__label" htmlFor={field.name}>
+              {field.label}
+            </label>
+            <input
+              id={field.name}
+              className="search-bar__value"
+              type="text"
+              value={values[field.name]}
+              placeholder={field.placeholder}
+              onChange={(e) => handleChange(field.name, e.target.value)}
+            />
+          </div>
+        ))}
+
+        <button className="search-bar__cta" onClick={() => onSubmit?.(values)}>
+          {ctaLabel} <span>→</span>
+        </button>
+      </div>
+
+      {note ? <p className="search-bar__note">{note}</p> : null}
+    </div>
+  )
+}
+
 const FILTERS = [
   { id: 'all', label: 'All' },
   { id: 'resorts', label: 'Resorts', match: ['RESORT', 'ALL INCL'] },
@@ -189,42 +227,37 @@ export default function HotelsPage() {
           <div className="container tours-hero__content">
             <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
             <h1 className="rise rise-delay-1">
-              All our hotels <br /><span>&</span> resorts
+              All our hotels <br />
+              <span>&</span> resorts
             </h1>
           </div>
         </section>
 
-        {/* SEARCH PANEL */}
+        {/* SEARCH BAR FROM HOME PAGE */}
         <div className="container search-wrapper rise rise-delay-2">
-          <div className="search-panel">
-            <div className="search-item">
-              <span className="search-label">START?</span>
-              <span className="search-value">Ukraine</span>
-              <span className="search-sub">Flights + trains + hotels — compared for you.</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">WHERE?</span>
-              <span className="search-value">Anywhere</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">DATES</span>
-              <span className="search-value">Choose dates</span>
-            </div>
-            <div className="search-divider"></div>
-            <div className="search-item">
-              <span className="search-label">TRAVELERS</span>
-              <span className="search-value">2</span>
-            </div>
-            <button type="button" className="btn search-btn">Find route &rarr;</button>
+          <div className="for_inputs_to_route">
+            <SearchBar
+              fields={[
+                { name: 'start', label: 'Start?', value: '', placeholder: 'Choose start point' },
+                { name: 'where', label: 'Where?', value: '', placeholder: 'Choose destination' },
+                { name: 'dates', label: 'Dates', value: '', placeholder: 'Choose dates' },
+                {
+                  name: 'travelers',
+                  label: 'Travelers',
+                  value: '',
+                  placeholder: 'Choose number of travelers',
+                },
+              ]}
+              note="Flights + trains + hotels — compared for you."
+              onSubmit={(values) => console.log('submitted:', values)}
+            />
           </div>
         </div>
       </header>
 
       {/* MAIN CONTAINER */}
       <main className="hotels-main-container">
-        {/* CATEGORY TABS WITH WORKING FILTERING */}
+        {/* CATEGORY TABS */}
         <div className="hotels-categories" role="tablist" aria-label="Hotel types">
           {FILTERS.map((item) => (
             <button
@@ -275,7 +308,7 @@ export default function HotelsPage() {
                     </div>
                   </div>
                   <button type="button" className="hotel-btn-arrow" aria-label={`View ${hotel.title}`}>
-                    &rarr;
+                    <img src="/HotelsRight.png" alt="Go" className="hotel-btn-arrow-icon" />
                   </button>
                 </div>
               </div>
@@ -291,17 +324,19 @@ export default function HotelsPage() {
 
         {/* PAGINATION */}
         <div className="hotels-pagination">
-          <button type="button" className="hotels-page-btn arrow">&lt;</button>
+          <button type="button" className="hotels-page-btn arrow" aria-label="Previous page">
+            <img src="/HotelsLeft.png" alt="Previous" className="pagination-arrow-icon" />
+          </button>
           <button type="button" className="hotels-page-btn active">1</button>
           <button type="button" className="hotels-page-btn">2</button>
           <button type="button" className="hotels-page-btn">3</button>
           <button type="button" className="hotels-page-btn">4</button>
-          <button type="button" className="hotels-page-btn arrow">&gt;</button>
+          <button type="button" className="hotels-page-btn">5</button>
+          <button type="button" className="hotels-page-btn arrow" aria-label="Next page">
+            <img src="/HotelsRight.png" alt="Next" className="pagination-arrow-icon" />
+          </button>
         </div>
       </main>
-
-      {/* FOOTER */}
-      <footer className="hotels-footer"></footer>
     </div>
   )
 }
