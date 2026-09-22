@@ -20,18 +20,22 @@ export default function SupportPage() {
   const [faqList, setFaqList] = useState([]);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/support/faq?q=${encodeURIComponent(searchQuery)}`)
-      .then(res => res.json())
-      .then(data => {
-        setFaqList(data.results);
-      })
-      .catch(err => console.error("Ошибка загрузки FAQ:", err));
+    const timer = setTimeout(() => {
+      fetch(`/api/support/faq?q=${encodeURIComponent(searchQuery)}`)
+        .then(res => res.json())
+        .then(data => {
+          setFaqList(data.results || data);
+        })
+        .catch(err => console.error("Ошибка загрузки FAQ:", err));
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [searchQuery]);
 
   const handleTicketSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/support/ticket", {
+      const response = await fetch("/api/support/ticket", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
