@@ -25,7 +25,7 @@ class TourItem(Schema):
     meta: str
     route: str
     price: str
-    discount: str | None = None
+    discount: str = ""
     image: str
 
 
