@@ -18,17 +18,6 @@ class HomePage(Schema):
     actions: list[LinkAction]
 
 
-class TourItem(Schema):
-    id: int
-    title: str
-    category: str
-    meta: str
-    route: str
-    price: str
-    discount: str | None = None
-    image: str
-
-
 class RegisterField(Schema):
     name: str
     label: str
@@ -55,9 +44,23 @@ class RegisterOut(Schema):
     email: str
 
 
+class TourItem(Schema):
+    id: str
+    title: str
+    category: str
+    meta: str
+    route: str
+    price: str
+    discount: str = ""
+    image: str
+
+
 class ToursPage(Schema):
     eyebrow: str
     title: str
     lead: str
+    categories: list[str] = []
     cta: LinkAction
-    tours: list[TourItem] = [ ]
+    tours: list[TourItem]
+
+

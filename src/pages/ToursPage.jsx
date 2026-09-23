@@ -17,7 +17,9 @@ export default function ToursPage() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [serverContent, setServerContent] = useState(null)
 
-  const categories = ['All', 'Beach', 'City', 'Mountain', 'Family', 'Last-minute']
+  const categories = serverContent?.categories?.length > 0
+    ? serverContent.categories
+    : ['All']
 
   useEffect(() => {
     fetch('/api/tours')
