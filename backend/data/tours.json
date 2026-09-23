@@ -20,7 +20,7 @@
       "id": "1",
       "title": "GREEK ISLAND",
       "category": "BEACH",
-      "meta": "4 nights • 7★ hotel",
+      "meta": "4 nights • 4★ hotel",
       "route": "Ukraine → Chișinău → Greek island",
       "price": "549",
       "discount": "-€155",
@@ -135,16 +135,6 @@
       "price": "849",
       "discount": "",
       "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800"
-    },
-    {
-      "id": "1790129974791",
-      "title": "ODESSA",
-      "category": "BEACH",
-      "meta": " 4 4 ",
-      "route": "Ukraine ",
-      "price": "777",
-      "discount": "-77",
-      "image": ""
     }
   ]
 }
