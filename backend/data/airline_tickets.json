@@ -1,0 +1,36 @@
+
+{
+  "title": "The best ticket is the one that works.",
+  "flights": [
+    {
+      "id": 1,
+      "airline": "LOT Polish Airlines",
+      "departure_time": "06:40",
+      "arrival_time": "14:20",
+      "duration": "6h 40m",
+      "stops": 1,
+      "route": "Kyiv → Warsaw → Barcelona",
+      "price_eur": 189
+    },
+    {
+      "id": 2,
+      "airline": "Wizz Air",
+      "departure_time": "08:15",
+      "arrival_time": "15:40",
+      "duration": "7h 25m",
+      "stops": 1,
+      "route": "Lviv → Kraków → Barcelona",
+      "price_eur": 204
+    },
+    {
+      "id": 3,
+      "airline": "Austrian",
+      "departure_time": "10:30",
+      "arrival_time": "18:10",
+      "duration": "7h 40m",
+      "stops": 1,
+      "route": "Uzhhorod → Vienna → Barcelona",
+      "price_eur": 237
+    }
+  ]
+}
