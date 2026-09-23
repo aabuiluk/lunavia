@@ -45,7 +45,7 @@ class RegisterOut(Schema):
 
 
 class TourItem(Schema):
-    id: int
+    id: str
     title: str
     category: str
     meta: str
@@ -59,6 +59,7 @@ class ToursPage(Schema):
     eyebrow: str
     title: str
     lead: str
+    categories: list[str] = []
     cta: LinkAction
     tours: list[TourItem]
 
