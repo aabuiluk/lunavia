@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { apiGet, apiSend } from '../api/client'
 import './LoginPage.css'
 import BGImageForLogin from '../images/back_for-login.png'
 
@@ -11,6 +12,7 @@ export const pageMeta = {
 }
 
 export default function LoginPage() {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [values, setValues] = useState({ email: '', password: '' })
 
@@ -18,11 +20,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/login/config')
-      .then((res) => {
-        if (!res.ok) throw new Error('Config fetch failed')
-        return res.json()
-      })
+    apiGet('/api/login/config')
       .then((data) => setConfig(data))
       .catch((err) => console.log('Backend config error:', err))
   }, [])
@@ -36,26 +34,18 @@ export default function LoginPage() {
     setError('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
+      const data = await apiSend('/api/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
+        body: values,
       })
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.message)
-        return
+      if (data.token) {
+        localStorage.setItem('adminToken', data.token)
       }
 
-      alert(`Welcome back, ${data.user.name}!`)
-      console.log('Successfully logged in:', data)
-
+      navigate('/')
     } catch (err) {
-      setError('Failed to connect to the server.')
+      setError(err.message || 'Failed to connect to the server.')
     }
   }
 
