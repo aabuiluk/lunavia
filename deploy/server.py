@@ -158,6 +158,15 @@ def flask_application():
             return {"detail": f"Unknown page '{slug}'"}, 404
         return store.save(slug, body)
 
+    @app.post("/api/register")
+    def api_register():
+        body = request.get_json(silent=True) or {}
+        return {
+            "ok": True,
+            "name": str(body.get("name") or ""),
+            "email": str(body.get("email") or ""),
+        }
+
     @app.get("/api/<slug>")
     def api_slug(slug: str):
         try:

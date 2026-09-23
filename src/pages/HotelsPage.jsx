@@ -4,9 +4,46 @@ import './Hotels.css'
 export const pageMeta = {
   path: '/hotels',
   title: 'Hotels',
-  order: 4,
-  nav: false,
-  summary: 'Stay options that pair with Lunavia routes.',
+  order: 3,
+  summary: 'Explore all our luxury hotels and resorts.',
+}
+
+export function SearchBar({ fields, note, ctaLabel = 'Find route', onSubmit }) {
+  const [values, setValues] = useState(
+    Object.fromEntries(fields.map((field) => [field.name, field.value])),
+  )
+
+  function handleChange(name, newValue) {
+    setValues((prev) => ({ ...prev, [name]: newValue }))
+  }
+
+  return (
+    <div className="search-bar">
+      <div className="search-bar__grid">
+        {fields.map((field) => (
+          <div className="search-bar__field" key={field.name}>
+            <label className="search-bar__label" htmlFor={field.name}>
+              {field.label}
+            </label>
+            <input
+              id={field.name}
+              className="search-bar__value"
+              type="text"
+              value={values[field.name]}
+              placeholder={field.placeholder}
+              onChange={(e) => handleChange(field.name, e.target.value)}
+            />
+          </div>
+        ))}
+
+        <button className="search-bar__cta" onClick={() => onSubmit?.(values)}>
+          {ctaLabel} <span>→</span>
+        </button>
+      </div>
+
+      {note ? <p className="search-bar__note">{note}</p> : null}
+    </div>
+  )
 }
 
 const FILTERS = [
@@ -29,7 +66,7 @@ const hotelsData = [
     oldPrice: '350',
     price: '289',
     category: 'VILLAS',
-    image: 'Hotels1.png',
+    image: '/Hotels1.png',
   },
   {
     id: 2,
@@ -41,7 +78,7 @@ const hotelsData = [
     oldPrice: '220',
     price: '189',
     category: 'RESORT',
-    image: 'Hotels2.png',
+    image: '/Hotels2.png',
   },
   {
     id: 3,
@@ -53,7 +90,7 @@ const hotelsData = [
     oldPrice: '400',
     price: '315',
     category: 'VILLAS',
-    image: 'Hotels3.png',
+    image: '/Hotels3.png',
   },
   {
     id: 4,
@@ -65,7 +102,7 @@ const hotelsData = [
     oldPrice: '600',
     price: '489',
     category: 'CITY',
-    image: 'Hotels4.png',
+    image: '/Hotels4.png',
   },
   {
     id: 5,
@@ -77,7 +114,7 @@ const hotelsData = [
     oldPrice: '289',
     price: '219',
     category: 'ALL INCL',
-    image: 'Hotels5.png',
+    image: '/Hotels5.png',
   },
   {
     id: 6,
@@ -89,7 +126,7 @@ const hotelsData = [
     oldPrice: '3100',
     price: '2289',
     category: 'ICONIC',
-    image: 'Hotels6.png',
+    image: '/Hotels6.png',
   },
   {
     id: 7,
@@ -101,7 +138,7 @@ const hotelsData = [
     oldPrice: '2300',
     price: '1679',
     category: '5 STARS',
-    image: 'Hotels7.png',
+    image: '/Hotels7.png',
   },
   {
     id: 8,
@@ -113,7 +150,7 @@ const hotelsData = [
     oldPrice: '2500',
     price: '2099',
     category: 'CHALET',
-    image: 'Hotels8.png',
+    image: '/Hotels8.png',
   },
   {
     id: 9,
@@ -125,7 +162,7 @@ const hotelsData = [
     oldPrice: '1550',
     price: '1289',
     category: 'CHALET',
-    image: 'Hotels9.png',
+    image: '/Hotels9.png',
   },
   {
     id: 10,
@@ -137,7 +174,7 @@ const hotelsData = [
     oldPrice: '450',
     price: '389',
     category: 'FLATS',
-    image: 'Hotels10.png',
+    image: '/Hotels10.png',
   },
   {
     id: 11,
@@ -149,7 +186,7 @@ const hotelsData = [
     oldPrice: '2290',
     price: '1889',
     category: 'VILLAS',
-    image: 'Hotels11.png',
+    image: '/Hotels11.png',
   },
   {
     id: 12,
@@ -161,13 +198,14 @@ const hotelsData = [
     oldPrice: '2399',
     price: '1649',
     category: 'VILLAS',
-    image: 'Hotels12.png',
+    image: '/Hotels12.png',
   },
-];
+]
 
 export default function HotelsPage() {
   const [filter, setFilter] = useState('all')
   const active = FILTERS.find((item) => item.id === filter) || FILTERS[0]
+
   const hotels = useMemo(
     () =>
       hotelsData.filter((hotel) => {
@@ -180,69 +218,125 @@ export default function HotelsPage() {
   )
 
   return (
-    <main className="hotels-main-container">
-      <div className="hotels-categories" role="tablist" aria-label="Hotel types">
-        {FILTERS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            role="tab"
-            aria-selected={filter === item.id}
-            className={filter === item.id ? 'hotels-tab-btn active' : 'hotels-tab-btn'}
-            onClick={() => setFilter(item.id)}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
+    <div>
+      {/* HEADER / HERO */}
+      <header className="hotels-header">
+        <section className="tours-hero">
+          <img className="tours-hero__media" src="/HeaderHotels.png" alt="Header Hotels" />
+          <div className="tours-hero__veil" />
+          <div className="container tours-hero__content">
+            <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
+            <h1 className="rise rise-delay-1">
+              All our hotels <br />
+              <span>&</span> resorts
+            </h1>
+          </div>
+        </section>
 
-      <div className="hotels-grid">
-        {hotels.map((hotel) => (
-          <article key={hotel.id} className="hotel-card">
-            <div className="hotel-image-wrapper">
-              <img src={`/${hotel.image}`} alt={hotel.title} />
-              <span className="hotel-badge-category">{hotel.category}</span>
-              <button type="button" className="hotel-like-btn" aria-label={`Save ${hotel.title}`}>
-                <img src="/Favorite.png" alt="" className="hotel-like-icon" />
-              </button>
-            </div>
+        {/* SEARCH BAR FROM HOME PAGE */}
+        <div className="container search-wrapper rise rise-delay-2">
+          <div className="for_inputs_to_route">
+            <SearchBar
+              fields={[
+                { name: 'start', label: 'Start?', value: '', placeholder: 'Choose start point' },
+                { name: 'where', label: 'Where?', value: '', placeholder: 'Choose destination' },
+                { name: 'dates', label: 'Dates', value: '', placeholder: 'Choose dates' },
+                {
+                  name: 'travelers',
+                  label: 'Travelers',
+                  value: '',
+                  placeholder: 'Choose number of travelers',
+                },
+              ]}
+              note="Flights + trains + hotels — compared for you."
+              onSubmit={(values) => console.log('submitted:', values)}
+            />
+          </div>
+        </div>
+      </header>
 
-            <div className="hotel-card-info">
-              <h3 className="hotel-title">{hotel.title}</h3>
-              <p className="hotel-subtitle">{hotel.subtitle}</p>
+      {/* MAIN CONTAINER */}
+      <main className="hotels-main-container">
+        {/* CATEGORY TABS */}
+        <div className="hotels-categories" role="tablist" aria-label="Hotel types">
+          {FILTERS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={filter === item.id}
+              className={filter === item.id ? 'hotels-tab-btn active' : 'hotels-tab-btn'}
+              onClick={() => setFilter(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
 
-              <div className="hotel-rating">
-                ★ {hotel.rating} <span>({hotel.reviewsCount} reviews)</span>
-              </div>
-
-              <div className="hotel-divider" />
-
-              <p className="hotel-description">{hotel.amenities}</p>
-
-              <div className="hotel-card-footer">
-                <div className="hotel-price-block">
-                  {hotel.oldPrice ? (
-                    <span className="hotel-old-price">€{hotel.oldPrice}/night</span>
-                  ) : null}
-                  <div className="hotel-price">
-                    €{hotel.price}
-                    <span className="hotel-night-label">/night</span>
-                  </div>
-                </div>
-                <button type="button" className="hotel-btn-arrow" aria-label={`View ${hotel.title}`}>
-                  →
+        {/* HOTELS GRID */}
+        <div className="hotels-grid">
+          {hotels.map((hotel) => (
+            <article key={hotel.id} className="hotel-card">
+              <div className="hotel-image-wrapper">
+                <img src={hotel.image} alt={hotel.title} />
+                <span className="hotel-badge-category">{hotel.category}</span>
+                <button type="button" className="hotel-like-btn" aria-label={`Save ${hotel.title}`}>
+                  <img src="/Favorite.png" alt="Like" className="hotel-like-icon" />
                 </button>
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
 
-      {hotels.length === 0 ? (
-        <p className="hotels-empty">No stays in this category yet.</p>
-      ) : null}
-    </main>
+              <div className="hotel-card-info">
+                <h3 className="hotel-title">{hotel.title}</h3>
+                <p className="hotel-subtitle">{hotel.subtitle}</p>
+
+                <div className="hotel-rating">
+                  ★ {hotel.rating} <span>({hotel.reviewsCount} reviews)</span>
+                </div>
+
+                <div className="hotel-divider" />
+
+                <p className="hotel-description">{hotel.amenities}</p>
+
+                <div className="hotel-card-footer">
+                  <div className="hotel-price-block">
+                    {hotel.oldPrice ? (
+                      <span className="hotel-old-price">€{hotel.oldPrice}/night</span>
+                    ) : null}
+                    <div className="hotel-price">
+                      €{hotel.price}
+                      <span className="hotel-night-label">/night</span>
+                    </div>
+                  </div>
+                  <button type="button" className="hotel-btn-arrow" aria-label={`View ${hotel.title}`}>
+                    <img src="/HotelsRight.png" alt="Go" className="hotel-btn-arrow-icon" />
+                  </button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {hotels.length === 0 ? (
+          <p className="hotels-empty" style={{ textAlign: 'center', margin: '40px 0' }}>
+            No stays in this category yet.
+          </p>
+        ) : null}
+
+        {/* PAGINATION */}
+        <div className="hotels-pagination">
+          <button type="button" className="hotels-page-btn arrow" aria-label="Previous page">
+            <img src="/HotelsLeft.png" alt="Previous" className="pagination-arrow-icon" />
+          </button>
+          <button type="button" className="hotels-page-btn active">1</button>
+          <button type="button" className="hotels-page-btn">2</button>
+          <button type="button" className="hotels-page-btn">3</button>
+          <button type="button" className="hotels-page-btn">4</button>
+          <button type="button" className="hotels-page-btn">5</button>
+          <button type="button" className="hotels-page-btn arrow" aria-label="Next page">
+            <img src="/HotelsRight.png" alt="Next" className="pagination-arrow-icon" />
+          </button>
+        </div>
+      </main>
+    </div>
   )
 }
-
-
