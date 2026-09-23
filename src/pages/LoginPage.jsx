@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './LoginPage.css'
 import BGImageForLogin from '../images/back_for-login.png'
@@ -10,19 +10,53 @@ export const pageMeta = {
   summary: 'Log in to your Lunavia account.',
 }
 
-
-
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [values, setValues] = useState({ email: '', password: '' })
+
+  const [config, setConfig] = useState(null)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/login/config')
+      .then((res) => {
+        if (!res.ok) throw new Error('Config fetch failed')
+        return res.json()
+      })
+      .then((data) => setConfig(data))
+      .catch((err) => console.log('Backend config error:', err))
+  }, [])
 
   function handleChange(name, value) {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log('login', values)
+    setError('')
+
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.message)
+        return
+      }
+
+      alert(`Welcome back, ${data.user.name}!`)
+      console.log('Successfully logged in:', data)
+
+    } catch (err) {
+      setError('Failed to connect to the server.')
+    }
   }
 
   return (
@@ -41,11 +75,17 @@ export default function LoginPage() {
             YOUR ROUTE TO EVERYWHERE
           </p>
           <h1>
-            A little less
-            <br />
-            planning. <span>A lot more</span>
-            <br />
-            going.
+            {config?.bannerText ? (
+              config.bannerText
+            ) : (
+              <>
+                A little less
+                <br />
+                planning. <span>A lot more</span>
+                <br />
+                going.
+              </>
+            )}
           </h1>
         </div>
 
@@ -58,10 +98,16 @@ export default function LoginPage() {
 
         <form className="login__form" onSubmit={handleSubmit}>
           <p className="login__eyebrow">WELCOME BACK</p>
-          <h2>Ready when you are.</h2>
+          <h2>{config?.welcomeTitle || 'Ready when you are.'}</h2>
           <p className="login__subtext">
-            Log in to pick up where your travel plans left off.
+            {config?.subtext || 'Log in to pick up where your travel plans left off.'}
           </p>
+
+          {error && (
+            <div style={{ color: '#d9534f', fontSize: '13px', marginBottom: '16px', fontWeight: 'bold' }}>
+              {error}
+            </div>
+          )}
 
           <label className="login__field">
             <span>EMAIL ADDRESS</span>
