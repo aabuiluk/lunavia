@@ -1,122 +1,230 @@
-import React, { useState, useEffect } from 'react';
-import './SupportPage.css';
+import './SupportPage.css'
+import heroImage from '../assets/support/support_img_one.png'
+import { useState } from 'react'
+import phoneIcon from '../assets/support/phone.png'
+import chatIcon from '../assets/support/message.png'
+import mailIcon from '../assets/support/mail.png'
 
 export const pageMeta = {
-  path: '/support',
-  title: 'Support',
-  order: 4,
-  summary: 'Support Center and FAQ',
-};
+    path: '/support',
+    title: 'Support',
+    order: 5,
+    summary: 'Help with bookings, routes, and travel questions.',
+}
 
 export default function SupportPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+    const [openFaq, setOpenFaq] = useState(0)
+    const [searchInput, setSearchInput] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [faqList, setFaqList] = useState([]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fetch(`/api/support/faq?q=${encodeURIComponent(searchQuery)}`)
-        .then(res => res.json())
-        .then(data => {
-          setFaqList(data.results || data);
-        })
-        .catch(err => console.error("Ошибка загрузки FAQ:", err));
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  const handleTicketSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/api/support/ticket", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    const faqs = [
+        {
+            question: 'How do I make changes to my travel booking or route?',
+            answer:
+                'You can modify your flights, trains, and hotel connections directly through your Lunavia profile up to 48 hours prior to your scheduled departure. For last-minute structural changes, our dedicated 24/7 destination architects can re-route your itinerary instantly.',
         },
-        body: JSON.stringify(formData),
-      });
+        {
+            question: 'What is the cancellation and refund policy?',
+            answer:
+                'Cancellation and refund conditions depend on your booking type and selected travel package.',
+        },
+        {
+            question: 'What payment methods do you accept?',
+            answer:
+                'We accept major credit and debit cards as well as supported online payment methods.',
+        },
+        {
+            question: 'Are luggage rules and transfer baggage handles included?',
+            answer:
+                'Baggage rules depend on the airline, train operator, and travel package included in your booking.',
+        },
+        {
+            question: 'Do you provide visa assistance for international destinations?',
+            answer:
+                'Yes, our support team can provide general guidance regarding visa requirements for your destination.',
+        },
+        {
+            question: 'How does travel insurance cover emergency cancellations?',
+            answer:
+                'Coverage depends on your insurance provider and the specific policy attached to your booking.',
+        },
+    ]
+    const filteredFaqs = faqs.filter((faq) => {
+        const query = searchQuery.toLowerCase().trim()
 
-      const data = await response.json();
+        if (!query) return true
 
-      if (!response.ok) {
-        throw new Error(data.detail || "Не удалось отправить запрос");
-      }
+        return (
+            faq.question.toLowerCase().includes(query) ||
+            faq.answer.toLowerCase().includes(query)
+        )
+    })
 
-      alert("Success! " + data.message);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
-      alert("Error: " + error.message);
-    }
-  };
+    return (
+        <main className="support-page">
+            <section className="support-hero">
+                <img
+                    className="support-hero__background"
+                    src={heroImage}
+                    alt=""
+                />
 
-  return (
-    <div className="support-page container" style={{ padding: '40px 0' }}>
-      <h1 style={{ marginBottom: '24px' }}>Support Center</h1>
+                <div className="support-hero__overlay" />
 
-      <div className="faq-search-section" style={{ marginBottom: '40px' }}>
-        <input
-          type="text"
-          placeholder="Search for answers..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="faq-search-input"
-          style={{ width: '100%', padding: '12px', marginBottom: '16px', borderRadius: '8px', border: '1px solid #ccc' }}
-        />
-        <div className="faq-list">
-          {faqList.map(faq => (
-            <div key={faq.id} className="faq-item" style={{ marginBottom: '16px', padding: '16px', background: '#f9f9f9', borderRadius: '8px' }}>
-              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>{faq.question}</h3>
-              <p style={{ color: '#555' }}>{faq.answer}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+                <div className="support-hero__content">
+                    <p className="support-hero__label">
+                        ● LUNAVIA SUPPORT CENTER
+                    </p>
 
-      <form onSubmit={handleTicketSubmit} className="support-form" style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h2>Submit a Request</h2>
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={formData.name}
-          onChange={(e) => setFormData({...formData, name: e.target.value})}
-          required
-          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
-        />
-        <input
-          type="email"
-          placeholder="Your Email"
-          value={formData.email}
-          onChange={(e) => setFormData({...formData, email: e.target.value})}
-          required
-          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
-        />
-        <input
-          type="text"
-          placeholder="Subject"
-          value={formData.subject}
-          onChange={(e) => setFormData({...formData, subject: e.target.value})}
-          required
-          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
-        />
-        <textarea
-          placeholder="Describe your issue..."
-          value={formData.message}
-          onChange={(e) => setFormData({...formData, message: e.target.value})}
-          required
-          rows="5"
-          style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ccc' }}
-        />
-        <button type="submit" style={{ padding: '12px 24px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
-          Send Message
-        </button>
-      </form>
-    </div>
-  );
+                    <h1 className="support-hero__title">
+                        How can we help?
+                    </h1>
+
+                    <p className="support-hero__description">
+                        Find answers regarding your booking routes, cancellation
+                        options, travel documents, and active tour packages.
+                    </p>
+
+                    <div className="support-search">
+                        <input
+                            className="support-search__input"
+                            type="text"
+                            placeholder="Search FAQ..."
+                            value={searchInput}
+                            onChange={(event) => setSearchInput(event.target.value)}
+                        />
+
+                        <button
+                            className="support-search__button"
+                            type="button"
+                            onClick={() => setSearchQuery(searchInput)}
+                        >
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section className="support-contact">
+                <div className="support-contact__container">
+
+                    <p className="support-contact__label">
+                        GET IN TOUCH
+                    </p>
+
+                    <h2 className="support-contact__title">
+                        We're here for you 24/7
+                    </h2>
+
+                    <div className="support-contact__grid">
+
+                        <article className="support-card">
+                            <div className="support-card__icon">
+                                <img src={phoneIcon} alt="" />
+                            </div>
+
+                            <h3>Phone Support</h3>
+
+                            <p>
+                                Talk directly to our destination route architects
+                                who can assist with active transfers.
+                            </p>
+
+                            <a href="tel:+3801231231212">
+                                +380 123 123 12 12 →
+                            </a>
+                        </article>
+
+                        <article className="support-card">
+                            <div className="support-card__icon">
+                               <img src={mailIcon} alt="" />
+                            </div>
+
+                            <h3>Email Support</h3>
+
+                            <p>
+                                Send us your tour booking documents or bulk
+                                group travel inquiries.
+                            </p>
+
+                            <a href="mailto:support@lunavia.ua">
+                                support@lunavia.ua →
+                            </a>
+                        </article>
+
+                        <article className="support-card">
+                            <div className="support-card__icon">
+                                <img src={chatIcon} alt="" />
+                            </div>
+
+                            <h3>Live Chat</h3>
+
+                            <p>
+                                Instant live help with your current train, hotel,
+                                or flight connection on the go.
+                            </p>
+
+                            <button
+                                className="support-card__link"
+                                type="button"
+                                onClick={() => alert('Live Chat coming soon')}
+                            >
+                                Open Live Chat →
+                            </button>
+                        </article>
+
+                    </div>
+                </div>
+            </section>
+            <section className="support-faq">
+                <div className="support-faq__container">
+
+                    <p className="support-faq__label">
+                        COMMON INQUIRIES
+                    </p>
+
+                    <h2 className="support-faq__title">
+                        Frequently Asked Questions
+                    </h2>
+
+                    <div className="support-faq__list">
+                        {filteredFaqs.map((faq, index) => {
+                            const isOpen = openFaq === index
+
+                            return (
+                                <div
+                                    className={`support-faq__item ${isOpen ? 'support-faq__item--open' : ''
+                                        }`}
+                                    key={faq.question}
+                                >
+                                    <button
+                                        className="support-faq__question"
+                                        type="button"
+                                        onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                                        aria-expanded={isOpen}
+                                        aria-controls={`faq-answer-${index}`}
+                                    >
+                                        <span>{faq.question}</span>
+
+                                        <span className="support-faq__button">
+                                            {isOpen ? '−' : '+'}
+                                        </span>
+                                    </button>
+
+                                    {isOpen && (
+                                        <p
+                                            id={`faq-answer-${index}`}
+                                            className="support-faq__answer"
+                                        >
+                                            {faq.answer}
+                                        </p>
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    )
 }

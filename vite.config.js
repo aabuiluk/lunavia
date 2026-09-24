@@ -5,13 +5,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5174, // или тот порт, который у вас используется (например, 5174)
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true,
-        secure: false,
-      },
+      '/api': 'http://127.0.0.1:8000',
+      '/docs': 'http://127.0.0.1:8000',
+      '/redoc': 'http://127.0.0.1:8000',
+      '/openapi.json': 'http://127.0.0.1:8000',
     },
   },
 })

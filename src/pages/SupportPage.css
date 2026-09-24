@@ -176,6 +176,7 @@
   color: #777;
 }
 
+.support-card a,
 .support-card__link {
   padding: 0;
   border: none;
@@ -187,6 +188,7 @@
   text-decoration: none;
 }
 
+.support-card a:hover,
 .support-card__link:hover {
   text-decoration: underline;
 }
