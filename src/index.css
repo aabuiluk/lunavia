@@ -15,7 +15,7 @@
   --max: 1120px;
   color: var(--color-ink);
   background: var(--color-white);
-  font-family: var(--font-body);
+  font-family: Manrope, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

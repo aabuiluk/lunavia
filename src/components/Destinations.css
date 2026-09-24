@@ -17,9 +17,9 @@
 
 .destinations__title {
   font-family: var(--font-body, 'Manrope');
-  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  font-size: 60px;
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 72px;
   color: var(--color-ink, #0e211b);
   margin-bottom: 32px;
 }
