@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Register.css';
+import bungalowImg from '../components/bungalow.jpg';
 
 export const pageMeta = {
   path: '/register',
@@ -14,12 +15,17 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Отправленные данные:', form);
+    if (typeof apiSend === 'function') {
+      apiSend('/api/register', form);
+    } else {
+      console.log('Отправленные данные:', form);
+    }
   };
 
   return (
     <div className="split-layout">
-      <div className="left-side">
+      {/* Передаем импортированную картинку из src/components через инлайн-стиль */}
+      <div className="left-side" style={{ backgroundImage: `url(${bungalowImg})` }}>
         <div className="left-overlay"></div>
         <div className="overlay-content">
           <div className="brand">
@@ -33,7 +39,6 @@ export default function RegisterPage() {
                 planning.<br />
                 going.
               </h1>
-              {/* Белая фраза вынесена отдельно, чтобы точно навести её на средний домик */}
               <span className="highlight-text-absolute">A lot more</span>
             </div>
           </div>
