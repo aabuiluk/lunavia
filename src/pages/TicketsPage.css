@@ -45,7 +45,7 @@
   margin: 0;
 
   font-family: 'Manrope', sans-serif;
-  font-size: 72px;
+  font-size: clamp(44px, 5vw, 72px);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -3px;
@@ -77,6 +77,7 @@
 }
 
 .tickets-search__field {
+  display: block;
   padding: 14px 0;
 
   border-bottom: 1px solid #e5e5e5;
@@ -95,12 +96,23 @@
   color: #777777;
 }
 
-.tickets-search__field strong {
+.tickets-search__field input,
+.tickets-search__field select {
   display: block;
-
+  width: 100%;
+  padding: 0;
+  border: 0;
+  outline-offset: 4px;
+  background: transparent;
+  color: #0b1212;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
+}
+
+.tickets-search__field input::placeholder {
+  color: #0b1212;
+  opacity: 1;
 }
 
 .tickets-search__button {
@@ -129,6 +141,17 @@
 
 .tickets-search__row .tickets-search__field {
   flex: 1;
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .tickets-hero__inner {
+    gap: 24px;
+  }
+
+  .tickets-search {
+    width: min(42vw, 460px);
+    padding: 28px;
+  }
 }
 
 
@@ -255,6 +278,22 @@
   gap: 48px;
 }
 
+.tickets-offers-section {
+  scroll-margin-top: 80px;
+}
+
+.tickets-offers__status {
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+.tickets-offers__all {
+  display: inline-block;
+  margin-top: 18px;
+  color: #0a7667;
+  font-weight: 700;
+}
+
 .tickets-offer {
   padding: 18px;
 
@@ -331,11 +370,13 @@
   font-weight: 800;
 }
 
-.tickets-offer__bottom button {
+.tickets-offer__bottom a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 38px;
   height: 26px;
 
-  border: 0;
   border-radius: 999px;
 
   background: #20c5ad;
@@ -343,7 +384,6 @@
 
   font-size: 14px;
 
-  cursor: pointer;
 }
 
 /* MOBILE */
@@ -425,7 +465,8 @@
     font-size: 8px;
   }
 
-  .tickets-search__field strong {
+  .tickets-search__field input,
+  .tickets-search__field select {
     font-size: 13px;
   }
 
