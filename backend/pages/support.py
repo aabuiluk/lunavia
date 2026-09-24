@@ -1,14 +1,18 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import sqlite3
 import os
-import uvicorn
 
-app = FastAPI()
+router = APIRouter()
 
-# Абсолютный путь к БД, чтобы PythonAnywhere не терял файл в своей файловой системе
+page_meta = {
+    "title": "Support & FAQ",
+    "route": "/api/support"
+}
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "lunavia.db")
+# Корректный путь к базе данных в корне проекта
+DB_PATH = os.path.normpath(os.path.join(BASE_DIR, "../../lunavia.db"))
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -27,14 +31,13 @@ def init_db():
 
 init_db()
 
-# Модель для тикетов поддержки
 class TicketModel(BaseModel):
     name: str = None
     email: str
     subject: str = None
     message: str
 
-@app.post("/api/support/ticket")
+@router.post("/ticket")
 def create_support_ticket(ticket: TicketModel):
     try:
         conn = sqlite3.connect(DB_PATH)
@@ -49,8 +52,7 @@ def create_support_ticket(ticket: TicketModel):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Эндпоинт для FAQ
-@app.get("/api/support/faq")
+@router.get("/faq")
 def get_faqs(q: str = ""):
     faqs = [
         {"id": 1, "question": "How to book a trip?", "answer": "You can plan a trip using our main planner."},
@@ -60,6 +62,3 @@ def get_faqs(q: str = ""):
         query = q.lower()
         faqs = [f for f in faqs if query in f["question"].lower() or query in f["answer"].lower()]
     return {"results": faqs}
-
-if __name__ == "__main__":
-    uvicorn.run("server:app", host="127.0.0.1", port=8000, reload=True)
