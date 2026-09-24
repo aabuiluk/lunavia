@@ -103,7 +103,7 @@ export default function SupportPage() {
                         <input
                             className="support-search__input"
                             type="text"
-                            placeholder="Search for booking ID, destination, policies..."
+                            placeholder="Search support FAQs..."
                             value={searchInput}
                             onChange={(event) => setSearchInput(event.target.value)}
                         />
