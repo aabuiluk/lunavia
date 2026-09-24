@@ -1,6 +1,10 @@
 .support-page {
   width: 100%;
   background: #f7f6f2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 /* HERO */
@@ -25,6 +29,7 @@
 }
 
 /* DARK OVERLAY */
+
 .support-hero__overlay {
   position: absolute;
   inset: 0;
@@ -32,6 +37,7 @@
 }
 
 /* CONTENT */
+
 .support-hero__content {
   position: relative;
   z-index: 2;
@@ -60,6 +66,7 @@
 }
 
 /* DESCRIPTION */
+
 .support-hero__description {
   color: white;
   font-size: 15px;
@@ -69,6 +76,7 @@
 }
 
 /* SEARCH */
+
 .support-search {
   display: flex;
   width: 100%;
@@ -171,12 +179,22 @@
 
 .support-card p {
   margin: 0 0 18px;
+
   font-size: 13px;
   line-height: 1.5;
+
   color: #777;
 }
 
-.support-card a,
+.support-card a {
+  color: #18c7a0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
 .support-card__link {
   padding: 0;
   border: none;
@@ -276,6 +294,10 @@
   line-height: 1.6;
 }
 
+/*
+   TABLET
+ */
+
 /* TABLET */
 @media (max-width: 900px) {
   .support-hero {
@@ -348,8 +370,9 @@
   .support-search__button {
     padding: 10px 16px;
     font-size: 12px;
-    line-height: 1.6;
   }
+
+  /* CONTACT */
 
   .support-contact {
     padding: 40px 20px;
@@ -383,3 +406,18 @@
     padding-right: 10px;
   }
 }
+//add
+.support-card__link {
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #18c7a0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
