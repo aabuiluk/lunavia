@@ -352,17 +352,6 @@
   z-index: 10;
 }
 
-.for_inputs_to_route {
-  width: min(100%, 58rem);
-  margin: 0 auto;
-}
-
-.for_inputs_to_route {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
 .search-bar {
   width: 100%;
   background: #fff;
