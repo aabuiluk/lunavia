@@ -9,6 +9,12 @@
   align-items: center;
 }
 
+.logo__img {
+  width: 150px;
+  height: 45px;
+  border-radius: 50%;
+}
+
 .sign_up_and_plan {
   margin-left: 100px;
   display: flex;
