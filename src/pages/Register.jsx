@@ -25,9 +25,17 @@ export default function RegisterPage() {
           <div className="brand">
             <span className="brand-dot"></span> Lunavia
           </div>
-          <div className="hero-text">
+          <div className="hero-text-container">
             <span className="small-top-label">YOUR ROUTE TO EVERYWHERE</span>
-            <h1>A little less planning. <span className="highlight-text">A lot more going.</span></h1>
+            <div className="hero-heading-wrapper">
+              <h1>
+                A little less<br />
+                planning.<br />
+                going.
+              </h1>
+              {/* Белая фраза вынесена отдельно, чтобы точно навести её на средний домик */}
+              <span className="highlight-text-absolute">A lot more</span>
+            </div>
           </div>
           <div className="footer-credits">
             Lunavia · Ukraine to anywhere
@@ -119,5 +127,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
-

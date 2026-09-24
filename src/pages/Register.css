@@ -7,13 +7,20 @@
   font-family: 'Inter', sans-serif;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 .split-layout {
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
-
 
 .left-side {
   flex: 1;
@@ -21,7 +28,6 @@
   position: relative;
   color: white;
 }
-
 
 .left-overlay {
   position: absolute;
@@ -40,7 +46,8 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: 40px;
+  padding: 60px;
+  text-align: left;
 }
 
 .brand {
@@ -59,8 +66,7 @@
   border-radius: 50%;
 }
 
-.hero-text {
-  max-width: 520px;
+.hero-text-container {
   margin-bottom: 40px;
 }
 
@@ -73,23 +79,34 @@
   margin-bottom: 12px;
 }
 
-.hero-text h1 {
-  font-size: 46px;
-  line-height: 1.15;
+.hero-heading-wrapper {
+  position: relative;
+}
+
+.hero-text-container h1 {
+  font-size: 68px;
+  line-height: 0.95;
   font-weight: 700;
   letter-spacing: -1px;
   color: #112225;
+  text-align: left;
 }
 
-.highlight-text {
+.highlight-text-absolute {
+  position: absolute;
+  top: 85px;
+  left: 310px;
   color: #ffffff;
   font-weight: 700;
+  font-size: 68px;
+  white-space: nowrap;
 }
 
 .footer-credits {
-  font-size: 12px;
+  font-size: 13px;
   color: #112225;
   font-weight: 600;
+  text-align: left;
 }
 
 .right-side {
@@ -216,7 +233,7 @@
   padding: 13px;
   background: #00cbc0;
   color: white;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -297,5 +314,3 @@
     display: none;
   }
 }
-
-
