@@ -193,3 +193,17 @@
     margin: 0;
   }
 }
+
+.plan__field--error span {
+  color: #e0453c;
+}
+
+.plan__field--error input {
+  color: #e0453c;
+}
+
+.plan__error {
+  font-size: 10px;
+  font-weight: 600;
+  color: #e0453c;
+}
