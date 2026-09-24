@@ -124,14 +124,25 @@ from server import application
         fail(f"Webapp patch failed {resp.status_code}: {resp.text[:400]}")
     print("Webapp source_directory updated")
 
-    resp = requests.post(
-        f"{BASE}/webapps/{DOMAIN}/reload/",
-        headers=HEADERS,
-        timeout=60,
-    )
-    if resp.status_code != 200:
+    reload_url = f"{BASE}/webapps/{DOMAIN}/reload/"
+    for attempt in range(4):
+        try:
+            resp = requests.post(reload_url, headers=HEADERS, timeout=180)
+        except requests.RequestException as exc:
+            wait = min(30, 5 * (attempt + 1))
+            print(f"Reload attempt {attempt + 1}/4 failed: {exc}; sleep {wait}s")
+            time.sleep(wait)
+            continue
+        if resp.status_code == 200:
+            print(f"Reloaded https://{DOMAIN}/")
+            return
+        if resp.status_code == 429:
+            wait = min(60, 10 * (attempt + 1))
+            print(f"Reload 429; sleep {wait}s (attempt {attempt + 1}/4)")
+            time.sleep(wait)
+            continue
         fail(f"Reload failed {resp.status_code}: {resp.text[:400]}")
-    print(f"Reloaded https://{DOMAIN}/")
+    fail(f"Reload timed out for https://{DOMAIN}/")
 
 
 if __name__ == "__main__":
