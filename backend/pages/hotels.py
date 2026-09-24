@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from backend import store
 from backend.schemas.hotels import HotelsPage
 
@@ -12,6 +13,7 @@ page_meta = {
 }
 
 router = APIRouter()
+
 
 @router.get("", response_model=HotelsPage)
 def get_hotels() -> HotelsPage:

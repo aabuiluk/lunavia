@@ -1,5 +1,6 @@
 from backend.schemas import Schema
 
+
 class Hotel(Schema):
     id: int
     title: str
@@ -11,6 +12,7 @@ class Hotel(Schema):
     price: str
     category: str
     image: str
+
 
 class HotelsPage(Schema):
     hotels: list[Hotel]

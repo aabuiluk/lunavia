@@ -1,28 +1,52 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { apiGet, apiSend } from '../api/client'
 import './LoginPage.css'
 import BGImageForLogin from '../images/back_for-login.png'
 
 export const pageMeta = {
   path: '/login',
   title: 'Login',
+  order: 6,
   summary: 'Log in to your Lunavia account.',
-  nav: true,
 }
 
-
-
 export default function LoginPage() {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [values, setValues] = useState({ email: '', password: '' })
+
+  const [config, setConfig] = useState(null)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    apiGet('/api/login/config')
+      .then((data) => setConfig(data))
+      .catch((err) => console.log('Backend config error:', err))
+  }, [])
 
   function handleChange(name, value) {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log('login', values)
+    setError('')
+
+    try {
+      const data = await apiSend('/api/login', {
+        method: 'POST',
+        body: values,
+      })
+
+      if (data.token) {
+        localStorage.setItem('adminToken', data.token)
+      }
+
+      navigate('/')
+    } catch (err) {
+      setError(err.message || 'Failed to connect to the server.')
+    }
   }
 
   return (
@@ -41,11 +65,17 @@ export default function LoginPage() {
             YOUR ROUTE TO EVERYWHERE
           </p>
           <h1>
-            A little less
-            <br />
-            planning. <span>A lot more</span>
-            <br />
-            going.
+            {config?.bannerText ? (
+              config.bannerText
+            ) : (
+              <>
+                A little less
+                <br />
+                planning. <span>A lot more</span>
+                <br />
+                going.
+              </>
+            )}
           </h1>
         </div>
 
@@ -58,10 +88,16 @@ export default function LoginPage() {
 
         <form className="login__form" onSubmit={handleSubmit}>
           <p className="login__eyebrow">WELCOME BACK</p>
-          <h2>Ready when you are.</h2>
+          <h2>{config?.welcomeTitle || 'Ready when you are.'}</h2>
           <p className="login__subtext">
-            Log in to pick up where your travel plans left off.
+            {config?.subtext || 'Log in to pick up where your travel plans left off.'}
           </p>
+
+          {error && (
+            <div style={{ color: '#d9534f', fontSize: '13px', marginBottom: '16px', fontWeight: 'bold' }}>
+              {error}
+            </div>
+          )}
 
           <label className="login__field">
             <span>EMAIL ADDRESS</span>
@@ -93,13 +129,13 @@ export default function LoginPage() {
             </div>
           </label>
 
-          <Link to="/restore" className="login__forgot">
+          <Link to="/register" className="login__forgot">
             Forgot password? <span>Restore it</span>
           </Link>
 
-          <Link to="/" type="submit" className="btn login__submit">
+          <button type="submit" className="btn login__submit">
             Log in <span>→</span>
-          </Link>
+          </button>
 
           <div className="login__divider">
             <span>OR CONTINUE WITH</span>
@@ -110,7 +146,7 @@ export default function LoginPage() {
           </button>
 
           <p className="login__signup">
-            New to Lunavia? <Link to="/signUp">Create one</Link>
+            New to Lunavia? <Link to="/register">Create one</Link>
           </p>
         </form>
       </div>

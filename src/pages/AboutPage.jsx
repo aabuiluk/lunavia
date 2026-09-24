@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useApi } from '../api/client'
 import { getSiblingPages } from './sitePages'
 import './AboutPage.css'
 
@@ -9,137 +10,127 @@ export const pageMeta = {
   summary: 'Who we are, how we plan trips, and the people behind Lunavia.',
 }
 
-const HERO =
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80'
-const STORY =
-  'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1400&q=80'
-const CTA =
-  'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=2000&q=80'
-
-const values = [
-  {
-    title: 'Honest routes',
-    text: 'We plan around real connections, local partners, and time you will actually enjoy — not brochure filler.',
-  },
-  {
-    title: 'Human support',
-    text: 'One travel specialist stays with your trip from the first idea to the flight home.',
-  },
-  {
-    title: 'Less logistics',
-    text: 'Transfers, timing, and tickets are handled so your days stay open for living.',
-  },
-]
-
-const milestones = [
-  { value: '12+', label: 'Years crafting trips' },
-  { value: '48', label: 'Countries on our map' },
-  { value: '9k', label: 'Travelers guided' },
-  { value: '24/7', label: 'Trip-day support' },
-]
-
-const team = [
-  {
-    name: 'Marta Koval',
-    role: 'Founder & lead planner',
-    photo:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=700&q=80',
-  },
-  {
-    name: 'Oleh Rudenko',
-    role: 'Destination specialist',
-    photo:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=700&q=80',
-  },
-  {
-    name: 'Sofia Melnyk',
-    role: 'Guest experience',
-    photo:
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80',
-  },
-]
+function SitePagesMenu({ siblings }) {
+  return (
+    <nav className="about-menu" id="site-pages" aria-label="Site pages">
+      <div className="container">
+        <div className="about-menu__intro">
+          <span className="eyebrow">On this site</span>
+          <h2>Explore other pages</h2>
+          <p>
+            Menu is built automatically from pages in{' '}
+            <code>src/pages</code>. When students add a new page with{' '}
+            <code>pageMeta</code>, it appears here.
+          </p>
+        </div>
+        <ul className="about-menu__list">
+          {siblings.map((page) => (
+            <li key={page.path}>
+              <Link to={page.path} className="about-menu__link">
+                <span className="about-menu__title">{page.title}</span>
+                <span className="about-menu__path">{page.path}</span>
+                {page.summary ? (
+                  <span className="about-menu__summary">{page.summary}</span>
+                ) : null}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}
 
 export default function AboutPage() {
   const siblings = getSiblingPages('/about')
+  const { data, error, loading } = useApi('/api/about')
+
+  if (loading) {
+    return (
+      <div className="about">
+        <section className="about-status" aria-live="polite">
+          <div className="container">
+            <span className="eyebrow">About</span>
+            <h1>Loading Lunavia…</h1>
+            <p>Fetching page content from the FastAPI About endpoint.</p>
+          </div>
+        </section>
+        <SitePagesMenu siblings={siblings} />
+      </div>
+    )
+  }
+
+  if (error || !data) {
+    return (
+      <div className="about">
+        <section className="about-status" aria-live="assertive">
+          <div className="container">
+            <span className="eyebrow">API error</span>
+            <h1>Could not load About</h1>
+            <p>
+              Start the backend with <code>npm run dev:api</code> and open{' '}
+              <code>/api/about</code>. The live schema is at <code>/docs</code>.
+            </p>
+          </div>
+        </section>
+        <SitePagesMenu siblings={siblings} />
+      </div>
+    )
+  }
+
+  const { hero, story, milestones, valuesIntro, values, teamIntro, team, cta } =
+    data
 
   return (
     <div className="about">
       <section className="about-hero" aria-labelledby="about-hero-title">
         <img
           className="about-hero__media"
-          src={HERO}
-          alt="Turquoise coastline at sunrise"
+          src={hero.image}
+          alt={hero.imageAlt}
         />
         <div className="about-hero__veil" />
         <div className="container about-hero__content">
-          <p className="about-hero__brand rise">Lunavia</p>
+          <p className="about-hero__brand rise">{hero.brand}</p>
           <h1 id="about-hero-title" className="rise rise-delay-1">
-            Travel, planned around
-            <span> real life</span>
+            {hero.title}
+            <span> {hero.titleHighlight}</span>
           </h1>
-          <p className="about-hero__lead rise rise-delay-2">
-            We are a small travel agency that builds clear routes so you spend
-            less time arranging and more time somewhere new.
-          </p>
+          <p className="about-hero__lead rise rise-delay-2">{hero.lead}</p>
           <div className="about-hero__actions rise rise-delay-2">
-            <a className="btn btn--light" href="#story">
-              Our story
-            </a>
-            <a className="btn btn--ghost about-hero__ghost" href="#site-pages">
-              Site pages
-            </a>
+            {hero.actions.map((action) => (
+              <a
+                key={action.href}
+                className={
+                  action.variant === 'ghost'
+                    ? 'btn btn--ghost about-hero__ghost'
+                    : 'btn btn--light'
+                }
+                href={action.href}
+              >
+                {action.label}
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      <nav className="about-menu" id="site-pages" aria-label="Site pages">
-        <div className="container">
-          <div className="about-menu__intro">
-            <span className="eyebrow">On this site</span>
-            <h2>Explore other pages</h2>
-            <p>
-              Menu is built automatically from pages in{' '}
-              <code>src/pages</code>. When students add a new page with{' '}
-              <code>pageMeta</code>, it appears here.
-            </p>
-          </div>
-          <ul className="about-menu__list">
-            {siblings.map((page) => (
-              <li key={page.path}>
-                <Link to={page.path} className="about-menu__link">
-                  <span className="about-menu__title">{page.title}</span>
-                  <span className="about-menu__path">{page.path}</span>
-                  {page.summary ? (
-                    <span className="about-menu__summary">{page.summary}</span>
-                  ) : null}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+      <SitePagesMenu siblings={siblings} />
 
       <section id="story" className="section about-story">
         <div className="container about-story__grid">
           <div className="about-story__copy">
-            <span className="eyebrow">Our story</span>
+            <span className="eyebrow">{story.eyebrow}</span>
             <h2>
-              Born from missed connections
-              <span> and better ideas</span>
+              {story.title}
+              <span> {story.titleHighlight}</span>
             </h2>
-            <p>
-              Lunavia started when our founders kept fixing trips that looked
-              perfect on paper and fell apart in airports. We rebuilt the
-              process around transparent timing, trusted local partners, and a
-              specialist who actually answers the phone.
-            </p>
-            <p>
-              Today we design custom itineraries and curated packages for people
-              who want the world without the spreadsheet.
-            </p>
+            {story.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
           <figure className="about-story__figure">
-            <img src={STORY} alt="Traveler with a backpack overlooking a city" />
+            <img src={story.image} alt={story.imageAlt} />
           </figure>
         </div>
       </section>
@@ -158,12 +149,9 @@ export default function AboutPage() {
       <section className="section about-values">
         <div className="container">
           <div className="about-values__intro">
-            <span className="eyebrow">How we work</span>
-            <h2>The Lunavia way</h2>
-            <p>
-              Every trip follows the same promise: honest routes, human support,
-              and logistics that stay out of your way.
-            </p>
+            <span className="eyebrow">{valuesIntro.eyebrow}</span>
+            <h2>{valuesIntro.title}</h2>
+            <p>{valuesIntro.lead}</p>
           </div>
           <div className="about-values__grid">
             {values.map((item, index) => (
@@ -180,16 +168,13 @@ export default function AboutPage() {
       <section className="section about-team">
         <div className="container">
           <div className="about-team__intro">
-            <span className="eyebrow">Team</span>
-            <h2>People behind your route</h2>
-            <p>
-              Specialists who know destinations, airports, and the quiet details
-              that turn a plan into a trip.
-            </p>
+            <span className="eyebrow">{teamIntro.eyebrow}</span>
+            <h2>{teamIntro.title}</h2>
+            <p>{teamIntro.lead}</p>
           </div>
           <div className="about-team__grid">
             {team.map((member) => (
-              <article key={member.name} className="team-card">
+              <article key={member.id} className="team-card">
                 <img src={member.photo} alt={member.name} />
                 <div>
                   <h3>{member.name}</h3>
@@ -202,16 +187,13 @@ export default function AboutPage() {
       </section>
 
       <section className="about-cta" aria-labelledby="about-cta-title">
-        <img className="about-cta__media" src={CTA} alt="" aria-hidden="true" />
+        <img className="about-cta__media" src={cta.image} alt="" aria-hidden="true" />
         <div className="about-cta__veil" />
         <div className="container about-cta__content">
-          <h2 id="about-cta-title">Tell us where you want to go</h2>
-          <p>
-            Share a destination, a season, or just a feeling — we will sketch a
-            route that fits.
-          </p>
-          <a className="btn" href="mailto:hello@lunavia.travel">
-            Start planning
+          <h2 id="about-cta-title">{cta.title}</h2>
+          <p>{cta.text}</p>
+          <a className="btn" href={`mailto:${cta.email}`}>
+            {cta.buttonLabel}
           </a>
         </div>
       </section>
