@@ -342,10 +342,6 @@
   color: var(--color-teal);
 }
 
-.for_inputs_to_route {
-  width: min(100%, 58rem);
-}
-
 .search-wrapper {
   margin-top: -40px;
   position: relative;
