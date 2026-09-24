@@ -7,20 +7,13 @@
   font-family: 'Inter', sans-serif;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-
 .split-layout {
   display: flex;
   height: 100vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  width: 100vw;
   overflow: hidden;
 }
+
 
 .left-side {
   flex: 1;
@@ -28,6 +21,7 @@ html, body {
   position: relative;
   color: white;
 }
+
 
 .left-overlay {
   position: absolute;
@@ -46,8 +40,7 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: 60px;
-  text-align: left;
+  padding: 40px;
 }
 
 .brand {
@@ -66,7 +59,8 @@ html, body {
   border-radius: 50%;
 }
 
-.hero-text-container {
+.hero-text {
+  max-width: 520px;
   margin-bottom: 40px;
 }
 
@@ -79,34 +73,23 @@ html, body {
   margin-bottom: 12px;
 }
 
-.hero-heading-wrapper {
-  position: relative;
-}
-
-.hero-text-container h1 {
-  font-size: 68px;
-  line-height: 0.95;
+.hero-text h1 {
+  font-size: 46px;
+  line-height: 1.15;
   font-weight: 700;
   letter-spacing: -1px;
   color: #112225;
-  text-align: left;
 }
 
-.highlight-text-absolute {
-  position: absolute;
-  top: 85px;
-  left: 310px;
+.highlight-text {
   color: #ffffff;
   font-weight: 700;
-  font-size: 68px;
-  white-space: nowrap;
 }
 
 .footer-credits {
-  font-size: 13px;
+  font-size: 12px;
   color: #112225;
   font-weight: 600;
-  text-align: left;
 }
 
 .right-side {
@@ -233,7 +216,7 @@ html, body {
   padding: 13px;
   background: #00cbc0;
   color: white;
-  border: 1px solid transparent;
+  border: none;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -314,3 +297,5 @@ html, body {
     display: none;
   }
 }
+
+

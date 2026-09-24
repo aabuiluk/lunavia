@@ -1,0 +1,82 @@
+{
+  "hero": {
+    "brand": "Lunavia",
+    "title": "Travel, planned around",
+    "titleHighlight": "real life",
+    "lead": "We are a small travel agency that builds clear routes so you spend less time arranging and more time somewhere new.",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
+    "imageAlt": "Turquoise coastline at sunrise",
+    "actions": [
+      { "label": "Our story", "href": "#story", "variant": "light" },
+      { "label": "Site pages", "href": "#site-pages", "variant": "ghost" }
+    ]
+  },
+  "story": {
+    "eyebrow": "Our story",
+    "title": "Born from missed connections",
+    "titleHighlight": "and better ideas",
+    "paragraphs": [
+      "Lunavia started when our founders kept fixing trips that looked perfect on paper and fell apart in airports. We rebuilt the process around transparent timing, trusted local partners, and a specialist who actually answers the phone.",
+      "Today we design custom itineraries and curated packages for people who want the world without the spreadsheet."
+    ],
+    "image": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1400&q=80",
+    "imageAlt": "Traveler with a backpack overlooking a city"
+  },
+  "milestones": [
+    { "value": "12+", "label": "Years crafting trips" },
+    { "value": "48", "label": "Countries on our map" },
+    { "value": "9k", "label": "Travelers guided" },
+    { "value": "24/7", "label": "Trip-day support" }
+  ],
+  "valuesIntro": {
+    "eyebrow": "How we work",
+    "title": "The Lunavia way",
+    "lead": "Every trip follows the same promise: honest routes, human support, and logistics that stay out of your way."
+  },
+  "values": [
+    {
+      "title": "Honest routes",
+      "text": "We plan around real connections, local partners, and time you will actually enjoy — not brochure filler."
+    },
+    {
+      "title": "Human support",
+      "text": "One travel specialist stays with your trip from the first idea to the flight home."
+    },
+    {
+      "title": "Less logistics",
+      "text": "Transfers, timing, and tickets are handled so your days stay open for living."
+    }
+  ],
+  "teamIntro": {
+    "eyebrow": "Team",
+    "title": "People behind your route",
+    "lead": "Specialists who know destinations, airports, and the quiet details that turn a plan into a trip."
+  },
+  "team": [
+    {
+      "id": 1,
+      "name": "Marta Koval",
+      "role": "Founder & lead planner",
+      "photo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=700&q=80"
+    },
+    {
+      "id": 2,
+      "name": "Oleh Rudenko",
+      "role": "Destination specialist",
+      "photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=700&q=80"
+    },
+    {
+      "id": 3,
+      "name": "Sofia Melnyk",
+      "role": "Guest experience",
+      "photo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80"
+    }
+  ],
+  "cta": {
+    "title": "Tell us where you want to go",
+    "text": "Share a destination, a season, or just a feeling — we will sketch a route that fits.",
+    "buttonLabel": "Start planning",
+    "email": "hello@lunavia.travel",
+    "image": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=2000&q=80"
+  }
+}
