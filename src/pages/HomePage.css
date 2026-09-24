@@ -164,3 +164,17 @@
   color: #8a9a95;
   margin-top: 10px;
 }
+
+.search-bar__field--error .search-bar__value {
+  color: #e0453c;
+}
+
+.search-bar__field--error .search-bar__label {
+  color: #e0453c;
+}
+
+.search-bar__error {
+  font-size: 11px;
+  font-weight: 600;
+  color: #e0453c;
+}

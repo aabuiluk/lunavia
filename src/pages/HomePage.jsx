@@ -15,35 +15,123 @@ export const pageMeta = {
   summary: 'Start here — Lunavia’s welcome page and travel promise.',
 }
 
+// Validators keyed by the *meaning* of a field, not its name —
+// so any field with type: 'city' gets city rules, etc.
+const VALIDATORS = {
+  city: (value) => {
+    const v = value.trim()
+    if (!v) return 'Please enter a place'
+    if (v.length < 2) return 'Too short'
+    if (!/^[a-zA-Zа-яА-ЯёЁ\s'-]+$/.test(v)) {
+      return 'Letters only, no numbers or symbols'
+    }
+    return null
+  },
+  date: (value) => {
+  const v = value.trim()
+  if (!v) return 'Please choose dates'
+
+  const datePattern = /^\d{1,2}[./]\d{1,2}[./]\d{2,4}$/
+
+  // allow a single date or a range like "12.08.2026 - 19.08.2026"
+  const parts = v.split(/\s*[-–]\s*/)
+  if (parts.length > 2) return 'Use one date or a range'
+
+  const allValid = parts.every((part) => datePattern.test(part))
+  if (!allValid) return 'Use a date like 12.08.2026'
+
+  return null
+},
+  count: (value) => {
+    const v = value.trim()
+    if (!v) return 'Please enter a number'
+    if (!/^\d+$/.test(v)) return 'Numbers only'
+    const n = Number(v)
+    if (n < 1) return 'At least 1 traveler'
+    if (n > 9) return 'Max 9 travelers'
+    return null
+  },
+}
+
 export function SearchBar({ fields, note, ctaLabel = 'Find route', onSubmit }) {
   const [values, setValues] = useState(
     Object.fromEntries(fields.map((f) => [f.name, f.value]))
   )
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
 
-  function handleChange(name, newValue) {
-    setValues((prev) => ({ ...prev, [name]: newValue }))
+  function validateField(field, value) {
+    const validator = VALIDATORS[field.type]
+    return validator ? validator(value) : null
+  }
+
+  function handleChange(field, newValue) {
+    setValues((prev) => ({ ...prev, [field.name]: newValue }))
+    if (touched[field.name]) {
+      setErrors((prev) => ({ ...prev, [field.name]: validateField(field, newValue) }))
+    }
+  }
+
+  function handleBlur(field) {
+    setTouched((prev) => ({ ...prev, [field.name]: true }))
+    setErrors((prev) => ({
+      ...prev,
+      [field.name]: validateField(field, values[field.name]),
+    }))
+  }
+
+  function handleSubmit() {
+    const nextErrors = {}
+    fields.forEach((field) => {
+      nextErrors[field.name] = validateField(field, values[field.name])
+    })
+    setErrors(nextErrors)
+    setTouched(Object.fromEntries(fields.map((f) => [f.name, true])))
+
+    const hasErrors = Object.values(nextErrors).some(Boolean)
+    if (hasErrors) return
+
+    onSubmit?.(values)
   }
 
   return (
     <div className="search-bar">
       <div className="search-bar__grid">
-        {fields.map((field) => (
-          <div className="search-bar__field" key={field.name}>
-            <label className="search-bar__label" htmlFor={field.name}>
-              {field.label}
-            </label>
-            <input
-              id={field.name}
-              className="search-bar__value"
-              type="text"
-              value={values[field.name]}
-              placeholder={field.placeholder}
-              onChange={(e) => handleChange(field.name, e.target.value)}
-            />
-          </div>
-        ))}
+        {fields.map((field) => {
+          const error = errors[field.name]
+          return (
+            <div
+              className={
+                'search-bar__field' + (error ? ' search-bar__field--error' : '')
+              }
+              key={field.name}
+            >
+              <label className="search-bar__label" htmlFor={field.name}>
+                {field.label}
+              </label>
+              <input
+                id={field.name}
+                className="search-bar__value"
+                type={field.type === 'count' ? 'number' : 'text'}
+                min={field.type === 'count' ? 1 : undefined}
+                max={field.type === 'count' ? 9 : undefined}
+                value={values[field.name]}
+                placeholder={field.placeholder}
+                onChange={(e) => handleChange(field, e.target.value)}
+                onBlur={() => handleBlur(field)}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? `${field.name}-error` : undefined}
+              />
+              {error && (
+                <span className="search-bar__error" id={`${field.name}-error`}>
+                  {error}
+                </span>
+              )}
+            </div>
+          )
+        })}
 
-        <button className="search-bar__cta" onClick={() => onSubmit?.(values)}>
+        <button type="button" className="search-bar__cta" onClick={handleSubmit}>
           {ctaLabel} <span>→</span>
         </button>
       </div>
@@ -52,8 +140,6 @@ export function SearchBar({ fields, note, ctaLabel = 'Find route', onSubmit }) {
     </div>
   )
 }
-
-
 
 export default function HomePage() {
   return (
@@ -80,10 +166,10 @@ export default function HomePage() {
           <div className='for_inputs_to_route'>
             <SearchBar
               fields={[
-                { name: 'start', label: 'Start?', value: '', placeholder: 'Choose start point' },
-                { name: 'where', label: 'Where?', value: '', placeholder: 'Choose destination' },
-                { name: 'dates', label: 'Dates', value: '', placeholder: 'Choose dates' },
-                { name: 'travelers', label: 'Travelers', value: '', placeholder: 'Choose number of travelers' },
+                { name: 'start', label: 'Start?', value: '', placeholder: 'Choose start point', type: 'city' },
+                { name: 'where', label: 'Where?', value: '', placeholder: 'Choose destination', type: 'city' },
+                { name: 'dates', label: 'Dates', value: '', placeholder: 'Choose dates', type: 'date' },
+                { name: 'travelers', label: 'Travelers', value: '', placeholder: 'Choose number of travelers', type: 'count' },
               ]}
               note="Flights + trains + hotels — compared for you."
               onSubmit={(values) => console.log('submitted:', values)}
