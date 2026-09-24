@@ -493,4 +493,43 @@
   }
 }
 
+@media (max-width: 480px) {
+  .hotels-main-container {
+  padding: 10px 3px 7px 3px;
+  }
+
+  .hotel-image-wrapper {
+    height: 190px;
+  }
+
+.search-panel {
+  background: var(--color-white, #fff);
+  border-radius: 16px;
+  padding: 6px 4px;
+  color: #1a1a1a;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+
+
+.hotel-badge-category {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  color: #222222;
+  letter-spacing: 0.5px;
+}
+
+
+
+}
+
 
