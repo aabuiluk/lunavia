@@ -511,19 +511,6 @@
   gap: 6px;
 }
 
-.hotel-badge-category {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #ffffff;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 10px 20px;
-  border-radius: 50px;
-  text-transform: uppercase;
-  color: #222222;
-  letter-spacing: 0.5px;
-}
 
 
 .hotel-badge-category {
