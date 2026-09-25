@@ -1,13 +1,47 @@
 {
-  "brand": "Lunavia",
+  "brand": "YOUR WAY TO EVERYWHERE",
   "title": "Your route to",
   "titleHighlight": "anywhere",
   "titleSuffix": "in the world",
-  "lead": "A small travel agency for clear itineraries, trusted partners, and trips that feel like living — not logistics.",
-  "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80",
-  "imageAlt": "Mountain lake at dusk",
+  "lead": "From Ukraine to anywhere in the world. We know the most convenient routes through European airports and can find a price that works for you.",
+  "image": "",
+  "imageAlt": "Beach with clear water and tropical cliffs",
   "actions": [
-    { "label": "About us", "href": "/about", "variant": "light" },
-    { "label": "See tours", "href": "/tours", "variant": "ghost" }
-  ]
+    { "label": "Know the price", "href": "/about", "variant": "light" },
+    { "label": "Go direct", "href": "/tours", "variant": "ghost" }
+  ],
+  "search": {
+    "fields": [
+      { "name": "start", "label": "Start?", "value": "", "placeholder": "Krakow", "type": "city" },
+      { "name": "where", "label": "Where?", "value": "", "placeholder": "Barcelona", "type": "city" },
+      { "name": "dates", "label": "Dates", "value": "", "placeholder": "12.10.2026 - 19.10.2026", "type": "date" },
+      { "name": "travelers", "label": "Travelers", "value": "", "placeholder": "Choose number of travelers", "type": "count" }
+    ],
+    "note": "Flight results open on Skyscanner. Train and hotel connections are not included.",
+    "ctaLabel": "Find route"
+  },
+  "routeMap": {
+    "eyebrow": "THE SMART WAY",
+    "titleLines": ["There is no", "direct flight."],
+    "titleHighlight": "We know the way.",
+    "text": "We select routes from Ukraine through the nearest airports in Europe — Poland, Moldova, Romania and other countries. One clear route, made for you.",
+    "stops": [
+      { "code": "UA", "title": "Ukraine", "note": "Where you begin" },
+      { "code": "↗", "title": "Train", "note": "Fast transfer" },
+      { "code": "PL", "title": "European hub", "note": "PL · MD · RO" },
+      { "code": "◇", "title": "Airport", "note": "Your connection" },
+      { "code": "✦", "title": "Destination", "note": "The world ahead", "active": true }
+    ],
+    "countries": ["Poland", "Moldova", "Romania", "Slovakia", "Hungary"],
+    "link": { "label": "The route is ours. The choice is yours", "href": "/tours" }
+  },
+  "destinations": {
+    "eyebrow": "AUTUMN, 2026",
+    "titleLines": ["Where do you", "want to go?"],
+    "items": [
+      { "tag": "BEACH", "country": "Greece", "place": "Greek Islands", "price": "€299", "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=80", "span": "wide", "href": "https://www.skyscanner.net/flights-to/gr/cheap-flights-to-greece.html" },
+      { "tag": "CITY", "country": "Spain", "place": "Barcelona", "price": "€279", "image": "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=900&q=80", "span": "wide", "href": "https://www.skyscanner.net/flights-to/bcn/cheap-flights-to-barcelona-airport.html" },
+      { "tag": "FAMILY", "country": "Türkiye", "place": "Antalya", "price": "€319", "image": "https://images.unsplash.com/photo-1600298881974-6be191ceeda1?auto=format&fit=crop&w=700&q=80", "span": "narrow", "href": "https://www.skyscanner.net/flights-to/ayt/cheap-flights-to-antalya-airport.html" }
+    ]
+  }
 }
