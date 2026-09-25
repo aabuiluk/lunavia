@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Register.css';
+import bungalowImg from '../components/bungalow.jpg';
 
 export const pageMeta = {
   path: '/register',
@@ -14,20 +15,32 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Отправленные данные:', form);
+    if (typeof apiSend === 'function') {
+      apiSend('/api/register', form);
+    } else {
+      console.log('Отправленные данные:', form);
+    }
   };
 
   return (
     <div className="split-layout">
-      <div className="left-side">
+      {/* Передаем импортированную картинку из src/components через инлайн-стиль */}
+      <div className="left-side" style={{ backgroundImage: `url(${bungalowImg})` }}>
         <div className="left-overlay"></div>
         <div className="overlay-content">
           <div className="brand">
             <span className="brand-dot"></span> Lunavia
           </div>
-          <div className="hero-text">
+          <div className="hero-text-container">
             <span className="small-top-label">YOUR ROUTE TO EVERYWHERE</span>
-            <h1>A little less planning. <span className="highlight-text">A lot more going.</span></h1>
+            <div className="hero-heading-wrapper">
+              <h1>
+                A little less<br />
+                planning.<br />
+                going.
+              </h1>
+              <span className="highlight-text-absolute">A lot more</span>
+            </div>
           </div>
           <div className="footer-credits">
             Lunavia · Ukraine to anywhere
@@ -119,5 +132,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
-

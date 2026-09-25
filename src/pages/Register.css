@@ -1,28 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Строго изолированный сброс стилей внутри .split-layout по требованию ревьюера */
 .split-layout,
 .split-layout * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   font-family: 'Inter', sans-serif;
 }
 
 .split-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   overflow: hidden;
 }
 
-
-.left-side {
+.split-layout .left-side {
   flex: 1;
-  background: url('../components/bungalow.jpg') center/cover no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
   color: white;
 }
 
-
-.left-overlay {
+.split-layout .left-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -32,17 +35,18 @@
   z-index: 1;
 }
 
-.overlay-content {
+.split-layout .overlay-content {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: 40px;
+  padding: 60px;
+  text-align: left;
 }
 
-.brand {
+.split-layout .brand {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -51,19 +55,18 @@
   color: #111;
 }
 
-.brand-dot {
+.split-layout .brand-dot {
   width: 10px;
   height: 10px;
   background-color: #00cbc0;
   border-radius: 50%;
 }
 
-.hero-text {
-  max-width: 520px;
+.split-layout .hero-text-container {
   margin-bottom: 40px;
 }
 
-.small-top-label {
+.split-layout .small-top-label {
   font-size: 11px;
   letter-spacing: 1.5px;
   font-weight: 700;
@@ -72,26 +75,37 @@
   margin-bottom: 12px;
 }
 
-.hero-text h1 {
-  font-size: 46px;
-  line-height: 1.15;
+.split-layout .hero-heading-wrapper {
+  position: relative;
+}
+
+.split-layout .hero-text-container h1 {
+  font-size: 68px;
+  line-height: 0.95;
   font-weight: 700;
   letter-spacing: -1px;
   color: #112225;
+  text-align: left;
 }
 
-.highlight-text {
+.split-layout .highlight-text-absolute {
+  position: absolute;
+  top: 85px;
+  left: 310px;
   color: #ffffff;
   font-weight: 700;
+  font-size: 68px;
+  white-space: nowrap;
 }
 
-.footer-credits {
-  font-size: 12px;
+.split-layout .footer-credits {
+  font-size: 13px;
   color: #112225;
   font-weight: 600;
+  text-align: left;
 }
 
-.right-side {
+.split-layout .right-side {
   flex: 1;
   background-color: #e8f7fc;
   display: flex;
@@ -101,7 +115,7 @@
   overflow: hidden;
 }
 
-.bg-circle-top {
+.split-layout .bg-circle-top {
   position: absolute;
   top: -60px;
   left: 60px;
@@ -112,7 +126,7 @@
   z-index: 0;
 }
 
-.bg-circle-bottom {
+.split-layout .bg-circle-bottom {
   position: absolute;
   bottom: -80px;
   right: -80px;
@@ -123,19 +137,19 @@
   z-index: 0;
 }
 
-.form-wrapper {
+.split-layout .form-wrapper {
   width: 100%;
   max-width: 400px;
   padding: 40px;
   z-index: 1;
 }
 
-.form-header {
+.split-layout .form-header {
   text-align: center;
   margin-bottom: 28px;
 }
 
-.create-account-tag {
+.split-layout .create-account-tag {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.2px;
@@ -144,7 +158,7 @@
   margin-bottom: 8px;
 }
 
-.form-header h2 {
+.split-layout .form-header h2 {
   font-size: 28px;
   font-weight: 700;
   color: #111;
@@ -152,32 +166,32 @@
   letter-spacing: -0.5px;
 }
 
-.form-header p {
+.split-layout .form-header p {
   font-size: 13px;
   color: #64748b;
   line-height: 1.4;
 }
 
-.reg-form {
+.split-layout .reg-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.input-group {
+.split-layout .input-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.input-group label {
+.split-layout .input-group label {
   font-size: 10px;
   font-weight: 700;
   color: #64748b;
   letter-spacing: 0.8px;
 }
 
-.input-group input {
+.split-layout .input-group input {
   width: 100%;
   padding: 12px 16px;
   background: #ffffff;
@@ -189,16 +203,16 @@
   transition: all 0.2s;
 }
 
-.input-group input:focus {
+.split-layout .input-group input:focus {
   border-color: #00b894;
   box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.1);
 }
 
-.password-wrapper {
+.split-layout .password-wrapper {
   position: relative;
 }
 
-.toggle-password {
+.split-layout .toggle-password {
   position: absolute;
   right: 14px;
   top: 50%;
@@ -210,12 +224,12 @@
   color: #64748b;
 }
 
-.btn-primary {
+.split-layout .btn-primary {
   width: 100%;
   padding: 13px;
   background: #00cbc0;
   color: white;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -224,11 +238,11 @@
   margin-top: 4px;
 }
 
-.btn-primary:hover {
+.split-layout .btn-primary:hover {
   background: #00b2a7;
 }
 
-.divider {
+.split-layout .divider {
   display: flex;
   align-items: center;
   text-align: center;
@@ -239,21 +253,22 @@
   font-weight: 600;
 }
 
-.divider::before, .divider::after {
+.split-layout .divider::before,
+.split-layout .divider::after {
   content: '';
   flex: 1;
   border-bottom: 1px solid #cbd5e1;
 }
 
-.divider::before {
+.split-layout .divider::before {
   margin-right: 10px;
 }
 
-.divider::after {
+.split-layout .divider::after {
   margin-left: 10px;
 }
 
-.btn-google {
+.split-layout .btn-google {
   width: 100%;
   padding: 12px;
   background: #ffffff;
@@ -270,31 +285,29 @@
   transition: background 0.2s;
 }
 
-.btn-google:hover {
+.split-layout .btn-google:hover {
   background: #f8fafc;
 }
 
-.login-footer {
+.split-layout .login-footer {
   text-align: center;
   font-size: 13px;
   color: #64748b;
   margin-top: 24px;
 }
 
-.login-footer a {
+.split-layout .login-footer a {
   color: #00b894;
   text-decoration: none;
   font-weight: 600;
 }
 
-.login-footer a:hover {
+.split-layout .login-footer a:hover {
   text-decoration: underline;
 }
 
 @media (max-width: 900px) {
-  .left-side {
+  .split-layout .left-side {
     display: none;
   }
 }
-
-
