@@ -1,0 +1,13 @@
+{
+  "brand": "Lunavia",
+  "title": "Your route to",
+  "titleHighlight": "anywhere",
+  "titleSuffix": "in the world",
+  "lead": "A small travel agency for clear itineraries, trusted partners, and trips that feel like living — not logistics.",
+  "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80",
+  "imageAlt": "Mountain lake at dusk",
+  "actions": [
+    { "label": "About us", "href": "/about", "variant": "light" },
+    { "label": "See tours", "href": "/tours", "variant": "ghost" }
+  ]
+}

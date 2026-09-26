@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Строго изолированный сброс стилей внутри .split-layout по требованию ревьюера */
+.split-layout,
+.split-layout * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.split-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.split-layout .left-side {
+  flex: 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  color: white;
+}
+
+.split-layout .left-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(150, 200, 220, 0.4) 100%);
+  z-index: 1;
+}
+
+.split-layout .overlay-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 60px;
+  text-align: left;
+}
+
+.split-layout .brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111;
+}
+
+.split-layout .brand-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #00cbc0;
+  border-radius: 50%;
+}
+
+.split-layout .hero-text-container {
+  margin-bottom: 40px;
+}
+
+.split-layout .small-top-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #1a2e35;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.split-layout .hero-heading-wrapper {
+  position: relative;
+}
+
+.split-layout .hero-text-container h1 {
+  font-size: 68px;
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #112225;
+  text-align: left;
+}
+
+.split-layout .highlight-text-absolute {
+  position: absolute;
+  top: 85px;
+  left: 310px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 68px;
+  white-space: nowrap;
+}
+
+.split-layout .footer-credits {
+  font-size: 13px;
+  color: #112225;
+  font-weight: 600;
+  text-align: left;
+}
+
+.split-layout .right-side {
+  flex: 1;
+  background-color: #e8f7fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.split-layout .bg-circle-top {
+  position: absolute;
+  top: -60px;
+  left: 60px;
+  width: 200px;
+  height: 200px;
+  background: #fef3d6;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.split-layout .bg-circle-bottom {
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 250px;
+  height: 250px;
+  border: 18px solid #5ce5e6;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.split-layout .form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  z-index: 1;
+}
+
+.split-layout .form-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.split-layout .create-account-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #00b894;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.split-layout .form-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.split-layout .form-header p {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.split-layout .reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.split-layout .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.split-layout .input-group label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.8px;
+}
+
+.split-layout .input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.split-layout .input-group input:focus {
+  border-color: #00b894;
+  box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.1);
+}
+
+.split-layout .password-wrapper {
+  position: relative;
+}
+
+.split-layout .toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.split-layout .btn-primary {
+  width: 100%;
+  padding: 13px;
+  background: #00cbc0;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 4px;
+}
+
+.split-layout .btn-primary:hover {
+  background: #00b2a7;
+}
+
+.split-layout .divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #94a3b8;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.split-layout .divider::before,
+.split-layout .divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.split-layout .divider::before {
+  margin-right: 10px;
+}
+
+.split-layout .divider::after {
+  margin-left: 10px;
+}
+
+.split-layout .btn-google {
+  width: 100%;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+
+.split-layout .btn-google:hover {
+  background: #f8fafc;
+}
+
+.split-layout .login-footer {
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 24px;
+}
+
+.split-layout .login-footer a {
+  color: #00b894;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.split-layout .login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .split-layout .left-side {
+    display: none;
+  }
+}
