@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApi } from '../api/client'
 import './Hotels.css'
+import {SearchBar} from "./HomePage.jsx";
 
 export const pageMeta = {
   path: '/hotels',
