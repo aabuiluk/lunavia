@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import './RouteMap.css'
 
 const STOPS = [
@@ -10,24 +11,23 @@ const STOPS = [
 
 const COUNTRIES = ['Poland', 'Moldova', 'Romania', 'Slovakia', 'Hungary']
 
-export function RouteMap() {
+export function RouteMap({ data }) {
+  const stops = data?.stops ?? STOPS
+  const countries = data?.countries ?? COUNTRIES
+  const titleLines = data?.titleLines ?? ['There is no', 'direct flight.']
+
   return (
     <section className="route container">
       <div className="route__head">
         <div className="route__head-left">
-          <p className="route__eyebrow">THE SMART WAY</p>
+          <p className="route__eyebrow">{data?.eyebrow ?? 'THE SMART WAY'}</p>
           <h2 className="route__title">
-            There is no
-            <br />
-            direct flight.
-            <br />
-            <span>We know the way.</span>
+            {titleLines.map((line) => <Fragment key={line}>{line}<br /></Fragment>)}
+            <span>{data?.titleHighlight ?? 'We know the way.'}</span>
           </h2>
         </div>
         <p className="route__text">
-          We select routes from Ukraine through the nearest airports in
-          Europe — Poland, Moldova, Romania and other countries. One clear
-          route, made for you.
+          {data?.text ?? 'We select routes from Ukraine through the nearest airports in Europe — Poland, Moldova, Romania and other countries. One clear route, made for you.'}
         </p>
       </div>
 
@@ -35,7 +35,7 @@ export function RouteMap() {
         <div className="route__glow" aria-hidden="true" />
 
         <div className="route__stops">
-          {STOPS.map((stop) => (
+          {stops.map((stop) => (
             <div className="route__stop" key={stop.title}>
               <span
                 className={
@@ -52,12 +52,12 @@ export function RouteMap() {
 
         <div className="route__footer">
           <div className="route__pills">
-            {COUNTRIES.map((c) => (
+            {countries.map((c) => (
               <span key={c}>{c}</span>
             ))}
           </div>
-          <a className="route__link" href="/tours">
-            The route is ours. The choice is yours <span>↗</span>
+          <a className="route__link" href={data?.link?.href ?? '/tours'}>
+            {data?.link?.label ?? 'The route is ours. The choice is yours'} <span>↗</span>
           </a>
         </div>
       </div>
