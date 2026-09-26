@@ -10,12 +10,9 @@
   --radius: 12px;
   --radius-lg: 20px;
   --header-h: 72px;
-  --font-display: "Syne", sans-serif;
-  --font-body: "Manrope", sans-serif;
   --max: 1120px;
   color: var(--color-ink);
   background: var(--color-white);
-  font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -50,7 +47,6 @@ a {
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.1;
   margin: 0;
@@ -59,7 +55,6 @@ h3 {
 p {
   margin: 0;
   line-height: 1.65;
-  color: var(--color-muted);
 }
 
 button,
@@ -114,7 +109,6 @@ textarea {
 .btn--ghost {
   background: transparent;
   color: var(--color-ink);
-  border: 1.5px solid rgba(20, 36, 36, 0.15);
 }
 
 .btn--ghost:hover {
@@ -123,12 +117,12 @@ textarea {
 }
 
 .btn--light {
-  background: var(--color-white);
-  color: var(--color-ink);
+  border-radius: 25px;
+  color: var(--color-white);
 }
 
 .btn--light:hover {
-  background: var(--color-fog);
+  background: var(--color-teal-dark);
 }
 
 @keyframes rise-in {
