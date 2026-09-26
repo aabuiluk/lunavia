@@ -126,6 +126,104 @@ function HomeEditor({ draft, setDraft }) {
           </>
         )}
       </ListBlock>
+      <HomeSectionsEditor draft={draft} setDraft={setDraft} />
+    </>
+  )
+}
+
+function HomeSectionsEditor({ draft, setDraft }) {
+  const search = draft.search || { fields: [], note: '', ctaLabel: '' }
+  const routeMap = draft.routeMap || { stops: [], countries: [], titleLines: [], link: {} }
+  const destinations = draft.destinations || { items: [], titleLines: [] }
+  const lines = (value) => value.split('\n').map((line) => line.trim()).filter(Boolean)
+  const update = (section, current, key, value) =>
+    setDraft(patch(draft, section, patch(current, key, value)))
+
+  return (
+    <>
+      <h3>Flight search</h3>
+      <Field label="Search note" value={search.note} onChange={(v) => update('search', search, 'note', v)} />
+      <Field label="Search button" value={search.ctaLabel} onChange={(v) => update('search', search, 'ctaLabel', v)} />
+      <ListBlock
+        title="Search fields"
+        items={search.fields}
+        onChange={(fields) => update('search', search, 'fields', fields)}
+        blank={{ name: '', label: '', value: '', placeholder: '', type: 'city' }}
+        addLabel="Add field"
+      >
+        {(item, _i, change) => (
+          <>
+            {['name', 'label', 'value', 'placeholder'].map((key) => (
+              <Field key={key} label={key} value={item[key]} onChange={(v) => change(patch(item, key, v))} />
+            ))}
+            <label className="admin-field">
+              <span>Type</span>
+              <select value={item.type} onChange={(e) => change(patch(item, 'type', e.target.value))}>
+                <option value="city">city</option>
+                <option value="date">date</option>
+                <option value="count">count</option>
+              </select>
+            </label>
+          </>
+        )}
+      </ListBlock>
+
+      <h3>Route map</h3>
+      <Field label="Eyebrow" value={routeMap.eyebrow} onChange={(v) => update('routeMap', routeMap, 'eyebrow', v)} />
+      <Field label="Title lines (one per line)" multiline value={(routeMap.titleLines || []).join('\n')} onChange={(v) => update('routeMap', routeMap, 'titleLines', lines(v))} />
+      <Field label="Title highlight" value={routeMap.titleHighlight} onChange={(v) => update('routeMap', routeMap, 'titleHighlight', v)} />
+      <Field label="Description" multiline value={routeMap.text} onChange={(v) => update('routeMap', routeMap, 'text', v)} />
+      <ListBlock
+        title="Route stops"
+        items={routeMap.stops}
+        onChange={(stops) => update('routeMap', routeMap, 'stops', stops)}
+        blank={{ code: '', title: '', note: '', active: false }}
+        addLabel="Add stop"
+      >
+        {(item, _i, change) => (
+          <>
+            {['code', 'title', 'note'].map((key) => (
+              <Field key={key} label={key} value={item[key]} onChange={(v) => change(patch(item, key, v))} />
+            ))}
+            <label className="admin-field">
+              <span>Highlighted stop</span>
+              <select value={item.active ? 'yes' : 'no'} onChange={(e) => change(patch(item, 'active', e.target.value === 'yes'))}>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </label>
+          </>
+        )}
+      </ListBlock>
+      <Field label="Countries (one per line)" multiline value={(routeMap.countries || []).join('\n')} onChange={(v) => update('routeMap', routeMap, 'countries', lines(v))} />
+      <Field label="Route link label" value={routeMap.link?.label} onChange={(v) => update('routeMap', routeMap, 'link', patch(routeMap.link || {}, 'label', v))} />
+      <Field label="Route link URL" value={routeMap.link?.href} onChange={(v) => update('routeMap', routeMap, 'link', patch(routeMap.link || {}, 'href', v))} />
+
+      <h3>Destinations</h3>
+      <Field label="Eyebrow" value={destinations.eyebrow} onChange={(v) => update('destinations', destinations, 'eyebrow', v)} />
+      <Field label="Title lines (one per line)" multiline value={(destinations.titleLines || []).join('\n')} onChange={(v) => update('destinations', destinations, 'titleLines', lines(v))} />
+      <ListBlock
+        title="Destination cards"
+        items={destinations.items}
+        onChange={(items) => update('destinations', destinations, 'items', items)}
+        blank={{ tag: '', country: '', place: '', price: '', image: '', span: 'wide', href: '' }}
+        addLabel="Add destination"
+      >
+        {(item, _i, change) => (
+          <>
+            {['tag', 'country', 'place', 'price', 'image', 'href'].map((key) => (
+              <Field key={key} label={key} value={item[key]} onChange={(v) => change(patch(item, key, v))} />
+            ))}
+            <label className="admin-field">
+              <span>Card width</span>
+              <select value={item.span} onChange={(e) => change(patch(item, 'span', e.target.value))}>
+                <option value="wide">wide</option>
+                <option value="narrow">narrow</option>
+              </select>
+            </label>
+          </>
+        )}
+      </ListBlock>
     </>
   )
 }
