@@ -1,5 +1,4 @@
 /** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
 @import "tailwindcss";
 @config "../tailwind.config.js";
@@ -108,7 +107,6 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Manrope", -apple-system, Roboto, Helvetica, sans-serif;
   }
 
   :where(p, span, li, a, button, label, td, th) {
@@ -128,8 +126,6 @@
   }
 
   html, body {
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px !important;
 }
 }
 

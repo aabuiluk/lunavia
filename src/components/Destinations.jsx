@@ -1,5 +1,7 @@
 import './Destinations.css'
 
+//something
+
 const DESTINATIONS = [
   {
     tag: 'BEACH',
