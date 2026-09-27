@@ -137,6 +137,43 @@ function ToursEditor({ draft, setDraft }) {
       <Field label="Eyebrow" value={draft.eyebrow} onChange={(v) => setDraft(patch(draft, 'eyebrow', v))} />
       <Field label="Title" value={draft.title} onChange={(v) => setDraft(patch(draft, 'title', v))} />
       <Field label="Lead" multiline value={draft.lead} onChange={(v) => setDraft(patch(draft, 'lead', v))} />
+
+      <Field
+        label="Categories (one per line)"
+        multiline
+        value={(draft.categories || []).join('\n')}
+        onChange={(v) =>
+          setDraft(
+            patch(
+              draft,
+              'categories',
+              v.split('\n').map((c) => c.trim()).filter(Boolean)
+            )
+          )
+        }
+      />
+
+      <ListBlock
+        title="Tours"
+        items={draft.tours}
+        onChange={(tours) => setDraft(patch(draft, 'tours', tours))}
+        blank={{ id: Date.now().toString(), title: '', category: '', meta: '', route: '', price: '', discount: '', image: '' }}
+        addLabel="Add tour"
+      >
+        {(item, _i, update) => (
+          <>
+            <Field label="ID" value={item.id} onChange={(v) => update(patch(item, 'id', v))} />
+            <Field label="Title" value={item.title} onChange={(v) => update(patch(item, 'title', v))} />
+            <Field label="Category" value={item.category} onChange={(v) => update(patch(item, 'category', v))} />
+            <Field label="Meta" value={item.meta} onChange={(v) => update(patch(item, 'meta', v))} />
+            <Field label="Route" value={item.route} onChange={(v) => update(patch(item, 'route', v))} />
+            <Field label="Price" value={item.price} onChange={(v) => update(patch(item, 'price', v))} />
+            <Field label="Discount" value={item.discount} onChange={(v) => update(patch(item, 'discount', v))} />
+            <Field label="Image URL" value={item.image} onChange={(v) => update(patch(item, 'image', v))} />
+          </>
+        )}
+      </ListBlock>
+
       <Field
         label="Button label"
         value={cta.label}
