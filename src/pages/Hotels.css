@@ -89,7 +89,6 @@
   background: #fff;
   border-radius: 24px;
   padding: 20px 28px 16px;
-  /* Плотная и яркая тень */
   box-shadow: 0 20px 45px -12px rgba(21, 111, 59, 0.35);
   box-sizing: border-box;
 }
@@ -396,7 +395,6 @@
 .hotels-empty {
   color: #666;
 }
-
 
 
 /* PAGINATION */
