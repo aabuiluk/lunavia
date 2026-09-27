@@ -398,7 +398,6 @@
 }
 
 
-
 /* PAGINATION */
 .hotels-pagination {
   display: flex;
@@ -458,10 +457,6 @@
   background-color: #16b39a;
 }
 
-.hotels-page-btn.arrow:first-child .pagination-arrow-icon {
-  transform: rotate(-180deg);
-}
-
 .pagination-arrow-icon {
   width: 16px;
   height: 16px;
@@ -472,8 +467,8 @@
 
 .hotels-page-btn.arrow:first-child,
 .hotels-page-btn.arrow:last-child {
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 
