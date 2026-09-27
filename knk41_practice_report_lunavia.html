@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Звіт з виробничої практики — КНК-41 · Lunavia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #142033;
+      --muted: #5a6a82;
+      --line: #d8e0ec;
+      --paper: #f7f9fc;
+      --surface: #ffffff;
+      --accent: #0e6b63;
+      --accent-soft: #e6f4f2;
+      --gold: #8a6a2f;
+      --gold-soft: #f5efdf;
+      --ok: #1b7a52;
+      --ok-soft: #e8f6ef;
+      --warn: #8a5a12;
+      --max: 820px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(14,107,99,.07), transparent 40%),
+        radial-gradient(circle at 100% 8%, rgba(138,106,47,.06), transparent 35%),
+        var(--paper);
+      font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.65;
+      font-size: 15.5px;
+    }
+
+    .page {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+      padding: 48px 0 72px;
+    }
+
+    .cover {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 40px 40px 34px;
+      box-shadow: 0 18px 50px rgba(20, 32, 51, .06);
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent), #1a9b8f 55%, var(--gold));
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .chip.alt { background: var(--gold-soft); color: var(--gold); }
+    h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin: 0 0 14px;
+      font-weight: 650;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16.5px;
+      max-width: 62ch;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .cover-stat {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #fff, #fafbfd);
+    }
+    .cover-stat strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 2px;
+      letter-spacing: -.02em;
+    }
+    .cover-stat span { color: var(--muted); font-size: 13px; }
+    .cover-link {
+      margin-top: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .cover-link a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(14,107,99,.25);
+    }
+
+    .toc {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 40px;
+      padding: 0;
+      list-style: none;
+    }
+    .toc a {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      text-decoration: none;
+      color: inherit;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+    .toc .n {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 13px;
+      min-width: 1.6rem;
+    }
+    .toc .t { font-weight: 650; }
+    .toc .d { margin-left: auto; color: var(--muted); font-size: 13px; }
+
+    section.block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 34px 34px 30px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 36px rgba(20, 32, 51, .04);
+    }
+    .section-kicker {
+      display: inline-flex;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h2 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(24px, 3vw, 30px);
+      margin: 0 0 8px;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+    }
+    .section-intro {
+      margin: 0 0 22px;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      font-size: 17px;
+      letter-spacing: -.01em;
+    }
+    p { margin: 0 0 12px; }
+    ul, ol { margin: 0 0 14px; padding-left: 1.15rem; }
+    li { margin: 0 0 6px; }
+    li::marker { color: var(--accent); }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+      background: #fbfcfe;
+    }
+    .panel h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+    }
+    .panel.done { background: var(--ok-soft); border-color: #c6e6d6; }
+    .panel.done h4 { color: var(--ok); }
+    .panel.plan h4 { color: var(--accent); }
+    .panel ul { margin-bottom: 0; }
+
+    .sprint-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 6px;
+      font-size: 14px;
+    }
+    .sprint-table th,
+    .sprint-table td {
+      text-align: left;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .sprint-table th {
+      background: #f1f5fa;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--muted);
+    }
+    .sprint-table tr:last-child td { border-bottom: 0; }
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 750;
+      background: var(--ok-soft);
+      color: var(--ok);
+      white-space: nowrap;
+    }
+    .tag.partial {
+      background: #fff4df;
+      color: var(--warn);
+    }
+
+    .note {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      border-radius: 0 12px 12px 0;
+      font-size: 14.5px;
+    }
+
+    .practical {
+      background:
+        linear-gradient(180deg, rgba(245,239,223,.55), rgba(255,255,255,1)),
+        var(--surface);
+    }
+    .practical .section-kicker { color: var(--gold); }
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .check-item {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+    .check-item .mark {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin-top: 3px;
+      background: var(--ok);
+      position: relative;
+    }
+    .check-item .mark::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      width: 5px;
+      height: 9px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .check-item strong { display: block; margin-bottom: 2px; }
+    .check-item span { color: var(--muted); font-size: 14px; }
+
+    .person {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px 20px 16px;
+      margin: 14px 0 0;
+      background: linear-gradient(180deg, #fff, #fafbfd);
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .person-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .person h3 {
+      margin: 0;
+      font-size: 17.5px;
+      font-family: "Source Serif 4", Georgia, serif;
+    }
+    .person .role {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .person .tickets {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 10px;
+    }
+    .person ul { margin-bottom: 0; }
+
+    footer.doc-foot {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 8px 0 20px;
+    }
+
+    @media (max-width: 720px) {
+      .page { width: min(calc(100% - 24px), var(--max)); padding-top: 24px; }
+      .cover, section.block { padding: 22px; border-radius: 18px; }
+      .cover-grid, .compare { grid-template-columns: 1fr; }
+      .toc .d { display: none; }
+      .person-head { flex-direction: column; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 12.5px; }
+      .page { width: 100%; max-width: none; margin: 0; padding: 0; }
+      .cover, section.block, .person, .toc a, .check-item, .panel, .cover-stat {
+        box-shadow: none !important;
+      }
+      .cover, section.block {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        padding: 22px;
+      }
+      .person { margin-top: 10px; }
+      a { color: inherit; text-decoration: none; }
+      .cover-link a { color: var(--accent); text-decoration: underline; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="cover">
+      <div class="meta-row">
+        <span class="chip">КНК-41 · виробнича практика</span>
+        <span class="chip alt">1–25 вересня 2026</span>
+      </div>
+      <h1>Звіт про виконання виробничої практики<br />проєкт Lunavia</h1>
+      <p class="lead">
+        Документ фіксує план практики Fullstack Web Development, фактичний результат команди
+        та індивідуальний внесок студентів у розробку й розгортання вебпродукту туристичного агентства.
+      </p>
+      <div class="cover-grid">
+        <div class="cover-stat"><strong>8</strong><span>студентів команди Lunavia</span></div>
+        <div class="cover-stat"><strong>4</strong><span>спринти · React + FastAPI</span></div>
+        <div class="cover-stat"><strong>MVP</strong><span>задеплоєно у відкритому доступі</span></div>
+      </div>
+      <p class="cover-link">
+        Робочий продукт:
+        <a href="https://cscai.pythonanywhere.com/" target="_blank" rel="noopener">https://cscai.pythonanywhere.com/</a>
+      </p>
+    </header>
+
+    <ol class="toc">
+      <li><a href="#official"><span class="n">01</span><span class="t">Що планували і що зробили</span><span class="d">офіційний огляд</span></a></li>
+      <li><a href="#practical"><span class="n">02</span><span class="t">По суті: що вийшло на практиці</span><span class="d">робочий підсумок</span></a></li>
+      <li><a href="#people"><span class="n">03</span><span class="t">Індивідуальний внесок</span><span class="d">по кожному студенту</span></a></li>
+    </ol>
+
+    <!-- ========== SECTION 1 ========== -->
+    <section class="block" id="official">
+      <div class="section-kicker">Розділ 1 · офіційний</div>
+      <h2>Що робили і що зробили на практиці</h2>
+      <p class="section-intro">
+        Виробнича практика організована у форматі командної розробки програмного продукту
+        з повним циклом: планування, дизайн, frontend, backend, інтеграція, розгортання, QA та презентація.
+        Команда працювала над продуктом <strong>Lunavia</strong> — онлайн-агентством подорожей.
+      </p>
+
+      <h3>Мета практики</h3>
+      <p>
+        Набути практичних навичок fullstack-розробки в умовах, наближених до реального проєкту:
+        робота в Git із Pull Request і code review, ведення задач у Jira, спільна комунікація,
+        проєктування API, інтеграція клієнта з сервером та публікація робочого MVP.
+      </p>
+
+      <h3>Організація роботи</h3>
+      <ul>
+        <li>команда з 8 студентів у складі загальної групи КНК-41 (2 команди × 8);</li>
+        <li>спільний технологічний стек: React (Vite), FastAPI, JSON/API-шар, GitHub, CI/CD, PythonAnywhere;</li>
+        <li>робочий процес: User Stories → гілки → Pull Request → review → merge → deploy;</li>
+        <li>спеціалізація за треками Design / Programming зі спільною frontend-базою для всіх.</li>
+      </ul>
+
+      <h3>План і фактичний результат за спринтами</h3>
+      <table class="sprint-table">
+        <thead>
+          <tr>
+            <th>Спринт</th>
+            <th>За планом</th>
+            <th>Фактичний результат</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sprint 1</strong><br /><span style="color:var(--muted);font-size:12.5px">1–4.09 · Organization &amp; Design</span></td>
+            <td>Команди, Jira, MVP, backlog, Figma, user flow, планування Sprint 2</td>
+            <td>Сформовано команду Lunavia, визначено MVP туристичного сайту, розподілено сторінки та зони відповідальності, підготовлено структуру репозиторію</td>
+            <td><span class="tag">виконано</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sprint 2</strong><br /><span style="color:var(--muted);font-size:12.5px">7–11.09 · Frontend + API start</span></td>
+            <td>React UI, routing, mock data, API contract, перші FastAPI endpoints</td>
+            <td>Реалізовано основні сторінки (Home, Hotels, Tours, Support, Login/Register), навігацію, перші backend-модулі та Swagger-орієнтовану структуру API</td>
+            <td><span class="tag">виконано</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sprint 3</strong><br /><span style="color:var(--muted);font-size:12.5px">14–18.09 · Backend · Integration · Deploy</span></td>
+            <td>CRUD/API, збереження даних, React ↔ FastAPI, CI/CD, deployed MVP</td>
+            <td>Підключено API до ключових сторінок, додано admin-збереження контенту, налаштовано GitHub Actions → PythonAnywhere; продукт опубліковано за адресою cscai.pythonanywhere.com</td>
+            <td><span class="tag">виконано</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sprint 4</strong><br /><span style="color:var(--muted);font-size:12.5px">21–25.09 · QA · Release · Demo</span></td>
+            <td>Cross-team QA, bugfix, retest, Feature Freeze, README, фінальна презентація</td>
+            <td>Проведено цикл виправлення дефектів (Hotels, Login/Register, Support, Main Page), стабілізовано critical flow, підготовлено release candidate до демонстрації</td>
+            <td><span class="tag">виконано</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="compare">
+        <div class="panel plan">
+          <h4>Що мали зробити</h4>
+          <ul>
+            <li>пройти повний цикл delivery від планування до release;</li>
+            <li>побудувати React + FastAPI продукт із командною відповідальністю;</li>
+            <li>задеплоїти робочий MVP і показати live demo;</li>
+            <li>відпрацювати Git, PR, review, QA та bug reports.</li>
+          </ul>
+        </div>
+        <div class="panel done">
+          <h4>Що зроблено</h4>
+          <ul>
+            <li>створено і опубліковано сайт туристичного агентства Lunavia;</li>
+            <li>реалізовано ключові сценарії користувача: маршрути, готелі, тури, підтримка, автентифікація;</li>
+            <li>налаштовано автоматичний деплой на PythonAnywhere;</li>
+            <li>закрито серію QA-багів перед фінальною демонстрацією.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Висновок розділу.</strong> Команда виконала програму практики в загальних рисах відповідно до затвердженого плану:
+        від організаційного тижня до deployed MVP і фінальної стабілізації. Продукт доступний у мережі та демонструє повний цикл командної fullstack-розробки.
+      </div>
+    </section>
+
+    <!-- ========== SECTION 2 ========== -->
+    <section class="block practical" id="practical">
+      <div class="section-kicker">Розділ 2 · по ділу</div>
+      <h2>Що реально вийшло (без зайвого пафосу)</h2>
+      <p class="section-intro">
+        Коротко: команда не «намалювала макет і розійшлася» — зібрала живий сайт, підключила API,
+        виклала його в інтернет і потім тиждень гасила баги. Нижче — що саме є в продукті.
+      </p>
+
+      <h3>Що є на сайті зараз</h3>
+      <div class="checklist">
+        <div class="check-item">
+          <div class="mark"></div>
+          <div>
+            <strong>Головна (Home)</strong>
+            <span>Hero, пошук маршруту, офери, блоки «чому ми», CTA. Контент пов’язаний із backend; є пошук міст.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="mark"></div>
+          <div>
+            <strong>Hotels</strong>
+            <span>Каталог готелів із фільтрами/категоріями, картками й адаптивною версткою. Є backend і правки після QA.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="mark"></div>
+          <div>
+            <strong>Tours</strong>
+            <span>Список турів / категорії, зв’язок із API та можливість керувати даними через admin.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="mark"></div>
+          <div>
+            <strong>Support + Tickets</strong>
+            <span>Сторінка підтримки, backend для тікетів / airline tickets, правки після review і QA.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="mark"></div>
+          <div>
+            <strong>Login / Register</strong>
+            <span>Окремі екрани входу та реєстрації: frontend + backend, потім окремий прохід по багах.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="mark"></div>
+          <div>
+            <strong>Admin + Deploy</strong>
+            <span>Адмінка для редагування page JSON; CI/CD через GitHub Actions на PythonAnywhere.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Що спрацювало добре</h3>
+      <ul>
+        <li>розподіл по сторінках дав паралельну роботу без повного хаосу;</li>
+        <li>шаблон «React page + FastAPI module + JSON» швидко масштабувався на нові екрани;</li>
+        <li>деплой на <a href="https://cscai.pythonanywhere.com/">cscai.pythonanywhere.com</a> змусив одразу ловити «у мене працює / на проді ні»;</li>
+        <li>Sprint 4 реально пішов у bugfix, а не в нові фічі — це правильно для release.</li>
+      </ul>
+
+      <h3>Де було боляче / що лишилось нерівним</h3>
+      <ul>
+        <li>багато merge-конфліктів на спільних CSS/Layout — типова ціна спільного frontend;</li>
+        <li>частина сторінок спочатку жила на mock data, інтеграція з API йшла хвилями;</li>
+        <li>QA виявив регресії на Hotels, auth і Support — довелося повертатися й допилювати;</li>
+        <li>не все з навчального «ідеального PostgreSQL CRUD всюди» вийшло однаково глибоко на кожній сторінці — десь JSON/store + admin, десь повноцінніший API.</li>
+      </ul>
+
+      <div class="note">
+        <strong>Одним реченням.</strong> План виконали: є командний fullstack MVP у проді.
+        Якість — робоча навчальна, із живими слідами інтеграції та bugfix, а не «глянцевий демо-макет».
+      </div>
+    </section>
+
+    <!-- ========== SECTION 3 ========== -->
+    <section class="block" id="people">
+      <div class="section-kicker">Розділ 3 · індивідуально</div>
+      <h2>Внесок кожного студента</h2>
+      <p class="section-intro">
+        Нижче — короткий профіль участі за комітами, Pull Request і зонами відповідальності в репозиторії Lunavia.
+        Формулювання орієнтовані на захист / звіт: що саме людина тягнула в продукті.
+      </p>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Бойко Маргарита Станіславівна</h3>
+          <span class="role">Auth · Bugfix</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-67, CSC-51, CSC-53</p>
+        <ul>
+          <li>реалізація сторінки Login (frontend);</li>
+          <li>backend реєстрації (Register API);</li>
+          <li>участь у фінальному bugfix-циклі перед релізом;</li>
+          <li>робота через PR і merge у спільну гілку команди.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Василечко Анастасія Сергіївна</h3>
+          <span class="role">Hotels · Auth API</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-43, CSC-50, CSC-97 · також участь у TourList</p>
+        <ul>
+          <li>основна розробка сторінки Hotels (UI + ітерації);</li>
+          <li>backend Login (CSC-50);</li>
+          <li>виправлення дефектів Hotels після QA (CSC-97);</li>
+          <li>активна робота з merge/review у командних гілках.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Вензліцький Михайло Михайлович</h3>
+          <span class="role">Support · Tickets API</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-42, Airline Tickets backend, Support QA fixes</p>
+        <ul>
+          <li>сторінка Support (базова реалізація);</li>
+          <li>backend API для airline tickets;</li>
+          <li>доопрацювання Support після QA (placeholder, feedback fixes);</li>
+          <li>участь у review/merge гілок, пов’язаних із підтримкою.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Дмитрашко Олександр Олександрович</h3>
+          <span class="role">Register · Support Backend</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-41, CSC-42/57</p>
+        <ul>
+          <li>сторінка Registration (jsx/css, ітерації WIP → готовий PR);</li>
+          <li>backend для Support Page, тести/оновлення серверної частини;</li>
+          <li>debug Login/Register на етапі стабілізації;</li>
+          <li>щільна робота з конфліктами та повторними фіксами після review.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Колесніков Іван Олексійович</h3>
+          <span class="role">Hotels · Responsive</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-60</p>
+        <ul>
+          <li>адаптивна верстка сторінки Hotels під різні екрани;</li>
+          <li>серія ітерацій adaptive → hotel adaptive після review;</li>
+          <li>внесок у мобільну/планшетну якість каталогу готелів;</li>
+          <li>оформлення роботи через окремий PR у main.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Рудоманенко Артем Ігорович</h3>
+          <span class="role">Home · Frontend polish</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-62, CSC-66 · також зв’язок Hotels backend</p>
+        <ul>
+          <li>frontend головної сторінки (структура, header/main блоки);</li>
+          <li>debugging і доводка Main Page після інтеграції;</li>
+          <li>підключення/ремонт зв’язки Hotels із backend і правки Support CSS/JSX за потреби;</li>
+          <li>супровід PR по main-page гілках команди.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Альошин Артем Андрійович</h3>
+          <span class="role">Tours · Admin data</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-39, tours-update</p>
+        <ul>
+          <li>Tour list: frontend і подальші фікси після review;</li>
+          <li>оновлення tours backend та підключення до API;</li>
+          <li>динамічні тури/категорії в admin-панелі;</li>
+          <li>прибирання тестових даних і стабілізація списку турів.</li>
+        </ul>
+      </article>
+
+      <article class="person">
+        <div class="person-head">
+          <h3>Патраманський Михайло Сергійович</h3>
+          <span class="role">Tickets · Home integration</span>
+        </div>
+        <p class="tickets">Ключові задачі: CSC-38, CSC-63</p>
+        <ul>
+          <li>frontend сторінки Tickets (CSC-38) і фікси після review;</li>
+          <li>підключення головної сторінки до backend;</li>
+          <li>пошук міст на Home;</li>
+          <li>виправлення збереження Home в admin і роутингу Support.</li>
+        </ul>
+      </article>
+
+      <div class="note">
+        <strong>Примітка.</strong> Індивідуальні формулювання складені за історією Git/PR репозиторію Lunavia.
+        За потреби їх можна уточнити за Jira (CSC-*) перед офіційною здачею.
+      </div>
+    </section>
+
+    <footer class="doc-foot">
+      КНК-41 · Виробнича практика · Lunavia · 1–25 вересня 2026<br />
+      Продукт: <a href="https://cscai.pythonanywhere.com/">https://cscai.pythonanywhere.com/</a>
+    </footer>
+  </div>
+</body>
+</html>

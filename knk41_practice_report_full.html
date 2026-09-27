@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Повний звіт практики КНК-41 · Lunavia · 6 розділів</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--ink:#142033;--muted:#5a6a82;--line:#d8e0ec;--paper:#f7f9fc;--surface:#fff;--accent:#0e6b63;--accent-soft:#e6f4f2;--gold:#8a6a2f;--gold-soft:#f5efdf;--ok:#1b7a52;--ok-soft:#e8f6ef;--warn:#8a5a12;--danger:#9b2c2c;--danger-soft:#fdecec;--max:860px}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:radial-gradient(circle at 0% 0%,rgba(14,107,99,.07),transparent 40%),radial-gradient(circle at 100% 8%,rgba(138,106,47,.06),transparent 35%),var(--paper);font-family:Manrope,ui-sans-serif,system-ui,sans-serif;line-height:1.65;font-size:15.5px}
+    .page{width:min(calc(100% - 40px),var(--max));margin:0 auto;padding:48px 0 72px}
+    .cover,.block{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px;margin-bottom:28px;box-shadow:0 12px 36px rgba(20,32,51,.04)}
+    .cover{position:relative;overflow:hidden}
+    .cover::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--accent),#1a9b8f 55%,var(--gold))}
+    .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+    .chip{display:inline-flex;padding:7px 12px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--accent-soft);color:var(--accent)}
+    .chip.alt{background:var(--gold-soft);color:var(--gold)}
+    h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+    h2{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(22px,3vw,28px);margin:0 0 8px;letter-spacing:-.02em}
+    h3{margin:22px 0 8px;font-size:16.5px}
+    h4{margin:14px 0 6px;font-size:14.5px}
+    .lead,.section-intro{color:var(--muted);margin:0 0 16px;max-width:70ch}
+    .kicker{display:inline-flex;margin-bottom:8px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+    .kicker.gold{color:var(--gold)}
+    .kicker.warn{color:var(--warn)}
+    .toc{display:grid;gap:8px;margin:0 0 36px;padding:0;list-style:none}
+    .toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:inherit;padding:11px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+    .toc .n{color:var(--accent);font-weight:800;font-size:13px;min-width:1.6rem}
+    .toc .t{font-weight:650}
+    .toc .d{margin-left:auto;color:var(--muted);font-size:12.5px}
+    ul,ol{margin:0 0 12px;padding-left:1.15rem} li{margin:0 0 5px} li::marker{color:var(--accent)}
+    p{margin:0 0 10px}
+    a{color:var(--accent)}
+    .note{margin:14px 0 0;padding:12px 14px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;font-size:14px}
+    .note.warn{border-left-color:var(--warn);background:var(--gold-soft)}
+    .note.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+    .panel{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#fbfcfe}
+    .panel h4{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+    .panel.ok{background:var(--ok-soft);border-color:#c6e6d6}
+    .panel.ok h4{color:var(--ok)}
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:750;background:var(--ok-soft);color:var(--ok)}
+    .tag.partial{background:#fff4df;color:var(--warn)}
+    .tag.bad{background:var(--danger-soft);color:var(--danger)}
+    table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+    th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+    th{background:#f1f5fa;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+    .person{border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0 0;background:linear-gradient(180deg,#fff,#fafbfd);break-inside:avoid;page-break-inside:avoid}
+    .person-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+    .person h3{margin:0;font-family:"Source Serif 4",Georgia,serif;font-size:17px}
+    .role{flex:0 0 auto;padding:5px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11.5px;font-weight:750}
+    .mini{color:var(--muted);font-size:13px;margin:0 0 8px}
+    .daily{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0;background:#fbfcfe;break-inside:avoid}
+    .daily .date{font-weight:800;color:var(--accent);font-size:13px}
+    .quote{font-size:13.5px;color:#314156;border-left:3px solid var(--gold);padding:8px 12px;margin:8px 0;background:var(--gold-soft);border-radius:0 10px 10px 0}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+    .stat{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:linear-gradient(180deg,#fff,#fafbfd)}
+    .stat strong{display:block;font-size:20px;margin-bottom:2px}
+    .stat span{color:var(--muted);font-size:12.5px}
+    footer{text-align:center;color:var(--muted);font-size:13px;padding:10px 0 20px}
+    .divider{height:1px;background:var(--line);margin:28px 0}
+    @media(max-width:720px){.grid2,.stats{grid-template-columns:1fr}.toc .d{display:none}.page{width:min(calc(100% - 22px),var(--max))}}
+    @media print{body{background:#fff;font-size:12px}.page{width:100%;padding:0}.cover,.block{box-shadow:none;break-inside:avoid}}
+  </style>
+</head>
+<body>
+<div class="page">
+<header class="cover">
+  <div class="meta-row">
+    <span class="chip">КНК-41 · повний звіт</span>
+    <span class="chip alt">1–25.09.2026</span>
+    <span class="chip">6 розділів</span>
+  </div>
+  <h1>Виробнича практика · Lunavia<br/>звіт за планом, Jira, Git/PR, сайтом і відео</h1>
+  <p class="lead">Документ включає попередній трироздільний звіт і додаткові аналітичні розділи з урахуванням активності в Jira, записів зустрічей з Drive, Pull Request і стану production-сайту.</p>
+  <div class="stats">
+    <div class="stat"><strong>8</strong><span>студентів команди</span></div>
+    <div class="stat"><strong>45+</strong><span>PR у GitHub</span></div>
+    <div class="stat"><strong>24</strong><span>відеозаписів зустрічей</span></div>
+    <div class="stat"><strong>MVP</strong><span>cscai.pythonanywhere.com</span></div>
+  </div>
+  <p class="mini" style="margin-top:14px">Сайт: <a href="https://cscai.pythonanywhere.com/">https://cscai.pythonanywhere.com/</a> · Jira CSC · Drive: <a href="https://drive.google.com/drive/folders/1xYv6P3mTUaY9bn72obaL-smWYtu9oJOY">Практика КНК-41 Відео</a></p>
+</header>
+
+<ol class="toc">
+  <li><a href="#s1"><span class="n">01</span><span class="t">Що планували і що зробили</span><span class="d">офіційно</span></a></li>
+  <li><a href="#s2"><span class="n">02</span><span class="t">По суті: що вийшло</span><span class="d">по ділу</span></a></li>
+  <li><a href="#s3"><span class="n">03</span><span class="t">Індивідуальний внесок</span><span class="d">базовий</span></a></li>
+  <li><a href="#s4"><span class="n">04</span><span class="t">З урахуванням активності в Jira</span><span class="d">дошка CSC</span></a></li>
+  <li><a href="#s5"><span class="n">05</span><span class="t">Фінальний звіт</span><span class="d">відео · Jira · сайт · Git</span></a></li>
+  <li><a href="#s6"><span class="n">06</span><span class="t">Окремий звіт по дейлі</span><span class="d">зустріч за зустріччю</span></a></li>
+</ol>
+
+<section class="block" id="s1">
+  <div class="kicker">Розділ 1 · офіційний</div>
+  <h2>Що робили і що зробили на практиці</h2>
+  <p class="section-intro">Практика Fullstack Web Development (1–25.09.2026): команда Lunavia, стек React + FastAPI, процес Git/PR/Jira, деплой на PythonAnywhere.</p>
+  <h3>Мета</h3>
+  <p>Пройти повний delivery-цикл від planning до release: User Stories, design, frontend, backend, integration, CI/CD, QA, презентація.</p>
+  <h3>Спринти — план vs факт</h3>
+  <table>
+    <thead><tr><th>Спринт</th><th>За планом</th><th>Факт</th><th></th></tr></thead>
+    <tbody>
+      <tr><td><strong>S1</strong> 1–4.09</td><td>Команди, Jira, MVP, Figma, backlog</td><td>Команда CSC сформована, епіки/сторіс у Jira, розподіл сторінок</td><td><span class="tag">виконано</span></td></tr>
+      <tr><td><strong>S2</strong> 7–11.09</td><td>React UI, mock data, перші API</td><td>Home/Hotels/Tours/Support/Login/Register, перші PR</td><td><span class="tag">виконано</span></td></tr>
+      <tr><td><strong>S3</strong> 14–18.09</td><td>Backend, DB, integration, deploy</td><td>API сторінок, admin, GitHub Actions → PythonAnywhere</td><td><span class="tag">виконано</span></td></tr>
+      <tr><td><strong>S4</strong> 21–25.09</td><td>QA, bugfix, freeze, demo</td><td>Хвиля багів Hotels/Login/Support/Main, Ready to Review / In Progress</td><td><span class="tag partial">майже</span></td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>Висновок.</strong> Програму практики в загальних рисах виконано: є deployed MVP і пройдений командний fullstack-цикл.</div>
+</section>
+
+<section class="block" id="s2">
+  <div class="kicker gold">Розділ 2 · по ділу</div>
+  <h2>Що реально вийшло</h2>
+  <p class="section-intro">Коротко: сайт живий у проді. Не все з «ідеального плану» однакове по глибині, але основні екрани є.</p>
+  <h3>На сайті зараз (перевірка 27.09)</h3>
+  <table>
+    <thead><tr><th>Маршрут</th><th>HTTP</th><th>Коментар</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code> Home</td><td>200</td><td>Hero, пошук маршруту, офери, CTA; API home 200</td></tr>
+      <tr><td><code>/hotels</code></td><td>200</td><td>Каталог карток + фільтри; API hotels 200</td></tr>
+      <tr><td><code>/tours</code></td><td>200</td><td>Сторінка турів; API tours 200</td></tr>
+      <tr><td><code>/support</code></td><td>200</td><td>UI підтримки; <strong>API /api/support = 404</strong></td></tr>
+      <tr><td><code>/login</code>, <code>/register</code></td><td>200</td><td>Auth-екрани</td></tr>
+      <tr><td><code>/about</code>, <code>/admin</code></td><td>200</td><td>About + admin panel</td></tr>
+    </tbody>
+  </table>
+  <h3>Що зайшло / що болить</h3>
+  <div class="grid2">
+    <div class="panel ok"><h4>Добре</h4><ul><li>Паралельна робота по сторінках</li><li>Шаблон page + API + JSON</li><li>Реальний деплой змусив ловити prod-баги</li><li>Sprint 4 пішов у bugfix</li></ul></div>
+    <div class="panel"><h4>Боляче</h4><ul><li>Merge-конфлікти CSS/Layout</li><li>«Done в Jira ≠ видно на проді»</li><li>Падіння CI/deploy (CSS/npm/Windows binding)</li><li>Support API на проді ще 404</li></ul></div>
+  </div>
+</section>
+
+<section class="block" id="s3">
+  <div class="kicker">Розділ 3 · індивідуально (базовий зріз з Git)</div>
+  <h2>Внесок кожного студента</h2>
+  <p class="section-intro">Базовий профіль за комітами/PR (до поглиблення в §4–5).</p>
+  <article class="person"><div class="person-head"><h3>Бойко Маргарита</h3><span class="role">Auth</span></div><p class="mini">Login FE, Registr Backend, bugfix</p><ul><li>CSC-37/67 Login, CSC-51 Registration backend, CSC-53 fixes</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Василечко Анастасія</h3><span class="role">Hotels</span></div><p class="mini">Hotels FE + Login BE + Hotels bugs</p><ul><li>CSC-43 Hotels, CSC-50 Backend Login, CSC-97 Hotels bugs</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Вензліцький Михайло</h3><span class="role">Support</span></div><p class="mini">Support FE + Airline tickets BE + QA fixes</p><ul><li>CSC-42 Support, CSC-53 tickets API, PR #35</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Дмитрашко Олександр</h3><span class="role">Register/Support BE</span></div><p class="mini">Registration + Support backend + debug</p><ul><li>CSC-41 Register, CSC-57/58 Support BE, Login/Register debug</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Колесніков Іван</h3><span class="role">Hotels adaptive</span></div><p class="mini">Mobile Hotels + Main Page BE part 2</p><ul><li>CSC-60 hotel adaptive, CSC-64 Main Page part 2</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Рудоманенко Артем</h3><span class="role">Home / Hotels BE</span></div><p class="mini">Mainpage FE + Hotels backend + QA</p><ul><li>CSC-36 Mainpage, CSC-61/62 Hotels BE, CSC-66/69 QA</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Альошин Артем</h3><span class="role">Tours</span></div><p class="mini">Tour list FE/BE + admin tours</p><ul><li>CSC-39/59 Tours, CSC-79/80/90/91 QA</li></ul></article>
+  <article class="person"><div class="person-head"><h3>Патраманський Михайло</h3><span class="role">Tickets / Home BE</span></div><p class="mini">Tickets FE + Home backend + city search</p><ul><li>CSC-38 Tickets, CSC-63 Home backend</li></ul></article>
+</section>
+
+<section class="block" id="s4">
+  <div class="kicker warn">Розділ 4 · з урахуванням активності в Jira</div>
+  <h2>Дошка CSC і реальний task flow</h2>
+  <p class="section-intro">Джерело: проєкт <strong>CSC</strong> на dataartitstep.atlassian.net (станом на 27.09.2026). За останні 7 днів: <strong>16 Done</strong>, <strong>55 updated</strong>, <strong>33 created</strong>.</p>
+
+  <h3>Мапінг акаунтів Jira → студенти</h3>
+  <table>
+    <thead><tr><th>Jira</th><th>Студент</th><th>GitHub / PR-автор</th></tr></thead>
+    <tbody>
+      <tr><td><code>ernessci _</code></td><td>Бойко Маргарита</td><td>ewresstyks / margob</td></tr>
+      <tr><td>Анастасия Василечко</td><td>Василечко Анастасія</td><td>VasilechkoAnastasia</td></tr>
+      <tr><td><code>Fiasker17 Zero</code></td><td>Вензліцький Михайло</td><td>VenzlitskyMichael</td></tr>
+      <tr><td><code>Sane4kk</code></td><td>Дмитрашко Олександр</td><td>Qwertyygdervbuhn / Alexander Dm.</td></tr>
+      <tr><td><code>Pepe 32</code></td><td>Колесніков Іван</td><td>Pepeshka32 / iwesh</td></tr>
+      <tr><td>Артём Рудоманенко</td><td>Рудоманенко Артем</td><td>merchzx / 123123</td></tr>
+      <tr><td><code>artem alyoshin</code></td><td>Альошин Артем</td><td>artemchik9321</td></tr>
+      <tr><td>Михаил Патраманский</td><td>Патраманський Михайло</td><td>M1migon</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Статуси ключових задач (зріз дошки)</h3>
+  <table>
+    <thead><tr><th>Тикет</th><th>Назва</th><th>Assignee</th><th>Статус</th></tr></thead>
+    <tbody>
+      <tr><td>CSC-37</td><td>[Frontend] Login</td><td>ernessci _</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-51</td><td>[Backend] Registration</td><td>ernessci _</td><td><span class="tag partial">Ready to Review</span></td></tr>
+      <tr><td>CSC-43</td><td>[Frontend] Hotels</td><td>Василечко</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-50</td><td>[Backend] Login</td><td>Василечко</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-95–98</td><td>Hotels bugs / QA</td><td>Василечко</td><td><span class="tag partial">In Progress</span></td></tr>
+      <tr><td>CSC-42</td><td>[Frontend] Support</td><td>Fiasker17</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-53</td><td>[Backend] Airline tickets</td><td>Fiasker17</td><td><span class="tag partial">Ready to Review</span></td></tr>
+      <tr><td>CSC-74–76</td><td>Support FE bugs</td><td>Fiasker17</td><td><span class="tag partial">Ready to Review</span></td></tr>
+      <tr><td>CSC-41/89/93</td><td>Register/Login debug</td><td>Sane4kk</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-58/77</td><td>Support Backend + QA</td><td>Sane4kk</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-60</td><td>Hotels Mobile</td><td>Pepe 32</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-64</td><td>Main Page BE part 2</td><td>Pepe 32</td><td><span class="tag partial">In Progress</span></td></tr>
+      <tr><td>CSC-36</td><td>[Frontend] Mainpage</td><td>Рудоманенко</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-61/62</td><td>[Backend] Hotels</td><td>Рудоманенко</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-39/59</td><td>Tour list FE/BE</td><td>alyoshin</td><td><span class="tag">Done</span></td></tr>
+      <tr><td>CSC-90/91</td><td>Tours QA/styling</td><td>alyoshin</td><td><span class="tag partial">In Progress</span></td></tr>
+      <tr><td>CSC-38</td><td>[Frontend] Tickets</td><td>Патраманський</td><td><span class="tag partial">Ready to Review</span></td></tr>
+      <tr><td>CSC-63</td><td>Main Page BE part 1</td><td>Патраманський</td><td><span class="tag partial">Ready to Review</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note warn"><strong>Висновок розділу 4.</strong> Jira показує живий Sprint 4: багато Done по feature-задачах, але критична маса ще в Ready to Review / In Progress (баги Hotels/Login/Support, backend tickets/registration, Main Page). «Галочка Done» без перевірки на проді була окремим фокусом менторського feedback на Planning 21.09.</div>
+</section>
+
+<section class="block" id="s5">
+  <div class="kicker">Розділ 5 · фінальний звіт</div>
+  <h2>Тріангуляція: відео + Jira + Git/PR + сайт</h2>
+  <p class="section-intro">Методика: каталог усіх 24 записів з <a href="https://drive.google.com/drive/folders/1xYv6P3mTUaY9bn72obaL-smWYtu9oJOY">Drive</a>; Whisper-стенограма ключового Planning 21.09 (статус-раунд); повний розбір Jira CSC; історія 45 PR; live-перевірка <a href="https://cscai.pythonanywhere.com/">сайту</a>.</p>
+
+  <h3>Загальний вердикт</h3>
+  <p>Команда довела MVP до публічного URL і пройти 4 спринти. Найсильніша частина — frontend сторінок і наявність PR-процесу. Найслабша — стабільність «змерджив → бачу на проді» і закриття QA-циклу до Feature Freeze. На Planning 21.09 ментор прямо сказав: <em>«змерджено в main — це має бути на сервері»</em>; єдиний, хто вчасно підняв питання «не бачу на серві» — <strong>Альошин Артем</strong>.</p>
+
+  <h3>По кожному: мав зробити → зробив → що на сайті → проблеми / обіцянки</h3>
+
+  <article class="person">
+    <div class="person-head"><h3>Бойко Маргарита Станіславівна</h3><span class="role">ernessci _</span></div>
+    <p class="mini"><strong>Мала:</strong> Design Mainpage/Mobile, Frontend Login, Backend Registration, Presentation</p>
+    <ul>
+      <li><strong>Зробила (Jira/Git):</strong> CSC-27/44 Design Mainpage Done; CSC-37 Login Done; CSC-51 Registr Backend Ready to Review (PR #34 open); bugfix CSC-53 (PR #44 merged); Presentation CSC-86 In Progress.</li>
+      <li><strong>На сайті:</strong> Login/Register відкриваються (200). Частина login-багів (CSC-82…85) ще To Do на неї.</li>
+      <li><strong>З відео 21.09:</strong> звітувала про роботу над backend; ментор відкрив Login у Ready to Review і не побачив очікуваного на сайті — дав feedback про роль «першого прикладу» для команди.</li>
+      <li><strong>Проблеми:</strong> розрив Ready to Review ↔ production; складність backend Registration.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Василечко Анастасія Сергіївна</h3><span class="role">Hotels lead</span></div>
+    <p class="mini"><strong>Мала:</strong> Hotels frontend, Backend Login, Design Tour list, QA Support/Hotels</p>
+    <ul>
+      <li><strong>Зробила:</strong> CSC-43 Hotels Done (кілька PR #11/#24/#26); CSC-50 Backend Login Done; CSC-73 QA Support Done; зараз CSC-95–98 Hotels bugs In Progress (PR #45 open).</li>
+      <li><strong>На сайті:</strong> <code>/hotels</code> і <code>/api/hotels</code> — 200, каталог карток живий.</li>
+      <li><strong>З відео 21.09:</strong> згадана в контексті правок після ChatGPT-рев’ю (разом з іншими).</li>
+      <li><strong>Проблеми:</strong> довгі ітерації Hotels + конфлікти CSS; свіжа хвиля UI-багів перед демо.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Вензліцький Михайло Михайлович</h3><span class="role">Fiasker17</span></div>
+    <p class="mini"><strong>Мав:</strong> Support frontend, Airline tickets backend, Support bugfix</p>
+    <ul>
+      <li><strong>Зробив:</strong> CSC-42 Support Done (PR #10); CSC-53 Airline tickets Ready to Review; CSC-74–76 Support bugs Ready to Review; PR #35 Support QA merged.</li>
+      <li><strong>На сайті:</strong> <code>/support</code> 200, але <code>/api/support</code> = <strong>404</strong> — інтеграція на проді неповна.</li>
+      <li><strong>З відео 21.09:</strong> сказав, що налаштував backend/зв’язок із базою; ментор відповів, що Support frontend уже змерджений, але PR ще не «готовий до review» через помилки з ChatGPT — треба почистити.</li>
+      <li><strong>Проблеми:</strong> якість PR після AI-генерації; API support не в проді.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Дмитрашко Олександр Олександрович</h3><span class="role">Sane4kk</span></div>
+    <p class="mini"><strong>Мав:</strong> Registration page, Support backend, debug auth</p>
+    <ul>
+      <li><strong>Зробив:</strong> CSC-41 Registration (PR #14/#37); CSC-58 Support Backend Done; CSC-77 QA Backend Support Done; CSC-89/93 Login/Register debug Done.</li>
+      <li><strong>На сайті:</strong> Register/Login UI доступні.</li>
+      <li><strong>З відео 21.09 («Санічка»):</strong> «все отлично»; обіцяв швидко виправити naming/ChatGPT-артефакти; backend по своїй зоні вважає зробленим.</li>
+      <li><strong>Проблеми:</strong> повторні debug-цикли Register.css/jsx; багато WIP перед merge.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Колесніков Іван Олексійович</h3><span class="role">Pepe 32</span></div>
+    <p class="mini"><strong>Мав:</strong> Hotels mobile adaptive, Design Tickets, Main Page backend part 2</p>
+    <ul>
+      <li><strong>Зробив:</strong> CSC-60 Hotels Mobile Done (PR #29) — на Planning 21.09 ментор окремо похвалив мобільну адаптацію; CSC-33 Design Tickets Done; CSC-64 Main Page part 2 In Progress.</li>
+      <li><strong>На сайті:</strong> Hotels виглядає адаптовано; вклад у Main BE ще не повністю закритий у Jira.</li>
+      <li><strong>З відео:</strong> питав, як довести зміни до основного сайту / main (класична проблема deploy path).</li>
+      <li><strong>Проблеми:</strong> розуміння шляху PR → merge → deploy.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Рудоманенко Артем Ігорович</h3><span class="role">Home / Hotels BE</span></div>
+    <p class="mini"><strong>Мав:</strong> Mainpage FE, Hotels backend, QA Registration/Main validations</p>
+    <ul>
+      <li><strong>Зробив:</strong> CSC-36 Mainpage Done (PR #19); CSC-61/62 Hotels Backend Done (PR #27); CSC-69 QA Registration Done; CSC-88 validations Main Page In Progress; CSC-66 debug PRs #36/#41/#42.</li>
+      <li><strong>На сайті:</strong> Home і Hotels живі; міський пошук/backend Home також тягнув Патраманський (CSC-63).</li>
+      <li><strong>Проблеми:</strong> кілька закритих/перевідкритих PR на Main Page на початку; debug після інтеграції.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Альошин Артем Андрійович</h3><span class="role">Tours</span></div>
+    <p class="mini"><strong>Мав:</strong> Tour list FE/BE, admin tours, QA Login/Tours</p>
+    <ul>
+      <li><strong>Зробив:</strong> CSC-39/59 Tours Done (PR #21/#25/#33); dynamic tours в admin; CSC-79 QA Login Done; CSC-80/90/91 ще In Progress.</li>
+      <li><strong>На сайті:</strong> <code>/tours</code> і <code>/api/tours</code> — 200.</li>
+      <li><strong>З відео 21.09:</strong> єдиний, хто явно запитав ментора «чому не бачу на сервері» — правильна prod-свідомість. Також писав про backend-питання.</li>
+      <li><strong>Проблеми:</strong> конфлікти ToursPage; прибирання test data.</li>
+    </ul>
+  </article>
+
+  <article class="person">
+    <div class="person-head"><h3>Патраманський Михайло Сергійович</h3><span class="role">Tickets / Home BE</span></div>
+    <p class="mini"><strong>Мав:</strong> Tickets frontend, Home backend + city search, Design Support</p>
+    <ul>
+      <li><strong>Зробив:</strong> CSC-34 Design Support Done; CSC-38 Tickets Ready to Review (PR #30 merged 26.09); CSC-63 Home backend Ready to Review (PR #43 open) — city search + admin save fix.</li>
+      <li><strong>На сайті:</strong> Home з пошуком/бекенд-зв’язкою частково видно; Tickets як окремий route залежить від навігації/меню.</li>
+      <li><strong>З відео 21.09:</strong> «все класно»; ментор пообіцяв допомогти правильно оцінити задачі.</li>
+      <li><strong>Проблеми:</strong> довгий шлях Tickets від 08.09 до merge 26.09; PR ще в Ready to Review.</li>
+    </ul>
+  </article>
+
+  <h3>Git/PR — короткий зріз</h3>
+  <ul>
+    <li>Найбільше student merges: Hotels, Tours, Support, Login/Register, Main Page, Tickets.</li>
+    <li>Відкриті на кінець: PR #45 Hotels bugs (Василечко), #43 Home backend (Патраманський), #34 Registr Backend (Бойко).</li>
+    <li>Інфра-фікси викладача: deploy retry, CSS build, PythonAnywhere reload — без них студентський код часто «не доїжджав» до сайту.</li>
+  </ul>
+
+  <div class="note"><strong>Фінал §5.</strong> Продукт є. Команда пройшла цикл. До «чистого release candidate» не вистачає: закрити Ready to Review, Support API 404, Hotels/Login bug packs, і дисципліну «Done = видно на проді».</div>
+</section>
+
+<section class="block" id="s6">
+  <div class="kicker gold">Розділ 6 · окремий звіт по дейлі</div>
+  <h2>Що говорили, що обіцяли, що реально пішло в Git/Jira</h2>
+  <p class="section-intro">Нижче — хронологія за записами з Drive. Для кожної зустрічі: тип, фокус, кореляція з Git/Jira. Детальний мовний розбір (хто що сказав у статус-раунді) — для Planning 21.09 за Whisper-стенограмою; решта дейлі відновлені за датами записів + комітами/PR у той самий день±1.</p>
+  <div class="note warn">Методика: повний каталог 24 відео; ASR (Whisper tiny, uk) перших ~25 хв Planning 21.09; для інших зустрічей — timeline-кореляція (відео ↔ git log ↔ Jira updated). Повна ASR усіх ~10+ годин записів у цьому документі не виконувалась через обсяг.</div>
+
+  <h3>Календар записів (Drive)</h3>
+  <table>
+    <thead><tr><th>Дата</th><th>Запис</th><th>Тип</th></tr></thead>
+    <tbody>
+      <tr><td>01.09</td><td>Organization and Kick-off</td><td>Kick-off</td></tr>
+      <tr><td>02.09</td><td>Planing + Grooming</td><td>Planning</td></tr>
+      <tr><td>03.09 / 04.09</td><td>Daily + Coordination</td><td>Daily</td></tr>
+      <tr><td>07.09</td><td>Planning + Coordination</td><td>Sprint 2 planning</td></tr>
+      <tr><td>08–11.09</td><td>Daily + Coordination (+ Intro 09.09)</td><td>Daily / Guest</td></tr>
+      <tr><td>14.09</td><td>Planning + Coordination</td><td>Sprint 3 planning</td></tr>
+      <tr><td>15–16.09</td><td>Daily + Retrospective 16.09</td><td>Daily / Retro</td></tr>
+      <tr><td>17.09</td><td>Дейли + QA meeting</td><td>Daily / Guest QA</td></tr>
+      <tr><td>18.09</td><td>Daily + BA meeting</td><td>Daily / Guest BA</td></tr>
+      <tr><td>21.09</td><td>Planning + Coordination</td><td>Sprint 4 planning ★</td></tr>
+      <tr><td>22–25.09</td><td>Daily + Backend meeting 23.09</td><td>Daily / Guest BE</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Дейлі / ключові зустрічі по днях</h3>
+
+  <div class="daily">
+    <div class="date">01.09 · Kick-off</div>
+    <p>Старт практики, правила, формування команд, доступ до інструментів. Обіцянка на спринт: зрозуміти MVP і процес Jira→PR.</p>
+    <p class="mini">Git: репозиторій/інфра викладача. Студентських feature-PR ще немає.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">02.09 · Planning + Grooming</div>
+    <p>Product &amp; Requirements: User Stories, Acceptance Criteria, оцінка. Обіцянка: backlog і пріоритети до кінця Sprint 1.</p>
+    <p class="mini">Jira: з’являються епіки/stories CSC-5…CSC-26 (організаційний каркас спринтів).</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">03–04.09 · Daily</div>
+    <p>Design-тиждень: хто бере Mainpage / Hotels / Tours / Support / Login / Registration / Tickets у Figma.</p>
+    <p class="mini">Jira Done пізніше: CSC-27…35 Design tasks (Рудоманенко, Василечко, Альошин, Pepe, Патраманський, ernessci).</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">07.09 · Sprint 2 Planning</div>
+    <p>Старт React: структура, routing, перші сторінки. Обіцянка: до кінця тижня клікабельний UI на mock data + перші PR.</p>
+    <p class="mini">Git: PR #1 React Start, #2 Frontend Development (викладач як каркас).</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">08–11.09 · Daily (Sprint 2)</div>
+    <ul>
+      <li><strong>Обіцянки тижня:</strong> кожен — своя сторінка FE; маленький PR; без «згенеруй усю сторінку AI».</li>
+      <li><strong>Фактично в Git:</strong> WIP Registration (Дмитрашко 09–14.09), Hotels (Василечко 09–11.09), Tour list (Альошин 09.09), Login (Бойко 09–10.09), Main header (123123/Рудоманенко 09–10.09), Tickets README noise (Патраманський 08.09).</li>
+      <li><strong>Типові проблеми на дейлі цього тижня (за патерном комітів):</strong> WIP без merge, конфлікти пізніше, «зроблю до кінця дня» → реально merge 15.09 пакетом.</li>
+    </ul>
+  </div>
+
+  <div class="daily">
+    <div class="date">09.09 · Introduction meeting (guest)</div>
+    <p>Загальний intro ITStep Internship College — контекст практики, очікування від індустрії.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">14.09 · Sprint 3 Planning</div>
+    <p>Фокус: backend CRUD/API, integration, deploy до кінця тижня. Обіцянка команди: прибрати mock data, мати deployed MVP.</p>
+    <p class="mini">Далі 15–18.09 — найщільніший merge-тиждень.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">15–16.09 · Daily + Retro 16.09</div>
+    <ul>
+      <li><strong>15.09:</strong> хвиля merge — Support (#10), Hotels (#11), Login (#12/#3), Tours (#21), Main-Page (#19), Admin/API (#17/#18). Багато людей кажуть «залив» — на дейлі акцент: review і щоб не ламати main.</li>
+      <li><strong>16.09 Retro:</strong> що спрацювало / що важко (конфлікти, розуміння API). Git: Hotels conflicts, Support backend wiring, auth menu.</li>
+      <li><strong>Проблеми:</strong> blank site від Admin import (фікс викладача); «у мене працює локально».</li>
+    </ul>
+  </div>
+
+  <div class="daily">
+    <div class="date">17.09 · Дейли + QA meeting</div>
+    <p>Guest QA: як писати bug reports, severity/priority, checklist. Обіцянка: готуватись до cross-team QA з 21.09.</p>
+    <p class="mini">Git: hotels backend create (123123), Tours API update.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">18.09 · Daily + BA meeting</div>
+    <p>Стабілізація перед QA week. Guest BA. Deploy фікси (Windows Vite binding). Hotels backend merge у main.</p>
+    <p class="mini">Обіцянка на Sprint 4: не нові фічі, а баги + demo prep.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">21.09 · Planning + Coordination ★ (розбір зі стенограми)</div>
+    <p>Ключова зустріч старту Sprint 4 / QA. Менторський блок + статус кожного.</p>
+    <div class="quote">«Змерджено в main — це має бути на сервері. Єдиний, хто задав питання “я не бачу цього на серві” — Альошин Артем.»</div>
+    <div class="quote">«Відкриваєте сайт — і це взагалі не те, що має бути. Кажете: я запушив у main, чому не задеплоїлось?»</div>
+    <ul>
+      <li><strong>План тижня з зустрічі:</strong> закінчити sprint review → короткий backend briefing → тестування (checklist / test cases / test plan) → нові QA-задачі в Jira; guest backend у середу ~17:00.</li>
+      <li><strong>Бойко Маргарита:</strong> працює над backend; Login у Ready to Review — ментор не побачив Login на сайті як очікував; акцент: бути прикладом для команди.</li>
+      <li><strong>Вензліцький Михайло:</strong> «налаштував backend/зв’язок з БД»; ментор: Support FE вже змерджений, але PR ще не ready (помилки після ChatGPT) — попросив почистити.</li>
+      <li><strong>Дмитрашко Олександр («Санічка»):</strong> «все отлично»; обіцяє виправити naming/ChatGPT-артефакти; backend по зоні — done.</li>
+      <li><strong>Колесніков / адаптив:</strong> мобільна адаптація Hotels — <em>«прекрасно зроблено»</em>; питання як довести зміни до основного сайту.</li>
+      <li><strong>Патраманський Михайло:</strong> «все класно»; ментор допоможе з оцінкою задач.</li>
+      <li><strong>Альошин Артем:</strong> питання про backend/prod visibility — позитивний сигнал.</li>
+      <li><strong>Загальні обіцянки на тиждень:</strong> задач у Review мають бути реально в проді; In Progress — рух щодня; не вимагають weekend-героїзму, але чесний прогрес.</li>
+    </ul>
+    <p class="mini">Git того дня±: Hotels adaptive commits (Іван), Main Page fix after review (Рудоманенко/123123), Tickets FE (Патраманський).</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">22.09 · Daily</div>
+    <p>Bug fixing day за планом Sprint 4. Обіцянки: critical/high першими, окремі PR на баги.</p>
+    <p class="mini">Jira: з’являються/оновлюються bug tickets (Login inputs/colors/eye, Support subtitle/search/font, email footer).</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">23.09 · Daily + Backend guest meeting</div>
+    <p>Guest backend talk (обіцяний у пн). На дейлі — статус bugfix / backend gaps.</p>
+    <p class="mini">Git: Login BE (Василечко), Registr BE (Бойко), Airline tickets API (Вензліцький), Tours admin (Альошин), Support BE fixes (Дмитрашко). Багато Done у Jira того ж дня.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">24.09 · Daily (Feature Freeze prep)</div>
+    <p>Обіцянки: freeze великих фіч, лише blockers, demo rehearsal.</p>
+    <p class="mini">Git: хвиля merges — hotel adaptive #29, Support BE #28, Main debug #36/#41/#42, Support QA #35, deploy CSS fixes викладача. Без інфра-фіксів студентський код знову б не доїхав до PythonAnywhere.</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">25.09 · Daily (Demo day за планом)</div>
+    <p>За планом — Final Demo. Фактично ще йде debug: Registration debug #37 merged, Support QA merge, Home backend commits (Патраманський), Tours QA ще In Progress у Jira.</p>
+    <p class="mini">Висновок дня: демо можливе з live сайтом, але Known Issues треба називати чесно (Support API 404, частина Ready to Review, Hotels bugs).</p>
+  </div>
+
+  <div class="daily">
+    <div class="date">26–27.09 · Після демо-вікна</div>
+    <p>Tickets #30 merged 26.09; Hotels bugs #45 open 27.09; CSC-95–98 In Progress у Василечко — команда ще гасить дефекти після freeze.</p>
+  </div>
+
+  <h3>Патерни дейлі (узагальнення)</h3>
+  <div class="grid2">
+    <div class="panel ok">
+      <h4>Що повторювалось як прогрес</h4>
+      <ul>
+        <li>«Сьогодні зроблю PR / дороблю сторінку»</li>
+        <li>Паралельні зони (Hotels / Tours / Support / Auth / Home)</li>
+        <li>Після guest talks — сплеск backend/QA задач</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h4>Що повторювалось як проблема</h4>
+      <ul>
+        <li>Done в Jira без перевірки на проді</li>
+        <li>ChatGPT-сміття в PR (naming, дублікати)</li>
+        <li>«Запушив у main — чому не на сайті?»</li>
+        <li>Обіцянка «до завтра» → merge через кілька днів</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note"><strong>Висновок §6.</strong> Дейлі виконували свою роль: синхронізація і тиск на видимий прогрес. Найбільший розрив між словами і фактом — не відсутність роботи, а <em>definition of done</em>: багато хто вважав задачу завершеною після merge/локального UI, тоді як ментор і сайт вимагали підтвердження в production.</div>
+</section>
+
+<div class="divider"></div>
+<footer>
+  КНК-41 · Lunavia · повний звіт (6 розділів) · 27.09.2026<br/>
+  Джерела: план практики · Jira CSC · GitHub PRs · <a href="https://cscai.pythonanywhere.com/">cscai.pythonanywhere.com</a> ·
+  <a href="https://drive.google.com/drive/folders/1xYv6P3mTUaY9bn72obaL-smWYtu9oJOY">Drive відео</a>
+</footer>
+</div>
+</body>
+</html>
