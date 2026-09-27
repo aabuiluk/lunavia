@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 
 from backend import store
 from backend.admin import router as admin_router
+from backend.pages.login import router as login_router
 from backend.registry import discover_pages
 from backend.schemas.menu import MenuConfig
 
@@ -54,6 +55,7 @@ def public_menu() -> dict:
 
 
 app.include_router(admin_router)
+app.include_router(login_router)
 
 for page in pages:
     app.include_router(page.router, prefix=page.api, tags=[page.title])

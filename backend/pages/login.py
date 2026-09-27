@@ -9,7 +9,7 @@ class LoginRequest(BaseModel):
     password: str
 
 
-page_meta = {
+login_config = {
     "welcomeTitle": "Ready when you are.",
     "subtext": "Log in to pick up where your travel plans left off.",
     "enableGoogleAuth": True,
@@ -20,7 +20,7 @@ page_meta = {
 
 @router.get("/config")
 def get_login_config():
-    return page_meta
+    return login_config
 
 
 @router.post("")

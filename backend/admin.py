@@ -58,7 +58,13 @@ def admin_me(username: str = Depends(require_admin)) -> MeOut:
 
 @router.get("/pages")
 def admin_pages(_: str = Depends(require_admin)) -> list[dict]:
-    return [page.as_dict() for page in discover_pages()]
+    # The admin editor only works for pages with stored content. Support has
+    # routes but no editable JSON payload.
+    return [
+        page.as_dict()
+        for page in discover_pages()
+        if (store.DATA_DIR / f"{page.slug}.json").is_file()
+    ]
 
 
 @router.get("/menu", response_model=MenuConfig)
@@ -82,6 +88,10 @@ def save_page(slug: str, body: dict[str, Any], _: str = Depends(require_admin)) 
     model = PAGE_MODELS.get(slug)
     if model is None:
         return store.save(slug, body)
+    if slug == "home":
+        # Preserve existing sections when an older admin client submits only
+        # the hero fields. Validate the completed payload before writing.
+        body = {**store.dump(slug), **body}
     parsed = model.model_validate(body)
     saved = store.save(slug, parsed.model_dump(by_alias=True))
     return model.model_validate(saved).model_dump(by_alias=True)

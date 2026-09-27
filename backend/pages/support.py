@@ -6,8 +6,12 @@ import os
 router = APIRouter()
 
 page_meta = {
-    "title": "Support & FAQ",
-    "route": "/api/support"
+    "slug": "support",
+    "path": "/support",
+    "title": "Support",
+    "order": 5,
+    "summary": "Help with bookings, routes, and travel questions.",
+    "api": "/api/support",
 }
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
