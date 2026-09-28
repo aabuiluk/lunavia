@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApi } from '../api/client'
 import './Hotels.css'
+import {SearchBar} from "./HomePage.jsx";
 
 export const pageMeta = {
   path: '/hotels',
@@ -38,37 +39,32 @@ export default function HotelsPage() {
   )
 
   return (
-    <div>
+    <div className="hotels-page">
       {/* HEADER / HERO */}
       <header className="hotels-header">
-        <section className="tours-hero">
-          <img className="tours-hero__media" src="/HeaderHotels.png" alt="Header Hotels" />
-          <div className="tours-hero__veil" />
-          <div className="container tours-hero__content">
-            <p className="tours-hero__eyebrow rise">BOOK YOUR ROOM</p>
+        <section className="hotels-hero">
+          <img className="hotels-hero__media" src="/HotelsPhoto.png" alt="Header Hotels" />
+          <div className="hotels-hero__veil" />
+          <div className="container hotels-hero__content">
+            <p className="hotels-hero__eyebrow rise">BOOK YOUR ROOM</p>
             <h1 className="rise rise-delay-1">
-              All our hotels <br />
+              Best hotels <br />
               <span>&</span> resorts
             </h1>
           </div>
         </section>
 
         {/* SEARCH BAR FROM HOME PAGE */}
-        <div className="container search-wrapper rise rise-delay-2">
-          <div className="for_inputs_to_route">
+        <div className="container hotels-search-wrapper rise rise-delay-2">
+          <div className="hotels-for_inputs_to_route">
             <SearchBar
               fields={[
                 { name: 'start', label: 'Start?', value: '', placeholder: 'Choose start point' },
                 { name: 'where', label: 'Where?', value: '', placeholder: 'Choose destination' },
                 { name: 'dates', label: 'Dates', value: '', placeholder: 'Choose dates' },
-                {
-                  name: 'travelers',
-                  label: 'Travelers',
-                  value: '',
-                  placeholder: 'Choose number of travelers',
-                },
+                {name: 'travelers', label: 'Travelers', value: '', placeholder: 'Choose number of travelers',},
               ]}
-              note="Flights + trains + hotels — compared for you."
+              note="Find the best places to stay."
               onSubmit={(values) => console.log('submitted:', values)}
             />
           </div>

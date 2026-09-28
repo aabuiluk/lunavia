@@ -10,12 +10,9 @@
   --radius: 12px;
   --radius-lg: 20px;
   --header-h: 72px;
-  --font-display: "Syne", sans-serif;
-  --font-body: "Manrope", sans-serif;
   --max: 1120px;
   color: var(--color-ink);
   background: var(--color-white);
-  font-family: Manrope, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -50,7 +47,6 @@ a {
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.1;
   margin: 0;
@@ -159,4 +155,197 @@ textarea {
 
 .rise-delay-2 {
   animation-delay: 0.24s;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    width: 90%;
+    top: 20px;
+    left: 5%;
+    height: auto;
+  }
+
+  .site-header__inner {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .sign_up_and_plan {
+    display: none;
+  }
+
+  .site-footer {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .site-footer__inner {
+    width: 88%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding-top: 0;
+  }
+
+  .site-footer__links {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    gap: 1.1rem;
+  }
+
+  .home-hero {
+    top: -72px;
+    min-height: auto;
+    padding-bottom: 160px;
+  }
+
+  .home-hero__media,
+  .home-hero__veil {
+    height: 100%;
+  }
+
+  .home-hero__content {
+    left: 0;
+    max-width: none;
+    padding-block: 130px 0;
+    padding-inline: 5%;
+  }
+
+  .ur_way_to {
+    font-size: 13px;
+  }
+
+  .home-hero h1 {
+    font-size: 42px;
+    line-height: 1.1;
+  }
+
+  .home-hero p:not(.home-hero__brand) {
+    max-width: none;
+    font-size: 14px;
+  }
+
+  .home-hero__actions {
+    width: 100%;
+  }
+
+  .for_inputs_to_route {
+    position: relative;
+    top: 24px;
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 24px;
+  }
+
+  .search-bar {
+    width: 100%;
+    padding: 18px 18px 16px;
+  }
+
+  .search-bar__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-top: 4px;
+  }
+
+  .search-bar__field {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-fog, #eef4f2);
+  }
+
+  .search-bar__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 14px;
+  }
+
+  .route {
+    padding-block: 2.5rem;
+  }
+
+  .route__head {
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .route__title {
+    font-size: 34px;
+    line-height: 1.15;
+  }
+
+  .route__text {
+    max-width: none;
+  }
+
+  .route__map {
+    padding: 22px 18px 18px;
+  }
+
+  .route__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .destinations {
+    padding-block: 2.5rem;
+    border-radius: 22px;
+  }
+
+  .destinations__title {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+  }
+
+  .offers {
+    padding-block: 2.5rem;
+  }
+
+  .offers__title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  .why {
+    padding-block: 2.5rem;
+    gap: 20px;
+  }
+
+  .why__title {
+    font-size: 32px;
+  }
+
+  .plan {
+    padding-block: 2.5rem;
+  }
+
+  .plan__panel {
+    height: auto;
+    border-radius: 22px;
+    padding: 28px 20px;
+  }
+
+  .plan__content {
+    position: relative;
+    left: 0;
+    top: 0;
+    max-width: none;
+    margin-bottom: 24px;
+  }
+
+  .plan__title {
+    font-size: 34px;
+    line-height: 1.15;
+  }
+
+  .plan__form {
+    height: auto;
+    width: 100%;
+    margin: 0;
+  }
 }

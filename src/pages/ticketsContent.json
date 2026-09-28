@@ -1,0 +1,16 @@
+{
+  "title": "Airline tickets",
+  "lead": "Choose where you go",
+  "season": "AUTUMN, 2026",
+  "destinations_title": "Where do you want to go?",
+  "destinations": [
+    { "name": "Greek Islands", "tag": "BEACH", "price": 299, "image": "greece" },
+    { "name": "Barcelona", "tag": "CITY", "price": 279, "image": "barcelona" },
+    { "name": "Antalya", "tag": "FAMILY", "price": 319, "image": "antalya" }
+  ],
+  "offers": [
+    { "title": "ANTALYA", "meta": "7 nights · 4★ hotel", "route": "Ukraine → Chișinău → Antalya", "price": 294, "discount": "-16%", "origin": "Ukraine", "vehicle": "Flight", "season": "Autumn 2026", "href": "/tours" },
+    { "title": "RHODES", "meta": "7 nights · 4★ hotel", "route": "Ukraine → Warsaw → Rhodes", "price": 333, "discount": "-17%", "origin": "Ukraine", "vehicle": "Flight", "season": "Autumn 2026", "href": "/tours" },
+    { "title": "MALLORCA", "meta": "5 nights · boutique stay", "route": "Ukraine → Kraków → Palma", "price": 157, "discount": "-16%", "origin": "Ukraine", "vehicle": "Flight", "season": "Autumn 2026", "href": "/tours" }
+  ]
+}
