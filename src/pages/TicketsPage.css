@@ -1,530 +1,254 @@
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('../assets/tickets/manrope-cyrillic-wght-normal.woff2') format('woff2');
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('../assets/tickets/manrope-latin-ext-wght-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('../assets/tickets/manrope-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+.tickets-page {
+  --tickets-ink: #172821;
+  --tickets-muted: #81908a;
+  --tickets-green: #20c5ae;
+  --tickets-line: #dfe9e6;
+  min-width: 320px;
+  color: var(--tickets-ink);
+  background: #fff;
+  font-family: 'Manrope', sans-serif;
+}
+
+.tickets-page *, .tickets-page *::before, .tickets-page *::after { box-sizing: border-box; }
+.tickets-page, .tickets-page * { font-family: 'Manrope', sans-serif !important; }
+.tickets-page .container { width: min(calc(100% - 160px), 1760px); margin-inline: auto; }
+
 .tickets-hero {
   position: relative;
-
-  min-height: 680px;
-
+  display: flex;
+  align-items: center;
+  min-height: clamp(610px, 49.7vw, 950px);
+  background-color: #f6f4eb;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  overflow: hidden;
+  background-position: center 53%;
+  isolation: isolate;
 }
 
 .tickets-hero::before {
-  content: "";
-
+  content: '';
   position: absolute;
   inset: 0;
-
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.75) 18%,
-    rgba(255, 255, 255, 0.35) 35%,
-    rgba(255, 255, 255, 0) 55%
-  );
-
-  z-index: 1;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(255,255,251,.96) 0%, rgba(255,255,251,.85) 22%, rgba(255,255,251,.41) 43%, transparent 66%);
 }
 
-.tickets-hero__inner {
-  position: relative;
-  z-index: 2;
-
-  min-height: 680px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-
-/* LEFT */
-
-.tickets-hero__title h1 {
+.tickets-hero__content { padding-top: 26px; padding-bottom: 68px; }
+.tickets-eyebrow { margin: 0 0 18px; color: #0dbca5; font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+.tickets-eyebrow span { margin-right: 4px; font-size: 13px; }
+.tickets-hero h1 {
+  max-width: 1200px;
   margin: 0;
-
-  font-family: 'Manrope', sans-serif;
-  font-size: clamp(44px, 5vw, 72px);
+  font-size: clamp(36px, 4.2vw, 82px);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -3px;
+  line-height: .96;
+  letter-spacing: -.065em;
 }
+.tickets-hero__first-line { white-space: nowrap; }
+.tickets-hero__accent { color: var(--tickets-green); }
 
-.tickets-hero__title p {
-  margin: 20px 0 0;
-
-  font-family: 'Manrope', sans-serif;
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -1.5px;
-}
-
-
-/* SEARCH CARD */
-
+.tickets-search-wrap { position: relative; z-index: 2; margin-top: -69px !important; }
 .tickets-search {
-  width: 460px;
-  flex-shrink: 0;
-
-  padding: 42px;
-
-  background: #ffffff;
+  display: grid;
+  grid-template-columns: 1.28fr 1.65fr 1.04fr .6fr auto;
+  align-items: center;
+  min-height: 93px;
+  padding: 10px 11px 10px 0;
+  border: 1px solid rgba(219,233,229,.8);
   border-radius: 16px;
-
-  font-family: 'Manrope', sans-serif;
+  background: #fff;
+  box-shadow: 0 13px 32px rgba(28,56,48,.09);
 }
-
 .tickets-search__field {
-  display: block;
-  padding: 14px 0;
-
-  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  height: 53px;
+  padding: 0 25px;
+  border-right: 1px solid #e8eeec;
 }
-
-.tickets-search__field span {
-  display: block;
-
-  margin-bottom: 6px;
-
+.tickets-search__field > span {
+  margin-bottom: 5px;
+  color: var(--tickets-muted);
   font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-
-  color: #777777;
+  font-weight: 750;
+  letter-spacing: .13em;
+  white-space: nowrap;
 }
-
-.tickets-search__field input,
-.tickets-search__field select {
-  display: block;
+.tickets-search__field input, .tickets-search__field select {
   width: 100%;
+  min-width: 0;
   padding: 0;
   border: 0;
   outline-offset: 4px;
   background: transparent;
-  color: #0b1212;
+  color: var(--tickets-ink);
+  font: inherit;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-.tickets-search__field input::placeholder {
-  color: #0b1212;
-  opacity: 1;
-}
-
-.tickets-search__button {
-  width: 100%;
-
-  margin-top: 28px;
-  padding: 14px;
-
-  border: 0;
-  border-radius: 999px;
-
-  background: #20c5ad;
-  color: #ffffff;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
-.tickets-search__row {
-  display: flex;
-
-  gap: 48px;
-}
-
-.tickets-search__row .tickets-search__field {
-  flex: 1;
-}
-
-@media (min-width: 769px) and (max-width: 1100px) {
-  .tickets-hero__inner {
-    gap: 24px;
-  }
-
-  .tickets-search {
-    width: min(42vw, 460px);
-    padding: 28px;
-  }
-}
-
-
-/* DESTINATIONS */
-
-.tickets-destinations {
-  padding: 44px 0 110px;
-
-  background: #ffffff;
-}
-
-.tickets-destinations__season {
-  margin: 0 0 14px;
-
-  color: #20c5ad;
-
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.tickets-destinations__title {
-  margin: 0 0 48px;
-
-  width: max-content;
-
-  font-family: 'Manrope', sans-serif;
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -2.2px;
-}
-
-
-/* DESTINATION PHOTOS */
-
-.tickets-destinations__photos {
-  display: grid;
-
-  grid-template-columns: 1.55fr 1.55fr 0.75fr;
-
-  gap: 16px;
-
-  margin-bottom: 52px;
-}
-
-.tickets-photo {
-  position: relative;
-
-  height: 330px;
-
-  padding: 14px;
-
-  border-radius: 10px;
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  overflow: hidden;
-}
-
-.tickets-photo::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.45) 0%,
-    rgba(0, 0, 0, 0) 45%
-  );
-}
-
-.tickets-photo__tag {
-  position: relative;
-  z-index: 2;
-
-  display: inline-block;
-
-  padding: 6px 12px;
-
-  border-radius: 999px;
-
-  background: #ffffff;
-  color: #0b1212;
-
-  font-size: 9px;
   font-weight: 700;
 }
-
-.tickets-photo__bottom {
-  position: absolute;
-  z-index: 2;
-
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  color: #ffffff;
-
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.tickets-photo__bottom strong {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-
-/* OFFER CARDS */
-
-.tickets-offers {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 48px;
-}
-
-.tickets-offers-section {
-  scroll-margin-top: 80px;
-}
-
-.tickets-offers__status {
-  margin: 0 0 20px;
-  font-size: 14px;
-}
-
-.tickets-offers__all {
-  display: inline-block;
-  margin-top: 18px;
-  color: #0a7667;
-  font-weight: 700;
-}
-
-.tickets-offer {
-  padding: 18px;
-
-  border: 1px solid #dce4e2;
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-}
-
-.tickets-offer__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 28px;
-
-  color: #9a9a9a;
-
-  font-size: 8px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-
-.tickets-offer__sale {
-  padding: 4px 10px;
-
-  border-radius: 999px;
-
-  background: #42ded0;
-  color: #17231D;
-
-  font-size: 8px;
-  font-weight: 700;
-}
-
-.tickets-offer h3 {
-  margin: 0 0 6px;
-
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.tickets-offer p {
-  margin: 0 0 24px;
-
-  color: #8a8a8a;
-
-  font-size: 9px;
-  font-weight: 500;
-}
-
-.tickets-offer__route {
-  padding: 14px 0;
-
-  border-top: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-
-  color: #555555;
-
-  font-size: 9px;
-  font-weight: 500;
-}
-
-.tickets-offer__bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding-top: 14px;
-}
-
-.tickets-offer__bottom strong {
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.tickets-offer__bottom a {
-  display: flex;
+.tickets-search__field input[type='date'] { color-scheme: light; }
+.tickets-search__field--passengers { border: 0; }
+.tickets-search__submit, .flight-card__footer button {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 26px;
+  gap: 18px;
+  min-height: 53px;
+  padding: 0 25px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--tickets-green);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.tickets-search__submit:hover, .flight-card__footer button:hover { background: #10ac96; transform: translateY(-1px); }
+.tickets-search__note, .tickets-search__error { margin: 9px 0 0; padding: 0 4px; font-size: 11px; line-height: 1.5; }
+.tickets-search__note { color: #63736c; }
+.tickets-search__error { color: #b13636; }
+.tickets-search__submit:focus-visible, .flight-card__footer button:focus-visible,
+.tickets-page input:focus-visible, .tickets-page select:focus-visible { outline: 2px solid #108d7d; outline-offset: 3px; }
 
-  border-radius: 999px;
+.tickets-results {
+  display: grid;
+  grid-template-columns: minmax(215px, .62fr) minmax(0, 1fr);
+  gap: clamp(30px, 4vw, 82px);
+  padding-top: 64px;
+  padding-bottom: 110px;
+  scroll-margin-top: 35px;
+}
+.tickets-filters { padding-top: 4px; }
+.tickets-filters h2 { margin: 0 0 14px; color: #82918b; font-size: 11px; font-weight: 700; letter-spacing: .13em; }
+.tickets-filters__item {
+  display: block;
+  padding: 18px 0 15px;
+  border-top: 1px solid var(--tickets-line);
+}
+.tickets-filters__item > span { display: block; margin-bottom: 8px; color: #8b9893; font-size: 10px; font-weight: 700; letter-spacing: .07em; }
+.tickets-filters__item select {
+  display: block;
+  width: 100%;
+  padding: 0 18px 0 0;
+  border: 0;
+  background: transparent;
+  color: #21332c;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tickets-filters__note { margin-top: 21px; color: #8d9a95; }
+.tickets-filters__note strong { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 700; }
+.tickets-filters__note p { max-width: 260px; margin: 0; font-size: 11px; line-height: 1.55; }
 
-  background: #20c5ad;
-  color: #ffffff;
+.tickets-results__heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; min-height: 57px; }
+.tickets-results__heading h2 { margin: 0 0 4px; font-size: 17px; font-weight: 800; letter-spacing: -.025em; }
+.tickets-results__heading h2 span { color: #788781; font-size: 13px; font-weight: 500; }
+.tickets-results__heading p { margin: 0; color: #9ba7a2; font-size: 11px; }
+.tickets-sort { display: flex; align-items: center; gap: 12px; color: #8b9892; font-size: 11px; white-space: nowrap; }
+.tickets-sort select { padding: 8px 10px; border: 1px solid var(--tickets-line); border-radius: 8px; background: #fff; color: #23362f; font: inherit; font-weight: 700; cursor: pointer; }
+.tickets-results__list { display: grid; gap: 18px; }
 
-  font-size: 14px;
+.flight-card { padding: 19px 22px 15px; border: 1px solid #daeeea; border-radius: 14px; background: #fff; }
+.flight-card--selected { border-color: var(--tickets-green); }
+.flight-card__header { display: flex; align-items: center; gap: 11px; }
+.flight-card__logo { display: flex; align-items: center; justify-content: center; flex: none; width: 33px; height: 33px; border-radius: 50%; font-size: 11px; font-weight: 800; }
+.flight-card__logo--blue { background: #e2f4f9; color: #4a99b5; }
+.flight-card__logo--pink { background: #fce8f2; color: #cf48a4; }
+.flight-card__logo--coral { background: #fee9e5; color: #db7071; }
+.flight-card__airline { min-width: 0; }
+.flight-card__airline h3 { margin: 0 0 2px; font-size: 13px; font-weight: 800; }
+.flight-card__airline p { margin: 0; color: #99a59f; font-size: 10px; }
+.flight-card__badge { margin-left: auto; padding: 4px 9px; border-radius: 30px; background: #f9e1f0; color: #a0367e; font-size: 9px; font-weight: 800; white-space: nowrap; }
+.flight-card__body { display: grid; grid-template-columns: minmax(64px,1fr) minmax(90px,1.4fr) minmax(64px,1fr) minmax(80px,1fr); align-items: center; gap: 14px; padding: 25px 0 18px; }
+.flight-card__time, .flight-card__price { display: flex; flex-direction: column; gap: 5px; }
+.flight-card__time strong, .flight-card__price strong { font-size: 22px; font-weight: 800; letter-spacing: -.04em; }
+.flight-card__time span, .flight-card__price span { color: #9ca9a3; font-size: 10px; }
+.flight-card__price { align-items: flex-end; text-align: right; }
+.flight-card__journey { color: #9aa8a2; font-size: 10px; text-align: center; white-space: nowrap; }
+.flight-card__line { position: relative; height: 1px; margin-top: 9px; background: #bfdfd7; }
+.flight-card__line::before, .flight-card__line::after, .flight-card__line i { content: ''; position: absolute; top: -3px; width: 7px; height: 7px; border: 1px solid #8bc5b8; border-radius: 50%; background: #fff; }
+.flight-card__line::before { left: 0; }
+.flight-card__line::after { right: 0; }
+.flight-card__line i { left: 50%; transform: translateX(-50%); background: var(--tickets-green); }
+.flight-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 50px; padding-top: 13px; border-top: 1px solid #edf1ef; }
+.flight-card__footer > span { color: #66746e; font-size: 11px; }
+.flight-card__footer button { min-height: 30px; padding: 0 15px; border-radius: 40px; font-size: 10px; }
+.flight-card__details { display: grid; gap: 6px; padding: 13px 0 4px; border-top: 1px solid #edf1ef; font-size: 11px; line-height: 1.5; }
+.flight-card__details span { color: #66746e; }
+.tickets-results__empty { padding: 45px 30px; border: 1px solid var(--tickets-line); border-radius: 14px; text-align: center; }
+.tickets-results__empty h3 { margin: 0 0 8px; font-size: 18px; }
+.tickets-results__empty p { margin: 0; color: var(--tickets-muted); font-size: 13px; line-height: 1.5; }
 
+@media (max-width: 1150px) {
+  .tickets-page .container { width: calc(100% - 80px); }
+  .tickets-search { grid-template-columns: 1fr 1.25fr 1fr .65fr; padding: 10px; }
+  .tickets-search__field { padding: 0 13px; }
+  .tickets-search__submit { grid-column: 1 / -1; margin-top: 8px; }
+  .tickets-results { gap: 35px; }
 }
 
-/* MOBILE */
+@media (max-width: 760px) {
+  .tickets-page .container { width: calc(100% - 32px); }
+  .tickets-hero { min-height: 570px; align-items: flex-start; background-position: 60% center; }
+  .tickets-hero::before { background: linear-gradient(180deg, rgba(255,255,251,.95), rgba(255,255,251,.72) 37%, rgba(255,255,251,.08) 85%); }
+  .tickets-hero__content { padding-top: 126px; }
+  .tickets-hero h1 { font-size: clamp(26px, 7.3vw, 53px); letter-spacing: -.06em; }
+  .tickets-search-wrap { margin-top: -85px !important; }
+  .tickets-search { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0; padding: 10px 14px 15px; }
+  .tickets-search__field { height: 70px; padding: 0 10px; border-bottom: 1px solid #e8eeec; }
+  .tickets-search__field:nth-child(2n) { border-right: 0; }
+  .tickets-search__field--date, .tickets-search__field--passengers { border-bottom: 0; }
+  .tickets-search__submit { margin-top: 5px; }
+  .tickets-results { display: block; padding-top: 45px; padding-bottom: 70px; }
+  .tickets-filters { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0 20px; margin-bottom: 34px; }
+  .tickets-filters h2 { grid-column: 1 / -1; }
+  .tickets-filters__note { grid-column: 1 / -1; }
+  .tickets-filters__item select { font-size: 12px; }
+}
 
-@media (max-width: 768px) {
-
-  /* CONTAINER */
-
-  .tickets-hero .container,
-  .tickets-destinations .container {
-    width: calc(100% - 32px);
-  }
-
-
-  /* HERO */
-
-  .tickets-hero {
-    min-height: auto;
-
-    background-position: center;
-  }
-
-  .tickets-hero::before {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.92) 0%,
-      rgba(255, 255, 255, 0.55) 30%,
-      rgba(255, 255, 255, 0.1) 55%,
-      rgba(255, 255, 255, 0) 70%
-    );
-  }
-
-  .tickets-hero__inner {
-    min-height: auto;
-
-    padding-top: 100px;
-    padding-bottom: 40px;
-
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-
-    gap: 32px;
-  }
-
-
-  /* HERO TITLE */
-
-  .tickets-hero__title h1 {
-    font-size: 48px;
-    line-height: 0.95;
-    letter-spacing: -2px;
-  }
-
-  .tickets-hero__title p {
-    margin-top: 12px;
-
-    font-size: 25px;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-
-
-  /* SEARCH */
-
-  .tickets-search {
-    width: 100%;
-
-    padding: 24px;
-
-    border-radius: 14px;
-  }
-
-  .tickets-search__field {
-    padding: 12px 0;
-  }
-
-  .tickets-search__field span {
-    font-size: 8px;
-  }
-
-  .tickets-search__field input,
-  .tickets-search__field select {
-    font-size: 13px;
-  }
-
-  .tickets-search__row {
-    gap: 24px;
-  }
-
-  .tickets-search__button {
-    margin-top: 22px;
-    padding: 13px;
-  }
-
-
-  /* DESTINATIONS */
-
-  .tickets-destinations {
-    padding: 36px 0 70px;
-  }
-
-  .tickets-destinations__season {
-    margin-bottom: 10px;
-
-    font-size: 8px;
-  }
-
-  .tickets-destinations__title {
-    margin-bottom: 30px;
-
-    font-size: 34px;
-    line-height: 0.92;
-    letter-spacing: -1.7px;
-  }
-
-
-  /* PHOTOS */
-
-  .tickets-destinations__photos {
-    grid-template-columns: 1fr;
-
-    gap: 14px;
-
-    margin-bottom: 36px;
-  }
-
-  .tickets-photo {
-    height: 300px;
-  }
-
-
-  /* OFFERS */
-
-  .tickets-offers {
-    grid-template-columns: 1fr;
-
-    gap: 18px;
-  }
-
-  .tickets-offer {
-    padding: 18px;
-  }
+@media (max-width: 460px) {
+  .tickets-hero { min-height: 500px; }
+  .tickets-hero__content { padding-top: 105px; }
+  .tickets-hero h1 { font-size: clamp(26px, 7.3vw, 32px); }
+  .tickets-search__field { padding-inline: 6px; }
+  .tickets-search__field input, .tickets-search__field select { font-size: 12px; }
+  .tickets-search__field > span { font-size: 8px; }
+  .tickets-results__heading { align-items: flex-start; }
+  .tickets-results__heading h2 { font-size: 15px; }
+  .tickets-sort { display: grid; gap: 3px; }
+  .flight-card { padding: 16px 14px 12px; }
+  .flight-card__body { grid-template-columns: 1fr 1.2fr 1fr; gap: 6px; }
+  .flight-card__price { grid-column: 1 / -1; flex-direction: row; align-items: baseline; justify-content: flex-end; gap: 7px; }
+  .flight-card__footer > span { max-width: 55%; line-height: 1.4; }
 }
