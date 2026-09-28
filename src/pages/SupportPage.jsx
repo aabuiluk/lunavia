@@ -86,10 +86,24 @@ export default function SupportPage() {
                     </p>
 
                     <div className="support-search">
+                        <span className="support-search__icon" aria-hidden="true">
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                            >
+                                <circle cx="11" cy="11" r="7" />
+                                <path d="m20 20-4-4" />
+                            </svg>
+                        </span>
                         <input
                             className="support-search__input"
                             type="text"
-                            placeholder="Search FAQ..."
+                            placeholder="Search support FAQs..."
                             value={searchInput}
                             onChange={(event) => setSearchInput(event.target.value)}
                         />
@@ -136,7 +150,7 @@ export default function SupportPage() {
 
                         <article className="support-card">
                             <div className="support-card__icon">
-                               <img src={mailIcon} alt="" />
+                                <img src={mailIcon} alt="" />
                             </div>
 
                             <h3>Email Support</h3>

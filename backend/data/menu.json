@@ -35,14 +35,14 @@
       "label": "Support",
       "href": "/support",
       "enabled": true,
-      "order": 4
+      "order": 5
     },
     {
       "id": "login",
       "label": "Login",
       "href": "/login",
       "enabled": true,
-      "order": 5
+      "order": 6
     }
   ]
 }
