@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Строго изолированный сброс стилей внутри .split-layout по требованию ревьюера */
+/* Изолированный сброс стилей строго внутри .split-layout */
 .split-layout,
 .split-layout * {
   box-sizing: border-box;
