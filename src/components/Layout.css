@@ -8,8 +8,7 @@
   display: flex;
   align-items: center;
 }
-
-
+//something
 
 .sign_up_and_plan {
   margin-left: 100px;
@@ -315,6 +314,8 @@
   .mobile-menu__link.active {
     color: var(--color-teal-dark);
   }
+
+
 
   .mobile-menu__foot {
     margin-top: auto;

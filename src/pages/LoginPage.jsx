@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
-import bungalowImg from './components/bungalow.jpg';
+import bungalowImg from '../images/bungalow.jpg';
 
 export const pageMeta = {
   path: '/login',

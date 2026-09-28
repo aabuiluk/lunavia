@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { navPages } from '../pages/sitePages'
 import './Layout.css'
-import heroImg from '../images/logo.jpg'
+import heroImg from '../images/logo.png'
 
 
 const MOBILE_MENU = [
