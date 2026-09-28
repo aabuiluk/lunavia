@@ -60,37 +60,68 @@ def call_api(method: str, url: str, *, what: str, ok: tuple[int, ...] = (200,), 
 
 def post_file(remote_path: str, local: Path) -> None:
     size_mb = local.stat().st_size / (1024 * 1024)
-    with local.open("rb") as fh:
-        for attempt in range(12):
-            fh.seek(0)
-            try:
+
+    for attempt in range(12):
+        try:
+            with local.open("rb") as fh:
                 resp = requests.post(
                     f"{BASE}/files/path{remote_path}",
                     headers=HEADERS,
                     files={"content": (local.name, fh)},
                     timeout=180,
                 )
-            except requests.RequestException as exc:
-                wait = min(60, 4 * (2**attempt))
-                print(f"Retry {attempt + 1}/12 {remote_path} after error: {exc}; sleep {wait}s")
-                time.sleep(wait)
-                continue
-            if resp.status_code in (200, 201):
-                print(f"OK {resp.status_code} {remote_path}")
-                time.sleep(0.4)
-                return
-            if resp.status_code == 429:
-                retry_after = resp.headers.get("Retry-After")
-                wait = int(retry_after) if retry_after and retry_after.isdigit() else min(90, 5 * (2**attempt))
-                print(
-                    f"429 {remote_path} ({size_mb:.1f} MB); sleep {wait}s "
-                    f"(attempt {attempt + 1}/12)"
-                )
-                time.sleep(wait)
-                continue
-            fail(f"Upload failed {resp.status_code} {remote_path}: {resp.text[:400]}")
-    fail(f"Rate-limited uploading {remote_path}")
+        except requests.RequestException as exc:
+            wait = min(60, 5 * (attempt + 1))
+            print(
+                f"Upload exception {remote_path}: {exc}; "
+                f"sleep {wait}s (attempt {attempt + 1}/12)",
+                flush=True,
+            )
+            time.sleep(wait)
+            continue
 
+        if resp.status_code in (200, 201):
+            print(f"OK {resp.status_code} {remote_path}", flush=True)
+            time.sleep(0.5)
+            return
+
+        if resp.status_code == 429:
+            retry_after = resp.headers.get("Retry-After")
+
+            if retry_after and retry_after.isdigit():
+                wait = int(retry_after)
+            else:
+                wait = min(90, 10 * (attempt + 1))
+
+            print(
+                f"429 {remote_path} ({size_mb:.1f} MB); "
+                f"sleep {wait}s (attempt {attempt + 1}/12)",
+                flush=True,
+            )
+            time.sleep(wait)
+            continue
+
+        if resp.status_code in (500, 502, 503, 504):
+            wait = min(90, 5 * (attempt + 1))
+
+            print(
+                f"Server error {resp.status_code} for {remote_path} "
+                f"({size_mb:.1f} MB); "
+                f"sleep {wait}s (attempt {attempt + 1}/12)",
+                flush=True,
+            )
+
+            print(resp.text[:500], flush=True)
+
+            time.sleep(wait)
+            continue
+
+        fail(
+            f"Upload failed {resp.status_code} {remote_path}: "
+            f"{resp.text[:500]}"
+        )
+
+    fail(f"Could not upload {remote_path} after 12 attempts")
 
 def main() -> None:
     if not TOKEN:
