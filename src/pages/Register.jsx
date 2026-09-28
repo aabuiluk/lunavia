@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Register.css';
-import bungalowImg from '../components/bungalow.jpg';
+import bungalowImg from './components/bungalow.jpg';
 
 export const pageMeta = {
   path: '/register',
@@ -24,7 +24,6 @@ export default function RegisterPage() {
 
   return (
     <div className="split-layout">
-      {/* Передаем импортированную картинку из src/components через инлайн-стиль */}
       <div className="left-side" style={{ backgroundImage: `url(${bungalowImg})` }}>
         <div className="left-overlay"></div>
         <div className="overlay-content">
