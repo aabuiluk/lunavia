@@ -50,15 +50,15 @@ export default function ToursPage() {
         <div className="tours-hero__veil" />
         <div className="container tours-hero__content">
           <p className="tours-hero__eyebrow rise">
-            {serverContent?.eyebrow || 'FIND YOUR NEXT ADVENTURE'}
+            FIND YOUR NEXT ADVENTURE
           </p>
           <h1 className="rise rise-delay-1">
-            {serverContent?.title || 'All our tours'} <br /><span>&</span> Packages
+            All our tours <br /><span>&</span> Packages
           </h1>
         </div>
       </section>
 
-      <div className="container search-wrapper rise rise-delay-2">
+      <div className="search-wrapper rise rise-delay-2">
         <SearchBar
           fields={[
             { name: 'start', label: 'START?', value: '', placeholder: 'Choose start point' },
