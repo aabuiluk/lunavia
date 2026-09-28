@@ -74,13 +74,61 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 860px) {
   .why {
     padding-block: 2.5rem;
-    gap: 20px;
+    gap: 24px;
+  }
+
+  .why__eyebrow {
+    letter-spacing: 0.12em;
   }
 
   .why__title {
-    font-size: 32px;
+    font-size: clamp(36px, 11vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-weight: 800;
+  }
+
+  .why__item p {
+    max-width: none;
+  }
+}
+
+/* Phone: the 4-item list from the design (the two extra items are hidden,
+   the remaining ones are numbered 01–04 by a counter). */
+@media (max-width: 560px) {
+  .why__grid {
+    counter-reset: why;
+  }
+
+  .why__item {
+    padding: 22px 0;
+  }
+
+  .why__item--extra {
+    display: none;
+  }
+
+  .why__item:not(.why__item--extra) {
+    counter-increment: why;
+  }
+
+  .why__num {
+    font-size: 0;
+  }
+
+  .why__num::before {
+    content: counter(why, decimal-leading-zero);
+    font-size: 12px;
+  }
+
+  .why__item h4 {
+    font-size: 20px;
+  }
+
+  .why__item p {
+    font-size: 14px;
   }
 }

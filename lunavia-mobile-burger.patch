@@ -1,0 +1,1265 @@
+diff --git a/src/components/Destinations.css b/src/components/Destinations.css
+index ab58f10..f432b92 100644
+--- a/src/components/Destinations.css
++++ b/src/components/Destinations.css
+@@ -16,7 +16,7 @@
+ }
+ 
+ .destinations__title {
+-  font-family: var(--font-body, 'Manrope');
++  font-family: var(--font-body, 'Manrope'), sans-serif;
+   font-size: 60px;
+   font-weight: 900;
+   line-height: 72px;
+@@ -108,24 +108,53 @@
+   color: rgba(255, 255, 255, 0.9);
+ }
+ 
+-@media (max-width: 780px) {
++.destinations__all {
++  display: none;
++}
++
++@media (max-width: 860px) {
++  /* full-bleed mint band */
++  .destinations {
++    width: 100%;
++    max-width: none;
++    margin: 0;
++    padding: 2.5rem 20px 2.75rem;
++    border-radius: 0;
++  }
++
++  .destinations__eyebrow {
++    letter-spacing: 0.12em;
++  }
++
++  .destinations__title {
++    font-size: clamp(36px, 11vw, 60px);
++    line-height: 1;
++    letter-spacing: -0.045em;
++    font-weight: 800;
++    margin-bottom: 14px;
++  }
++
++  .destinations__all {
++    display: inline-flex;
++    align-items: center;
++    gap: 6px;
++    margin-bottom: 24px;
++    font-size: 14px;
++    font-weight: 700;
++    color: var(--color-teal-dark);
++  }
++
+   .destinations__grid {
+     grid-template-columns: 1fr;
++    gap: 16px;
+   }
++
+   .destinations__card {
+     height: 260px;
+-  }
+-}
+-
+-@media (max-width: 640px) {
+-  .destinations {
+-    padding-block: 2.5rem;
+     border-radius: 22px;
+   }
+ 
+-  .destinations__title {
+-    font-size: 32px;
+-    line-height: 1.2;
+-    margin-bottom: 22px;
++  .destinations__place {
++    font-size: 20px;
+   }
+ }
+diff --git a/src/components/Destinations.jsx b/src/components/Destinations.jsx
+index af64439..8bfae99 100644
+--- a/src/components/Destinations.jsx
++++ b/src/components/Destinations.jsx
+@@ -41,6 +41,9 @@ export function Destinations() {
+         <br />
+         want to go?
+       </h2>
++      <a className="destinations__all" href="/tours">
++        Explore all <span aria-hidden="true">→</span>
++      </a>
+ 
+       <div className="destinations__grid">
+         {DESTINATIONS.map((d) => (
+diff --git a/src/components/Layout.css b/src/components/Layout.css
+index 3c4ee16..89407db 100644
+--- a/src/components/Layout.css
++++ b/src/components/Layout.css
+@@ -166,53 +166,206 @@
+   color: var(--color-teal);
+ }
+ 
+-@media (max-width: 860px) {
+-  .nav {
+-    display: none;
+-  }
+-
+-  .site-footer__inner,
+-  .site-footer__cols {
+-    grid-template-columns: 1fr;
+-  }
++/* Burger button + mobile menu: hidden on desktop */
++.burger,
++.mobile-menu {
++  display: none;
+ }
+ 
+-@media (max-width: 640px) {
++@media (max-width: 860px) {
+   .site-header {
+-    width: 90%;
+-    top: 20px;
+-    left: 5%;
+-    height: auto;
++    width: 100%;
++    top: 0;
++    left: 0;
++    height: var(--header-h);
++    padding-inline: 20px;
++    justify-content: space-between;
+   }
+ 
+   .site-header__inner {
++    width: auto;
++    height: auto;
++    margin: 0;
++    padding: 0;
++    flex: 0 0 auto;
+     background: transparent;
+     backdrop-filter: none;
+     -webkit-backdrop-filter: none;
+     box-shadow: none;
+     border-radius: 0;
+-    padding: 0;
+   }
+ 
++  .logo__img {
++    width: 128px;
++    height: 38px;
++  }
++
++  /* frosted-glass pill behind the header logo */
++  .site-header .logo {
++    overflow: hidden;
++    border-radius: 999px;
++    background: rgba(255, 255, 255, 0.45);
++    -webkit-backdrop-filter: blur(12px);
++    backdrop-filter: blur(12px);
++    box-shadow: 0 6px 20px rgba(20, 36, 36, 0.12);
++  }
++
++  .site-header .logo__img {
++    border-radius: 0;
++    /* the logo file has an opaque off-white background:
++       multiply lets the glass show through it */
++    mix-blend-mode: multiply;
++  }
++
++  .nav,
+   .sign_up_and_plan {
+     display: none;
+   }
+ 
++  .burger {
++    display: inline-flex;
++    flex-direction: column;
++    justify-content: center;
++    align-items: center;
++    gap: 5px;
++    width: 44px;
++    height: 44px;
++    padding: 0;
++    border: 0;
++    border-radius: 50%;
++    /* frosted-glass circle */
++    background: rgba(255, 255, 255, 0.55);
++    -webkit-backdrop-filter: blur(12px);
++    backdrop-filter: blur(12px);
++    box-shadow: 0 6px 20px rgba(20, 36, 36, 0.12);
++    cursor: pointer;
++  }
++
++  .burger span {
++    display: block;
++    height: 2px;
++    width: 20px;
++    border-radius: 2px;
++    background: var(--color-ink);
++  }
++
++  .burger span:nth-child(2) {
++    width: 14px;
++    align-self: flex-end;
++    margin-right: 12px;
++  }
++
++  .burger:focus-visible,
++  .mobile-menu__close:focus-visible,
++  .mobile-menu__link:focus-visible {
++    outline: 2px solid var(--color-teal);
++    outline-offset: 2px;
++  }
++
++  .mobile-menu {
++    position: fixed;
++    inset: 0;
++    z-index: 100;
++    display: flex;
++    flex-direction: column;
++    padding: 28px 24px max(28px, env(safe-area-inset-bottom));
++    background: #fff;
++    opacity: 0;
++    visibility: hidden;
++    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
++  }
++
++  .mobile-menu--open {
++    opacity: 1;
++    visibility: visible;
++    transition: opacity 0.2s ease;
++  }
++
++  .mobile-menu__close {
++    align-self: flex-end;
++    display: grid;
++    place-items: center;
++    width: 40px;
++    height: 40px;
++    border: 0;
++    border-radius: 50%;
++    background: #0b0b0b;
++    color: #fff;
++    cursor: pointer;
++  }
++
++  .mobile-menu__close path {
++    fill: none;
++    stroke: currentColor;
++    stroke-width: 2.4;
++    stroke-linecap: round;
++  }
++
++  .mobile-menu__list {
++    display: flex;
++    flex-direction: column;
++    gap: 6px;
++    margin-top: 24px;
++  }
++
++  .mobile-menu__link {
++    padding: 12px 4px;
++    font-size: 24px;
++    font-weight: 500;
++    letter-spacing: -0.01em;
++    color: var(--color-ink);
++  }
++
++  .mobile-menu__link.active {
++    color: var(--color-teal-dark);
++  }
++
++  .mobile-menu__foot {
++    margin-top: auto;
++    display: flex;
++    align-items: center;
++    justify-content: space-between;
++    padding-top: 20px;
++    border-top: 1px solid var(--color-fog);
++    font-size: 15px;
++  }
++
++  .mobile-menu__signup {
++    font-weight: 700;
++    text-decoration: underline;
++  }
++
++  .mobile-menu__currency {
++    color: var(--color-muted);
++  }
++
+   .site-footer {
+     padding: 2.5rem 0 1.5rem;
+   }
+ 
+   .site-footer__inner {
+-    width: 88%;
+-    flex-direction: column;
+-    align-items: flex-start;
+-    gap: 0.9rem;
+-    padding-top: 0;
++    width: min(100% - 2.5rem, var(--max));
++    display: grid;
++    grid-template-columns: auto 1fr;
++    align-items: center;
++    gap: 20px 16px;
++    padding: 0 0 1.5rem;
++  }
++
++  .logo--footer {
++    margin: 0;
++  }
++
++  .site-footer__tagline {
++    text-align: right;
++    font-size: 0.8rem;
++    line-height: 1.4;
+   }
+ 
+   .site-footer__links {
++    grid-column: 1 / -1;
+     flex-wrap: wrap;
+-    row-gap: 0.5rem;
+-    gap: 1.1rem;
++    justify-content: space-between;
++    gap: 0.5rem 1rem;
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/src/components/Layout.jsx b/src/components/Layout.jsx
+index 480fc62..d983676 100644
+--- a/src/components/Layout.jsx
++++ b/src/components/Layout.jsx
+@@ -1,9 +1,53 @@
+-import { NavLink, Outlet } from 'react-router-dom'
+-import { navPages, sitePages } from '../pages/sitePages'
++import { useEffect, useRef, useState } from 'react'
++import { NavLink, Outlet, useLocation } from 'react-router-dom'
++import { navPages } from '../pages/sitePages'
+ import './Layout.css'
+ import heroImg from '../images/logo.jpg'
+ 
++// Items of the mobile (burger) menu, in the order from the design.
++const MOBILE_MENU = [
++  { label: 'Direct', to: '/' },
++  { label: 'Tours', to: '/tours' },
++  { label: 'Airline tickets', to: '/tickets' },
++  { label: 'Hotels', to: '/hotels' },
++  { label: 'How it works', to: '/#how-it-works' },
++  { label: 'About us', to: '/about' },
++]
++
+ export default function Layout() {
++  const [menuOpen, setMenuOpen] = useState(false)
++  const closeBtnRef = useRef(null)
++  const { pathname, hash } = useLocation()
++
++  // Scroll to #anchors (react-router does not do it by itself).
++  useEffect(() => {
++    if (!hash) return
++    document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth' })
++  }, [pathname, hash])
++
++  // Menu open: lock page scroll, close on Escape, focus the close button.
++  useEffect(() => {
++    if (!menuOpen) return undefined
++    const onKey = (e) => e.key === 'Escape' && setMenuOpen(false)
++    window.addEventListener('keydown', onKey)
++    document.body.style.overflow = 'hidden'
++    closeBtnRef.current?.focus()
++    return () => {
++      window.removeEventListener('keydown', onKey)
++      document.body.style.overflow = ''
++    }
++  }, [menuOpen])
++
++  // Menu is mobile-only: close it when the window grows to desktop width.
++  useEffect(() => {
++    const mq = window.matchMedia('(min-width: 861px)')
++    const onChange = (e) => e.matches && setMenuOpen(false)
++    mq.addEventListener('change', onChange)
++    return () => mq.removeEventListener('change', onChange)
++  }, [])
++
++  const closeMenu = () => setMenuOpen(false)
++
+   return (
+     <div className="layout">
+       <header className="site-header">
+@@ -36,8 +80,66 @@ export default function Layout() {
+             Choose a destination
+           </NavLink>
+         </div>
++
++        <button
++          type="button"
++          className="burger"
++          aria-label="Open menu"
++          aria-expanded={menuOpen}
++          aria-controls="mobile-menu"
++          onClick={() => setMenuOpen(true)}
++        >
++          <span />
++          <span />
++          <span />
++        </button>
+       </header>
+ 
++      <div
++        id="mobile-menu"
++        className={'mobile-menu' + (menuOpen ? ' mobile-menu--open' : '')}
++        role="dialog"
++        aria-modal="true"
++        aria-label="Menu"
++        inert={!menuOpen}
++      >
++        <button
++          type="button"
++          className="mobile-menu__close"
++          aria-label="Close menu"
++          ref={closeBtnRef}
++          onClick={closeMenu}
++        >
++          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
++            <path d="M6 6l12 12M18 6L6 18" />
++          </svg>
++        </button>
++
++        <nav className="mobile-menu__list" aria-label="Mobile">
++          {MOBILE_MENU.map((item) => (
++            <NavLink
++              key={item.label}
++              to={item.to}
++              end
++              className={({ isActive }) =>
++                'mobile-menu__link' +
++                (isActive && !item.to.includes('#') ? ' active' : '')
++              }
++              onClick={closeMenu}
++            >
++              {item.label}
++            </NavLink>
++          ))}
++        </nav>
++
++        <div className="mobile-menu__foot">
++          <NavLink to="/login" className="mobile-menu__signup" onClick={closeMenu}>
++            Sign up
++          </NavLink>
++          <span className="mobile-menu__currency">UA / EN | € EUR</span>
++        </div>
++      </div>
++
+       <main className="site-main">
+         <Outlet />
+       </main>
+diff --git a/src/components/Offers.css b/src/components/Offers.css
+index 47d7afc..1af718a 100644
+--- a/src/components/Offers.css
++++ b/src/components/Offers.css
+@@ -118,19 +118,48 @@
+   background: var(--color-teal-dark, #129b77);
+ }
+ 
+-@media (max-width: 780px) {
+-  .offers__grid {
+-    grid-template-columns: 1fr;
+-  }
+-}
+-
+-@media (max-width: 640px) {
++@media (max-width: 860px) {
+   .offers {
+     padding-block: 2.5rem;
+   }
+ 
++  .offers__eyebrow {
++    letter-spacing: 0.12em;
++  }
++
+   .offers__title {
+-    font-size: 32px;
++    font-size: clamp(36px, 11vw, 60px);
++    line-height: 1;
++    letter-spacing: -0.045em;
++    font-weight: 800;
+     margin-bottom: 24px;
+   }
++
++  .offers__grid {
++    grid-template-columns: 1fr;
++    gap: 16px;
++  }
++
++  .offers__card {
++    padding: 22px;
++    border-radius: 22px;
++    box-shadow: 0 12px 32px rgba(20, 36, 36, 0.08);
++  }
++
++  .offers__label {
++    letter-spacing: 0.1em;
++  }
++
++  .offers__card h3 {
++    font-size: 22px;
++  }
++
++  .offers__price {
++    font-size: 26px;
++  }
++
++  .offers__go {
++    width: 44px;
++    height: 44px;
++  }
+ }
+diff --git a/src/components/PlanCta.css b/src/components/PlanCta.css
+index 380b76d..b619338 100644
+--- a/src/components/PlanCta.css
++++ b/src/components/PlanCta.css
+@@ -147,50 +147,91 @@
+   background: var(--color-teal-dark, #129b77);
+ }
+ 
+-@media (max-width: 780px) {
++@media (max-width: 860px) {
++  .plan_container {
++    padding: 0 20px 40px;
++  }
++
+   .plan__panel {
++    height: auto;
++    min-height: 640px;
+     flex-direction: column;
+-    padding: 32px 24px;
+     align-items: stretch;
+-  }
+-  .plan__content {
+-    padding: 0 0 24px;
+-    max-width: none;
+-  }
+-  .plan__form {
+-    width: auto;
+-    margin: 0;
+-  }
+-}
+-
+-@media (max-width: 640px) {
+-  .plan {
+-    padding-block: 2.5rem;
++    justify-content: space-between;
++    gap: 40px;
++    padding: 36px 20px 20px;
++    border-radius: 28px;
+   }
+ 
+-  .plan__panel {
+-    height: auto;
+-    border-radius: 22px;
+-    padding: 28px 20px;
++  .plan__veil {
++    background: linear-gradient(
++      180deg,
++      rgba(8, 22, 18, 0.45) 0%,
++      rgba(8, 22, 18, 0.1) 55%,
++      rgba(8, 22, 18, 0) 100%
++    );
+   }
+ 
+   .plan__content {
+-    position: relative;
+     left: 0;
+     top: 0;
+     max-width: none;
+-    margin-bottom: 24px;
++    padding: 0;
++  }
++
++  .plan__eyebrow {
++    letter-spacing: 0.12em;
+   }
+ 
+   .plan__title {
+-    font-size: 34px;
+-    line-height: 1.15;
++    font-size: clamp(38px, 11.5vw, 64px);
++    line-height: 1;
++    letter-spacing: -0.045em;
++    font-weight: 800;
++  }
++
++  .plan__text {
++    font-size: 15px;
+   }
+ 
+   .plan__form {
+-    height: auto;
++    align-items: stretch;
++    justify-content: flex-start;
+     width: 100%;
++    height: auto;
+     margin: 0;
++    padding: 8px 22px 20px;
++    border-radius: 24px;
++  }
++
++  .plan__field {
++    padding: 14px 0;
++    margin-bottom: 0;
++  }
++
++  .plan__row {
++    grid-template-columns: 1fr;
++    gap: 0;
++  }
++
++  .plan__row .plan__field {
++    padding: 14px 0;
++    margin-bottom: 0;
++    border-bottom: 1px solid var(--color-line, #e7efec);
++  }
++
++  .plan__field span {
++    letter-spacing: 0.12em;
++  }
++
++  .plan__field input {
++    font-size: 16px;
++  }
++
++  .plan__submit {
++    margin-top: 18px;
++    padding: 16px;
++    font-size: 15px;
+   }
+ }
+ 
+diff --git a/src/components/RouteMap.css b/src/components/RouteMap.css
+index 5912d14..50cd43f 100644
+--- a/src/components/RouteMap.css
++++ b/src/components/RouteMap.css
+@@ -154,44 +154,112 @@
+   gap: 4px;
+ }
+ 
+-@media (max-width: 780px) {
+-  .route__stops {
+-    grid-template-columns: repeat(2, 1fr);
+-    row-gap: 24px;
+-  }
+-  .route__stops::before {
+-    display: none;
+-  }
+-  .route__glow {
+-    display: none;
+-  }
++.route__path {
++  display: none;
+ }
+ 
+-@media (max-width: 640px) {
++@media (max-width: 860px) {
+   .route {
+     padding-block: 2.5rem;
+   }
+ 
+   .route__head {
+-    gap: 16px;
+-    margin-bottom: 32px;
++    flex-direction: column;
++    align-items: flex-start;
++    gap: 18px;
++    margin-bottom: 28px;
++  }
++
++  .route__eyebrow {
++    letter-spacing: 0.12em;
+   }
+ 
+   .route__title {
+-    font-size: 34px;
+-    line-height: 1.15;
++    font-size: clamp(36px, 11vw, 60px);
++    line-height: 1;
++    letter-spacing: -0.045em;
++    font-weight: 800;
+   }
+ 
+   .route__text {
+     max-width: none;
++    padding-bottom: 0;
+   }
+ 
+   .route__map {
+-    padding: 22px 18px 18px;
++    padding: 28px 20px 22px;
++    border-radius: 28px;
++  }
++
++  .route__glow {
++    display: block;
++    top: 26%;
++    left: 82%;
++    width: 200px;
++    height: 200px;
++  }
++
++  /* 2-column zigzag: UA → train (row 1), hub → airport (row 2), destination (row 3) */
++  .route__stops {
++    grid-template-columns: 1fr 1fr;
++    grid-template-rows: 120px 120px 110px;
++    gap: 0 12px;
++  }
++
++  .route__stops::before {
++    display: none;
++  }
++
++  .route__path {
++    display: block;
++    position: absolute;
++    inset: 0;
++    width: 100%;
++    height: 100%;
++    fill: none;
++    stroke: rgba(14, 33, 27, 0.3);
++    stroke-width: 2;
++    stroke-dasharray: 2 7;
++    stroke-linecap: round;
++  }
++
++  .route__dot {
++    width: 40px;
++    height: 40px;
++    margin-bottom: 12px;
++    font-size: 12px;
++  }
++
++  /* the <svg> path is the 1st child, so stops 2 and 4 are the odd children */
++  .route__stop:nth-child(odd):not(:last-child) {
++    align-items: flex-end;
++    text-align: right;
++  }
++
++  .route__stop:last-child {
++    grid-column: 1 / -1;
++    align-items: center;
++    text-align: center;
++  }
++
++  .route__stop:last-child .route__dot {
++    width: 52px;
++    height: 52px;
++    font-size: 16px;
++    box-shadow: 0 0 0 8px rgba(31, 199, 154, 0.18);
++  }
++
++  .route__stop strong {
++    font-size: 15px;
+   }
+ 
+   .route__footer {
+-    flex-direction: column;
+-    align-items: flex-start;
++    margin-top: 12px;
++    padding-top: 20px;
++    justify-content: flex-start;
++  }
++
++  .route__link {
++    display: none;
+   }
+ }
+diff --git a/src/components/RouteMap.jsx b/src/components/RouteMap.jsx
+index 5d29c1a..e8ca711 100644
+--- a/src/components/RouteMap.jsx
++++ b/src/components/RouteMap.jsx
+@@ -12,7 +12,7 @@ const COUNTRIES = ['Poland', 'Moldova', 'Romania', 'Slovakia', 'Hungary']
+ 
+ export function RouteMap() {
+   return (
+-    <section className="route container">
++    <section className="route container" id="how-it-works">
+       <div className="route__head">
+         <div className="route__head-left">
+           <p className="route__eyebrow">THE SMART WAY</p>
+@@ -35,6 +35,18 @@ export function RouteMap() {
+         <div className="route__glow" aria-hidden="true" />
+ 
+         <div className="route__stops">
++          {/* dotted zigzag between the stops, mobile layout only */}
++          <svg
++            className="route__path"
++            viewBox="0 0 100 100"
++            preserveAspectRatio="none"
++            aria-hidden="true"
++          >
++            <path
++              d="M6.4 5.7 H93.6 C93.6 24 6.4 22 6.4 40 H93.6 C93.6 58 50 56 50 76"
++              vectorEffect="non-scaling-stroke"
++            />
++          </svg>
+           {STOPS.map((stop) => (
+             <div className="route__stop" key={stop.title}>
+               <span
+diff --git a/src/components/WhyUs.css b/src/components/WhyUs.css
+index d92c0d0..1d3af8a 100644
+--- a/src/components/WhyUs.css
++++ b/src/components/WhyUs.css
+@@ -74,13 +74,61 @@
+   }
+ }
+ 
+-@media (max-width: 640px) {
++@media (max-width: 860px) {
+   .why {
+     padding-block: 2.5rem;
+-    gap: 20px;
++    gap: 24px;
++  }
++
++  .why__eyebrow {
++    letter-spacing: 0.12em;
+   }
+ 
+   .why__title {
+-    font-size: 32px;
++    font-size: clamp(36px, 11vw, 56px);
++    line-height: 1;
++    letter-spacing: -0.045em;
++    font-weight: 800;
++  }
++
++  .why__item p {
++    max-width: none;
++  }
++}
++
++/* Phone: the 4-item list from the design (the two extra items are hidden,
++   the remaining ones are numbered 01–04 by a counter). */
++@media (max-width: 560px) {
++  .why__grid {
++    counter-reset: why;
++  }
++
++  .why__item {
++    padding: 22px 0;
++  }
++
++  .why__item--extra {
++    display: none;
++  }
++
++  .why__item:not(.why__item--extra) {
++    counter-increment: why;
++  }
++
++  .why__num {
++    font-size: 0;
++  }
++
++  .why__num::before {
++    content: counter(why, decimal-leading-zero);
++    font-size: 12px;
++  }
++
++  .why__item h4 {
++    font-size: 20px;
++  }
++
++  .why__item p {
++    font-size: 14px;
+   }
+ }
+diff --git a/src/components/WhyUs.jsx b/src/components/WhyUs.jsx
+index 8194cd5..73d215d 100644
+--- a/src/components/WhyUs.jsx
++++ b/src/components/WhyUs.jsx
+@@ -15,6 +15,7 @@ const REASONS = [
+     n: '03',
+     title: 'Local Secrets',
+     text: 'Discover hidden gems and authentic places beyond the usual tourist routes.',
++    extra: true,
+   },
+   {
+     n: '04',
+@@ -30,6 +31,7 @@ const REASONS = [
+     n: '06',
+     title: 'Easy Planning',
+     text: 'Enjoy a seamless travel experience with every detail thoughtfully arranged for you.',
++    extra: true,
+   },
+ ]
+ 
+@@ -47,7 +49,10 @@ export function WhyUs() {
+ 
+       <div className="why__grid">
+         {REASONS.map((r) => (
+-          <div className="why__item" key={r.n}>
++          <div
++            className={'why__item' + (r.extra ? ' why__item--extra' : '')}
++            key={r.n}
++          >
+             <span className="why__num">{r.n}</span>
+             <h4>{r.title}</h4>
+             <p>{r.text}</p>
+diff --git a/src/index.css b/src/index.css
+index 74a94a1..4a98aa0 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -156,196 +156,3 @@ textarea {
+ .rise-delay-2 {
+   animation-delay: 0.24s;
+ }
+-
+-@media (max-width: 640px) {
+-  .site-header {
+-    width: 90%;
+-    top: 20px;
+-    left: 5%;
+-    height: auto;
+-  }
+-
+-  .site-header__inner {
+-    background: transparent;
+-    backdrop-filter: none;
+-    -webkit-backdrop-filter: none;
+-    box-shadow: none;
+-    border-radius: 0;
+-    padding: 0;
+-  }
+-
+-  .sign_up_and_plan {
+-    display: none;
+-  }
+-
+-  .site-footer {
+-    padding: 2.5rem 0 1.5rem;
+-  }
+-
+-  .site-footer__inner {
+-    width: 88%;
+-    flex-direction: column;
+-    align-items: flex-start;
+-    gap: 0.9rem;
+-    padding-top: 0;
+-  }
+-
+-  .site-footer__links {
+-    flex-wrap: wrap;
+-    row-gap: 0.5rem;
+-    gap: 1.1rem;
+-  }
+-
+-  .home-hero {
+-    top: -72px;
+-    min-height: auto;
+-    padding-bottom: 160px;
+-  }
+-
+-  .home-hero__media,
+-  .home-hero__veil {
+-    height: 100%;
+-  }
+-
+-  .home-hero__content {
+-    left: 0;
+-    max-width: none;
+-    padding-block: 130px 0;
+-    padding-inline: 5%;
+-  }
+-
+-  .ur_way_to {
+-    font-size: 13px;
+-  }
+-
+-  .home-hero h1 {
+-    font-size: 42px;
+-    line-height: 1.1;
+-  }
+-
+-  .home-hero p:not(.home-hero__brand) {
+-    max-width: none;
+-    font-size: 14px;
+-  }
+-
+-  .home-hero__actions {
+-    width: 100%;
+-  }
+-
+-  .for_inputs_to_route {
+-    position: relative;
+-    top: 24px;
+-    width: 90%;
+-    height: auto;
+-    margin-left: 5%;
+-    margin-right: 5%;
+-    border-radius: 24px;
+-  }
+-
+-  .search-bar {
+-    width: 100%;
+-    padding: 18px 18px 16px;
+-  }
+-
+-  .search-bar__grid {
+-    grid-template-columns: 1fr;
+-    gap: 18px;
+-    padding-top: 4px;
+-  }
+-
+-  .search-bar__field {
+-    padding-bottom: 12px;
+-    border-bottom: 1px solid var(--color-fog, #eef4f2);
+-  }
+-
+-  .search-bar__cta {
+-    width: 100%;
+-    justify-content: center;
+-    padding: 14px;
+-  }
+-
+-  .route {
+-    padding-block: 2.5rem;
+-  }
+-
+-  .route__head {
+-    gap: 16px;
+-    margin-bottom: 32px;
+-  }
+-
+-  .route__title {
+-    font-size: 34px;
+-    line-height: 1.15;
+-  }
+-
+-  .route__text {
+-    max-width: none;
+-  }
+-
+-  .route__map {
+-    padding: 22px 18px 18px;
+-  }
+-
+-  .route__footer {
+-    flex-direction: column;
+-    align-items: flex-start;
+-  }
+-
+-  .destinations {
+-    padding-block: 2.5rem;
+-    border-radius: 22px;
+-  }
+-
+-  .destinations__title {
+-    font-size: 32px;
+-    line-height: 1.2;
+-    margin-bottom: 22px;
+-  }
+-
+-  .offers {
+-    padding-block: 2.5rem;
+-  }
+-
+-  .offers__title {
+-    font-size: 32px;
+-    margin-bottom: 24px;
+-  }
+-
+-  .why {
+-    padding-block: 2.5rem;
+-    gap: 20px;
+-  }
+-
+-  .why__title {
+-    font-size: 32px;
+-  }
+-
+-  .plan {
+-    padding-block: 2.5rem;
+-  }
+-
+-  .plan__panel {
+-    height: auto;
+-    border-radius: 22px;
+-    padding: 28px 20px;
+-  }
+-
+-  .plan__content {
+-    position: relative;
+-    left: 0;
+-    top: 0;
+-    max-width: none;
+-    margin-bottom: 24px;
+-  }
+-
+-  .plan__title {
+-    font-size: 34px;
+-    line-height: 1.15;
+-  }
+-
+-  .plan__form {
+-    height: auto;
+-    width: 100%;
+-    margin: 0;
+-  }
+-}
+diff --git a/src/pages/HomePage.css b/src/pages/HomePage.css
+index fe66b53..d8c262c 100644
+--- a/src/pages/HomePage.css
++++ b/src/pages/HomePage.css
+@@ -177,4 +177,139 @@
+   font-size: 11px;
+   font-weight: 600;
+   color: #e0453c;
+-}
+\ No newline at end of file
++}
++
++@media (max-width: 860px) {
++  .home-hero {
++    top: 0;
++    /* pull the hero under the (in-flow) header */
++    margin-top: calc(-1 * var(--header-h));
++    min-height: 0;
++    display: block;
++  }
++
++  .home-hero__media {
++    height: 100%;
++    object-position: 50% 15%;
++  }
++
++  .home-hero__veil {
++    height: 100%;
++    background: linear-gradient(
++      180deg,
++      rgba(255, 255, 255, 0.05) 0%,
++      rgba(255, 255, 255, 0.6) 18%,
++      rgba(240, 250, 246, 0.94) 40%,
++      #eaf7f2 100%
++    );
++  }
++
++  .home-hero__content {
++    left: 0;
++    max-width: none;
++    padding-block: 140px 40px;
++  }
++
++  .home-hero p.ur_way_to {
++    display: flex;
++    align-items: center;
++    gap: 8px;
++    margin-bottom: 18px;
++    font-size: 11px;
++    letter-spacing: 0.12em;
++  }
++
++  .home-hero p.ur_way_to::before {
++    content: '';
++    width: 6px;
++    height: 6px;
++    border-radius: 50%;
++    background: var(--color-teal);
++  }
++
++  .home-hero h1 {
++    font-size: clamp(42px, 14vw, 84px);
++    line-height: 0.98;
++    letter-spacing: -0.045em;
++    font-weight: 800;
++    margin-bottom: 18px;
++  }
++
++  .home-hero__content > p:not(.ur_way_to):not(.home-hero__brand) {
++    max-width: 34rem;
++    margin-bottom: 24px;
++    font-size: 15px;
++    line-height: 1.55;
++    color: var(--color-ink);
++  }
++
++  .home-hero__actions {
++    gap: 10px;
++  }
++
++  .home-hero__actions .btn {
++    padding: 14px 22px;
++    border-radius: 999px;
++    font-size: 14px;
++  }
++
++  .home-hero__ghost {
++    background: rgba(255, 255, 255, 0.75);
++    border: 0;
++  }
++
++  .for_inputs_to_route {
++    top: 0;
++    width: 100%;
++    height: auto;
++    margin: 32px 0 0;
++    display: block;
++    background: transparent;
++    border-radius: 0;
++  }
++
++  .search-bar {
++    padding: 8px 22px 20px;
++    border-radius: 28px;
++    box-shadow: 0 24px 48px -24px rgba(6, 20, 16, 0.3);
++  }
++
++  .search-bar__grid {
++    grid-template-columns: 1fr;
++    gap: 0;
++    padding-top: 0;
++  }
++
++  .search-bar__field {
++    gap: 6px;
++    padding: 16px 0 14px;
++    border-bottom: 1px solid var(--color-fog);
++  }
++
++  .search-bar__label {
++    font-size: 10px;
++    letter-spacing: 0.12em;
++  }
++
++  .search-bar__value {
++    width: 100%;
++    padding: 0;
++    background: transparent;
++    font-size: 16px;
++    -moz-appearance: textfield;
++  }
++
++  .search-bar__cta {
++    width: 100%;
++    justify-content: center;
++    margin-top: 18px;
++    padding: 16px;
++    font-size: 15px;
++  }
++
++  .search-bar__note {
++    text-align: center;
++    margin-top: 14px;
++  }
++}
++
+diff --git a/src/pages/HomePage.jsx b/src/pages/HomePage.jsx
+index eafa3cd..b82eab5 100644
+--- a/src/pages/HomePage.jsx
++++ b/src/pages/HomePage.jsx
+@@ -150,7 +150,7 @@ export default function HomePage() {
+         <div className="container home-hero__content">
+           <p className="ur_way_to">YOUR WAY TO EVERYWHERE</p>
+           <h1 className="rise rise-delay-1">
+-            Your route to <span>anywhere</span> in the world
++            Your route to <span>anywhere</span> in the world.
+           </h1>
+           <p className="rise rise-delay-2">
+             From Ukraine to anywhere in the world. We know the most convenient routes through European airports and can find a price that works for you.
