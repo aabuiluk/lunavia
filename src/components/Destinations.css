@@ -16,7 +16,7 @@
 }
 
 .destinations__title {
-  font-family: var(--font-body, 'Manrope');
+  font-family: var(--font-body, 'Manrope'), sans-serif;
   font-size: 60px;
   font-weight: 900;
   line-height: 72px;
@@ -108,24 +108,53 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-@media (max-width: 780px) {
-  .destinations__grid {
-    grid-template-columns: 1fr;
-  }
-  .destinations__card {
-    height: 260px;
-  }
+.destinations__all {
+  display: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 860px) {
+  /* full-bleed mint band */
   .destinations {
-    padding-block: 2.5rem;
-    border-radius: 22px;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 2.5rem 20px 2.75rem;
+    border-radius: 0;
+  }
+
+  .destinations__eyebrow {
+    letter-spacing: 0.12em;
   }
 
   .destinations__title {
-    font-size: 32px;
-    line-height: 1.2;
-    margin-bottom: 22px;
+    font-size: clamp(36px, 11vw, 60px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+
+  .destinations__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-teal-dark);
+  }
+
+  .destinations__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .destinations__card {
+    height: 260px;
+    border-radius: 22px;
+  }
+
+  .destinations__place {
+    font-size: 20px;
   }
 }

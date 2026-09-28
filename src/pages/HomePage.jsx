@@ -150,7 +150,7 @@ export default function HomePage() {
         <div className="container home-hero__content">
           <p className="ur_way_to">YOUR WAY TO EVERYWHERE</p>
           <h1 className="rise rise-delay-1">
-            Your route to <span>anywhere</span> in the world
+            Your route to <span>anywhere</span> in the world.
           </h1>
           <p className="rise rise-delay-2">
             From Ukraine to anywhere in the world. We know the most convenient routes through European airports and can find a price that works for you.

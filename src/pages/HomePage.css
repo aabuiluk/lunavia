@@ -178,3 +178,138 @@
   font-weight: 600;
   color: #e0453c;
 }
+
+@media (max-width: 860px) {
+  .home-hero {
+    top: 0;
+    /* pull the hero under the (in-flow) header */
+    margin-top: calc(-1 * var(--header-h));
+    min-height: 0;
+    display: block;
+  }
+
+  .home-hero__media {
+    height: 100%;
+    object-position: 50% 15%;
+  }
+
+  .home-hero__veil {
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.6) 18%,
+      rgba(240, 250, 246, 0.94) 40%,
+      #eaf7f2 100%
+    );
+  }
+
+  .home-hero__content {
+    left: 0;
+    max-width: none;
+    padding-block: 140px 40px;
+  }
+
+  .home-hero p.ur_way_to {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+
+  .home-hero p.ur_way_to::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-teal);
+  }
+
+  .home-hero h1 {
+    font-size: clamp(42px, 14vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+
+  .home-hero__content > p:not(.ur_way_to):not(.home-hero__brand) {
+    max-width: 34rem;
+    margin-bottom: 24px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  .home-hero__actions {
+    gap: 10px;
+  }
+
+  .home-hero__actions .btn {
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+  }
+
+  .home-hero__ghost {
+    background: rgba(255, 255, 255, 0.75);
+    border: 0;
+  }
+
+  .for_inputs_to_route {
+    top: 0;
+    width: 100%;
+    height: auto;
+    margin: 32px 0 0;
+    display: block;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .search-bar {
+    padding: 8px 22px 20px;
+    border-radius: 28px;
+    box-shadow: 0 24px 48px -24px rgba(6, 20, 16, 0.3);
+  }
+
+  .search-bar__grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 0;
+  }
+
+  .search-bar__field {
+    gap: 6px;
+    padding: 16px 0 14px;
+    border-bottom: 1px solid var(--color-fog);
+  }
+
+  .search-bar__label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .search-bar__value {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    font-size: 16px;
+    -moz-appearance: textfield;
+  }
+
+  .search-bar__cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: 18px;
+    padding: 16px;
+    font-size: 15px;
+  }
+
+  .search-bar__note {
+    text-align: center;
+    margin-top: 14px;
+  }
+}
+

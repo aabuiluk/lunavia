@@ -15,6 +15,7 @@ const REASONS = [
     n: '03',
     title: 'Local Secrets',
     text: 'Discover hidden gems and authentic places beyond the usual tourist routes.',
+    extra: true,
   },
   {
     n: '04',
@@ -30,6 +31,7 @@ const REASONS = [
     n: '06',
     title: 'Easy Planning',
     text: 'Enjoy a seamless travel experience with every detail thoughtfully arranged for you.',
+    extra: true,
   },
 ]
 
@@ -47,7 +49,10 @@ export function WhyUs() {
 
       <div className="why__grid">
         {REASONS.map((r) => (
-          <div className="why__item" key={r.n}>
+          <div
+            className={'why__item' + (r.extra ? ' why__item--extra' : '')}
+            key={r.n}
+          >
             <span className="why__num">{r.n}</span>
             <h4>{r.title}</h4>
             <p>{r.text}</p>

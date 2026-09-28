@@ -12,7 +12,7 @@ const COUNTRIES = ['Poland', 'Moldova', 'Romania', 'Slovakia', 'Hungary']
 
 export function RouteMap() {
   return (
-    <section className="route container">
+    <section className="route container" id="how-it-works">
       <div className="route__head">
         <div className="route__head-left">
           <p className="route__eyebrow">THE SMART WAY</p>
@@ -35,6 +35,18 @@ export function RouteMap() {
         <div className="route__glow" aria-hidden="true" />
 
         <div className="route__stops">
+          {/* dotted zigzag between the stops, mobile layout only */}
+          <svg
+            className="route__path"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M6.4 5.7 H93.6 C93.6 24 6.4 22 6.4 40 H93.6 C93.6 58 50 56 50 76"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
           {STOPS.map((stop) => (
             <div className="route__stop" key={stop.title}>
               <span

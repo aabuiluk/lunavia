@@ -41,6 +41,9 @@ export function Destinations() {
         <br />
         want to go?
       </h2>
+      <a className="destinations__all" href="/tours">
+        Explore all <span aria-hidden="true">→</span>
+      </a>
 
       <div className="destinations__grid">
         {DESTINATIONS.map((d) => (
