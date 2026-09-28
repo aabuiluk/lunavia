@@ -41,7 +41,7 @@ def discover_pages() -> list[BackendPage]:
         module = importlib.import_module(f"{pages_pkg.__name__}.{info.name}")
         meta = getattr(module, "page_meta", None)
         router = getattr(module, "router", None)
-        if not isinstance(meta, dict) or router is None:
+        if not isinstance(meta, dict) or router is None or "path" not in meta or "title" not in meta:
             continue
         slug = str(meta.get("slug") or info.name)
         found.append(
