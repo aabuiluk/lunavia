@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './PlaceholderPage.css'
 import './ToursPage.css'
-import { SearchBar } from './HomePage'
+import { SearchBar } from './HomePage.jsx'
 
 export const pageMeta = {
   path: '/tours',
@@ -50,33 +50,36 @@ export default function ToursPage() {
         <div className="tours-hero__veil" />
         <div className="container tours-hero__content">
           <p className="tours-hero__eyebrow rise">
-            {serverContent?.eyebrow || 'FIND YOUR NEXT ADVENTURE'}
+            FIND YOUR NEXT ADVENTURE
           </p>
           <h1 className="rise rise-delay-1">
-            {serverContent?.title || 'All our tours'} <br /><span>&</span> Packages
+            All our tours <br /><span>&</span> Packages
           </h1>
         </div>
       </section>
 
-      <div className="container search-wrapper rise rise-delay-2">
-        <SearchBar
-          fields={[
-            { name: 'start', label: 'START?', value: '', placeholder: 'Choose start point' },
-            { name: 'where', label: 'WHERE?', value: '', placeholder: 'Choose destination' },
-            { name: 'dates', label: 'DATES', value: '', placeholder: 'Choose dates' },
-            {
-              name: 'travelers',
-              label: 'TRAVELERS',
-              value: '',
-              placeholder: 'Choose number of travelers',
-            },
-          ]}
-          note="Flights + trains + hotels — compared for you."
-          onSubmit={(values) => {
-            const skyscannerUrl = "https://www.skyscanner.com.ua/transport/flights/ods/bcn/261005/261006/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false";
-            window.open(skyscannerUrl, '_blank');
-          }}
-        />
+      <div className="container tours-search-wrapper rise rise-delay-2">
+        <div className="tours-for_inputs_to_route">
+          <SearchBar
+            fields={[
+              { name: 'start', label: 'START?', value: '', placeholder: 'Choose start point' },
+              { name: 'where', label: 'WHERE?', value: '', placeholder: 'Choose destination' },
+              { name: 'dates', label: 'DATES', value: '', placeholder: 'Choose dates' },
+              {
+                name: 'travelers',
+                label: 'TRAVELERS',
+                value: '',
+                placeholder: 'Choose number of travelers',
+              },
+            ]}
+            note="Flights + trains + hotels — compared for you."
+            buttonText="Find route &rarr;"
+            onSubmit={(values) => {
+              const skyscannerUrl = "https://www.skyscanner.com.ua/transport/flights/ods/bcn/261005/261006/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false";
+              window.open(skyscannerUrl, '_blank');
+            }}
+          />
+        </div>
       </div>
 
       <section className="container filters-section">
@@ -91,7 +94,7 @@ export default function ToursPage() {
         ))}
       </section>
 
-      <section className="container tours-grid">
+      <section className="tours-grid-wide">
         {filteredTours.length > 0 ? (
           filteredTours.map((tour) => (
             <div key={tour.id} className="tour-card">
